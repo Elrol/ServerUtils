@@ -1,11 +1,10 @@
 package com.github.elrol.elrolsutilities.commands;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.data.PlayerData;
 import com.github.elrol.elrolsutilities.data.Price;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
@@ -64,7 +63,7 @@ extends _CmdBase {
             TextUtils.err(c, Errs.not_player());
             return 0;
         }
-        PlayerData data = Main.database.get(player.getUUID());
+        IPlayerData data = Main.database.get(player.getUUID());
         if (FeatureConfig.enable_economy.get() && cost > 0) {
             if (!data.charge(cost)) {
                 TextUtils.err(player, Errs.not_enough_funds(cost, data.getBal()));

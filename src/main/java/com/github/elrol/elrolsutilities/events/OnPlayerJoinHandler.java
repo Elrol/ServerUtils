@@ -1,23 +1,23 @@
 package com.github.elrol.elrolsutilities.events;
 
-import java.util.UUID;
-
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
-import com.github.elrol.elrolsutilities.data.PlayerData;
 import com.github.elrol.elrolsutilities.data.ServerData;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.ModInfo;
-
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+import java.util.UUID;
 
 public class OnPlayerJoinHandler {
 
@@ -27,20 +27,26 @@ public class OnPlayerJoinHandler {
             if (!(event.getPlayer() instanceof ServerPlayerEntity)) {
                 return;
             }
-            //Main.patreonList.init();
             ServerPlayerEntity player = (ServerPlayerEntity)event.getPlayer();
             UUID uuid = player.getUUID();
-            PlayerData data = Main.database.get(uuid);
-            data.username = player.getName().getString();
+            IPlayerData data = Main.database.get(uuid);
+            data.setUsername(player.getName().getString());
+
+            Main.patreonList.init();
+            data.setPatreon(Main.patreonList.has(uuid));
+            String msg;
             if (player.getUUID().equals(ModInfo.Constants.ownerUUID)) {
-                Main.mcServer.getPlayerList().broadcastToAllExceptTeam(player, new StringTextComponent(ModInfo.getTag() + TextFormatting.GRAY + "Hello Creator " + Methods.getDisplayName(player)));
+                msg = "Hello Creator " + Methods.getDisplayName(player);
+                Main.bot.sendInfoMessage(msg);
+                Main.mcServer.getPlayerList().broadcastMessage(new StringTextComponent(ModInfo.getTag() + TextFormatting.GRAY + msg), ChatType.CHAT, player.getUUID());
             } else {
                 if(FeatureConfig.welcome_msg_enable.get()) {
                     StringTextComponent text = new StringTextComponent(ModInfo.getTag());
                     String[] raw = FeatureConfig.welcome_msg_text.get().split("\\{player}");
-                    String msg = TextUtils.formatString(raw[0]) + (raw.length > 1 ? data.getDisplayName() + TextUtils.formatString(raw[1]) : "");
-                    text.append(new StringTextComponent(msg));
-                    Main.mcServer.getPlayerList().broadcastToAllExceptTeam(player, text);
+                    msg = raw[0] + (raw.length > 1 ? data.getDisplayName() + raw[1] : "");
+                    text.append(new StringTextComponent(TextUtils.formatString(msg)));
+                    Main.bot.sendInfoMessage(msg);
+                    Main.mcServer.getPlayerList().broadcastMessage(text, ChatType.CHAT, player.getUUID());
                 }
             }
             if(ModInfo.getRawTag().equals("&5[&dJNEM&5]")){
@@ -57,24 +63,25 @@ public class OnPlayerJoinHandler {
                     Logger.log("Player: " + player.getName().getString() + " is not the ServerOwner: " + Main.mcServer.getSingleplayerName());
                 }
             }
-            if(!data.firstKit){
+            if(!data.gotFirstKit()){
                 Main.kitMap.values().forEach(kit -> {
                     if(!kit.isDefault()) return;
                     kit.give(player);
                     TextUtils.msg(player, Msgs.received_kit(kit.name));
                 });
-                data.firstKit = true;
+                data.gotFirstKit(true);
             }
-            data.lastOnline = Main.mcServer.getNextTickTime();
+            data.setLastOnline(Main.mcServer.getNextTickTime());
             boolean creative = player.gameMode.isCreative();
-            player.abilities.mayfly = creative || data.enableFly;
-            player.abilities.invulnerable = creative || data.godmode;
-            player.abilities.flying = data.isFlying;
+            player.abilities.mayfly = creative || data.canFly();
+            player.abilities.invulnerable = creative || data.hasGodmode();
+            player.abilities.flying = data.isFlying();
             player.onUpdateAbilities();
             data.update();
             data.checkPerms();
             ServerData serverdata = Main.serverData;
-            player.sendMessage(new StringTextComponent(serverdata.getMotd()), player.getUUID());
+            if(!serverdata.getMotd().isEmpty())
+                player.sendMessage(new StringTextComponent(serverdata.getMotd()), player.getUUID());
         }
     }
 }

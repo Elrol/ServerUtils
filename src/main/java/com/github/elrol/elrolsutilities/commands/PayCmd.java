@@ -1,11 +1,9 @@
 package com.github.elrol.elrolsutilities.commands;
 
 import com.github.elrol.elrolsutilities.Main;
-import com.github.elrol.elrolsutilities.config.CommandConfig;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.data.PlayerData;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
@@ -50,7 +48,7 @@ public class PayCmd extends _CmdBase {
             TextUtils.err(c, Errs.not_player());
             return 0;
         }
-        PlayerData data = Main.database.get(sender.getUUID());
+        IPlayerData data = Main.database.get(sender.getUUID());
         if (FeatureConfig.enable_economy.get() && data.getBal() >= cost + amount) {
             if (!data.charge(cost)) {
                 TextUtils.err(sender, Errs.not_enough_funds(cost, data.getBal()));
@@ -82,8 +80,8 @@ public class PayCmd extends _CmdBase {
 
         @Override
         public void run() {
-            PlayerData senderData = Main.database.get(sender.getUUID());
-            PlayerData targetData = Main.database.get(target.getUUID());
+            IPlayerData senderData = Main.database.get(sender.getUUID());
+            IPlayerData targetData = Main.database.get(target.getUUID());
             if(senderData.charge(amount)) targetData.pay(amount);
             TextUtils.msg(sender, Msgs.paid_player(targetData.getDisplayName(), TextUtils.parseCurrency(amount, true)));
             TextUtils.msg(target, Msgs.paid_by(senderData.getDisplayName(), TextUtils.parseCurrency(amount, true)));

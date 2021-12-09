@@ -1,7 +1,7 @@
 package com.github.elrol.elrolsutilities.commands.econ;
 
 import com.github.elrol.elrolsutilities.Main;
-import com.github.elrol.elrolsutilities.data.PlayerData;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.builder.ArgumentBuilder;
@@ -22,7 +22,7 @@ public class EconBal {
     private static int execute(CommandContext<CommandSource> c) {
         try {
             ServerPlayerEntity player = EntityArgument.getPlayer(c, "target");
-            PlayerData data = Main.database.get(player.getUUID());
+            IPlayerData data = Main.database.get(player.getUUID());
             String cur = TextUtils.parseCurrency(data.getBal(), false);
 
             if(player.getName().equals(c.getSource().getDisplayName())) {

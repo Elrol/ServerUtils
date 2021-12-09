@@ -2,10 +2,9 @@ package com.github.elrol.elrolsutilities.commands;
 
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.IElrolAPI;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.data.PlayerData;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
 import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
@@ -57,14 +56,14 @@ extends _CmdBase {
             sender = source.getPlayerOrException();
         } catch (CommandSyntaxException ignored) {}
 
-        PlayerData senderData = (sender == null ? null : Main.database.get(sender.getUUID()));
+        IPlayerData senderData = (sender == null ? null : Main.database.get(sender.getUUID()));
         if (players.size() > 1 && !IElrolAPI.getInstance().getPermissionHandler().hasPermission(source, "*")) {
             TextUtils.err(c, Errs.cant_select_mulit());
             return 0;
         }
         players.forEach(player -> {
-            PlayerData data = Main.database.get(player.getUUID());
-            if (data.disableMsg) {
+            IPlayerData data = Main.database.get(player.getUUID());
+            if (data.msgDisabled()) {
                 TextUtils.msg(c, Errs.disabled_msg(Methods.getDisplayName(player)));
                 return;
             }

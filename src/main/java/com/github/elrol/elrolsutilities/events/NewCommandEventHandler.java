@@ -1,8 +1,8 @@
 package com.github.elrol.elrolsutilities.events;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
-import com.github.elrol.elrolsutilities.data.PlayerData;
 import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
@@ -28,7 +28,7 @@ public class NewCommandEventHandler {
             source = Main.mcServer.createCommandSourceStack();
         }
         if(player != null) {
-            PlayerData data = Main.database.get(player.getUUID());
+            IPlayerData data = Main.database.get(player.getUUID());
             if(data.isJailed()) {
                 boolean wl = FeatureConfig.jailCommandsWhitelist.get();
                 int flag = -1;

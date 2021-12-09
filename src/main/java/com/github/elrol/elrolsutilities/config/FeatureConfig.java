@@ -14,6 +14,7 @@ public class FeatureConfig {
 
     public static ForgeConfigSpec.BooleanValue color_chat_enable;
     public static ForgeConfigSpec.BooleanValue translation_enable;
+    public static ForgeConfigSpec.BooleanValue discord_bot_enable;
     public static ForgeConfigSpec.ConfigValue<String> color_chat_perm;
     public static ForgeConfigSpec.ConfigValue<String> link_chat_perm;
     public static ForgeConfigSpec.BooleanValue rainbow_code_enable;
@@ -71,10 +72,16 @@ public class FeatureConfig {
             server.comment("{player} will be replaced with the player name.");
             welcome_msg_text = server.define("text", "&hWelcome {player}&h to the server!");
         server.pop();
+
         server.comment("enabling global permissions will attempt to change all commands to use permissions generated dynamically by ServerUtils. If disabled, only the commands from ServerUtils will have the permissions.");
         enable_global_perms = server.define("global perms", true);
+
         server.comment("disabling translations will force all messages to be in english.");
         translation_enable = server.define("translations", true);
+
+        server.comment("enabling this will allow you to run a discord bot that will bridge the server with discord. be sure to edit the discord config.");
+        discord_bot_enable = server.define("discord bot", false);
+
         server.comment("enabling the economy will apply the cost for commands, and other money related features.");
         server.push("Economy");
             enable_economy = server.define("economy", false);
@@ -87,6 +94,7 @@ public class FeatureConfig {
                 chestshop_price = server.defineInRange("price", 0F, 0F, Float.MAX_VALUE);
             server.pop();
         server.pop();
+
         server.push("Auto Clearlag");
             auto_clearlag_enabled = server.define("enabled", false);
             clearlag_frequency = server.defineInRange("frequency", 5, 0, Integer.MAX_VALUE);
@@ -96,6 +104,7 @@ public class FeatureConfig {
                 clearlag_hostile = server.define("hostile", true);
             server.pop();
         server.pop();
+
         server.push("Color Chat");
             color_chat_perm = server.define("perm", "serverutils.colorchat");
             link_chat_perm = server.define("link-perm", "serverutils.linkchat");
@@ -129,6 +138,7 @@ public class FeatureConfig {
                     dec_colors = server.define("December", "afc");
                 server.pop();
             server.pop();
+
             server.push("Staff Chat");
                 server.comment("Formatting for the staff chat. Uses just the formatting codes. Don't include the &");
                 sc_tag = server.define("staff tag", "&3&l[STAFF]&r");
@@ -143,6 +153,7 @@ public class FeatureConfig {
                 sc_jail_format = server.define("jail formatting", "7o");
             server.pop();
         server.pop();
+
         server.comment("Jail Configs");
         server.push("Jails");
             server.comment("A list of commands that can/can't be used while jailed.");

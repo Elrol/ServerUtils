@@ -1,36 +1,24 @@
 package com.github.elrol.elrolsutilities;
 
+import com.github.elrol.elrolsutilities.api.econ.IShopRegistry;
+import com.github.elrol.elrolsutilities.data.*;
+import com.github.elrol.elrolsutilities.discord.DiscordBot;
+import com.github.elrol.elrolsutilities.init.*;
+import com.github.elrol.elrolsutilities.libs.JsonMethod;
+import com.github.elrol.elrolsutilities.libs.Logger;
+import com.github.elrol.elrolsutilities.libs.ModInfo;
+import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.fml.*;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.network.FMLNetworkConstants;
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.logging.log4j.LogManager;
+
 import java.io.File;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ScheduledFuture;
-
-import com.github.elrol.elrolsutilities.api.IElrolAPI;
-import com.github.elrol.elrolsutilities.api.econ.IShopRegistry;
-import com.github.elrol.elrolsutilities.config.Configs;
-import com.github.elrol.elrolsutilities.data.*;
-import com.github.elrol.elrolsutilities.events.*;
-import com.github.elrol.elrolsutilities.init.*;
-import com.github.elrol.elrolsutilities.libs.Methods;
-import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
-import org.apache.logging.log4j.LogManager;
-
-import com.github.elrol.elrolsutilities.config.FeatureConfig;
-import com.github.elrol.elrolsutilities.libs.JsonMethod;
-import com.github.elrol.elrolsutilities.libs.Logger;
-import com.github.elrol.elrolsutilities.libs.ModInfo;
-
-import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModContainer;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.common.Mod;
 
 @Mod(value="serverutilities")
 public class Main {
@@ -47,6 +35,7 @@ public class Main {
     public static IShopRegistry shopRegistry = new ShopRegistry();
     public static PermRegistry permRegistry = new PermRegistry();
     public static BlackLists blackLists = new BlackLists();
+    public static DiscordBot bot = new DiscordBot();
     public static MinecraftServer mcServer;
     public static boolean isCheatMode;
     public static Map<UUID, ScheduledFuture<?>> requests;
@@ -55,76 +44,12 @@ public class Main {
     public static Map<String, Kit> kitMap;
 
     public Main() {
-        IElrolAPI.setInstance(new ElrolApi());
-
-        if (!ModInfo.Constants.configdir.exists()) {
-            ModInfo.Constants.configdir.mkdir();
-        }
-        commandDelays = new HashMap<>();
-        commandCooldowns = new HashMap<>();
-        requests = new HashMap<>();
-        kitMap = new HashMap<>();
-        patreonList = new PatreonList();
-        econData = new EconData();
-        econData.load();
-        shopRegistry.load();
-        permRegistry.load();
-        blackLists.load();
-
-        if(getLogger() == null) System.out.println("Logger was null?");
-
-        getLogger().info("Loading Configs");
-        Configs.reload();
-
-        this.loadKits();
-        MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new ChatEventHandler());
-        MinecraftForge.EVENT_BUS.register(new EntityInteractHandler());
-        MinecraftForge.EVENT_BUS.register(new LivingDropHandler());
-        MinecraftForge.EVENT_BUS.register(new OnPlayerJoinHandler());
-        MinecraftForge.EVENT_BUS.register(new OnPlayerLeaveHandler());
-        MinecraftForge.EVENT_BUS.register(new PlayerDeathHandler());
-        MinecraftForge.EVENT_BUS.register(new NewCommandEventHandler());
-        MinecraftForge.EVENT_BUS.register(new BlockEventHandler());
-        MinecraftForge.EVENT_BUS.register(new ChunkHandler());
+        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
         DistExecutor.safeRunForDist(() -> SideProxy.Client::new, () -> SideProxy.Server::new);
     }
 
-    @SubscribeEvent
-    public void serverStarting(FMLServerStartingEvent event) {
-        database = new PlayerDatabase();
-        mcServer = event.getServer();
-        patreonList.init();
-        //Logger.log("Server IP is as follows: " + mcServer.getServerHostname() + ":" + mcServer.getServerPort());
-        isCheatMode = mcServer.getWorldData().getAllowCommands();
-        dir = Methods.getWorldDir(event.getServer().getWorldData().getLevelName());
 
-        //shopRegistry.registerShopManager(new ChestShopManager.Buy());
-        //shopRegistry.registerShopManager(new ChestShopManager.Sell());
-        //shopRegistry.registerShopManager(new ChestShopManager.AdminBuy());
-        //shopRegistry.registerShopManager(new ChestShopManager.AdminSell());
-
-
-
-        serverData = JsonMethod.load(new File(dir, "/data"), "serverdata.dat", ServerData.class);
-        if (serverData == null) {
-            serverData = new ServerData();
-        }
-        JsonMethod.save(new File(dir, "/data"), "serverdata.dat", serverData);
-        Ranks.init();
-        database.loadAll();
-        permRegistry.save();
-        TimerInit.init();
-    }
-
-
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    public void commandRegister(RegisterCommandsEvent event){
-        getLogger().info("Registering Commands");
-        CommandRegistry.registerCommands(event.getDispatcher());
-    }
-
-    public void loadKits() {
+    public static void loadKits() {
         File[] kitFiles = ModInfo.Constants.kitdir.listFiles((dir, name) -> name.endsWith(".json"));
         if (ModInfo.Constants.kitdir.mkdirs()) {
             Logger.log("Kit directory was missing and has been created.");
@@ -150,6 +75,13 @@ public class Main {
             return (o.get()).getModInfo().getVersion().toString();
         }
         return "NONE";
+    }
+
+    public static void shutdown() {
+        commandDelays.forEach((uuid, delay) -> delay.cancel());
+        commandCooldowns.forEach((uuid, map) -> map.forEach((cmd, cd) -> cd.cancel()));
+        requests.forEach((uuid, sf) -> sf.cancel(true));
+        TimerInit.shutdown();
     }
 
     public static boolean isDev() {

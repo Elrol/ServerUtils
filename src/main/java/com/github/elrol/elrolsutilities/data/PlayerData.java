@@ -1,16 +1,12 @@
 package com.github.elrol.elrolsutilities.data;
 
 import com.github.elrol.elrolsutilities.Main;
-import com.github.elrol.elrolsutilities.api.data.Location;
 import com.github.elrol.elrolsutilities.api.claims.IClaimSetting;
-import com.github.elrol.elrolsutilities.api.data.IKit;
-import com.github.elrol.elrolsutilities.api.data.IPlayerData;
-import com.github.elrol.elrolsutilities.api.data.IRank;
-import com.github.elrol.elrolsutilities.api.data.Location;
+import com.github.elrol.elrolsutilities.api.data.*;
+import com.github.elrol.elrolsutilities.api.enums.ClaimFlagKeys;
 import com.github.elrol.elrolsutilities.config.CommandConfig;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.init.Ranks;
-import com.github.elrol.elrolsutilities.libs.ClaimFlagKeys;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.ModInfo;
@@ -48,7 +44,7 @@ public class PlayerData implements IPlayerData {
     private List<UUID> trusted;
     public List<Location> shops;
     public Location prevLoc;
-    public TpRequest tpRequest;
+    public ITpRequest tpRequest;
     public long lastOnline;
     public long nextRank;
     public int maxHomes;
@@ -94,6 +90,10 @@ public class PlayerData implements IPlayerData {
             ranks.add(Ranks.op_rank.getName());
         }
         this.nickname = "";
+    }
+
+    public UUID getUUID() {
+        return uuid;
     }
 
     public void update() {
@@ -148,7 +148,7 @@ public class PlayerData implements IPlayerData {
         } else if(!isStaff()) {
             Main.serverData.staffList.remove(uuid);
         }
-        //checkPerms();
+        checkPerms();
     }
 
     public int getMinPlayed() {
@@ -179,6 +179,8 @@ public class PlayerData implements IPlayerData {
     public void toggleBypass() {
         bypass = !bypass;
     }
+
+    public boolean canBypass() { return bypass; }
 
     public boolean charge(double cost){
         Main.getLogger().info("Charging " + this.getDisplayName() + " " + TextUtils.parseCurrency(cost, false));
@@ -329,7 +331,7 @@ public class PlayerData implements IPlayerData {
     }
 
     public boolean isTrusted(UUID uuid){
-        if(Main.database.get(uuid).bypass) return true;
+        if(Main.database.get(uuid).canBypass()) return true;
         return trusted.contains(uuid);
     }
 
@@ -468,7 +470,7 @@ public class PlayerData implements IPlayerData {
         save();
     }
 
-    public Boolean getFlag(ClaimFlagKeys key){
+    public boolean getFlag(ClaimFlagKeys key){
         return claimFlags.get(key);
     }
 
@@ -494,8 +496,12 @@ public class PlayerData implements IPlayerData {
         return null;
     }
 
+    public void setLastMsg(UUID uuid) {
+        lastMsg = uuid;
+    }
+
     public Long tillUseKit(IKit kit) {
-        if (this.kitCooldowns.containsKey(kit.name)) {
+        if (kitCooldowns.containsKey(kit.name)) {
             if(kit.cooldown < 1) {
                 return -1L;
             }
@@ -527,8 +533,54 @@ public class PlayerData implements IPlayerData {
         return TextUtils.formatString(this.nickname) + TextFormatting.RESET;
     }
 
-    public void save(){
-        Main.database.save(this);
+    public void addShop(Location loc) {
+        if(shops.contains(loc)) return;
+        shops.add(loc);
     }
+
+    public void removeShop(Location loc) {
+        shops.remove(loc);
+    }
+
+    public void setFly(boolean flag)                            { this.enableFly = flag; }
+    public boolean canFly()                                     { return enableFly; }
+    public void setFlying(boolean flag)                         { this.isFlying = flag; }
+    public boolean isFlying()                                   { return isFlying; }
+    public void setGodmode(boolean flag)                        { this.godmode = flag; }
+    public boolean hasGodmode()                                 { return godmode; }
+    public boolean canRankUp()                                  { return canRankUp; }
+    public void allowRankUp(boolean flag)                       { canRankUp = flag; }
+    public long timeTillNextRank()                              { return nextRank; }
+    public void setTimeTillNextRank(long time)                  { nextRank = time; }
+    public long timeLastOnline()                                { return lastOnline; }
+    public List<Location> getShops()                            { return shops; }
+    public Location getPrevLoc()                                { return prevLoc; }
+    public boolean msgDisabled()                                { return disableMsg; }
+    public int getMaxClaims()                                   { return maxClaims; }
+    public int getMaxHomes()                                    { return maxHomes; }
+    public int getMaxShops()                                    { return maxShops; }
+    public Map<ClaimFlagKeys, Boolean> getClaimFlags()          { return claimFlags; }
+    public Map<String, Location> getHomes()                     { return homes; }
+    public ITpRequest getTpRequest()                            { return tpRequest; }
+    public void setTpRequest(ITpRequest tpRequest)              { this.tpRequest = tpRequest; }
+    public Map<String, Integer> getKitCooldowns()               { return kitCooldowns; }
+    public void setMsgDisabled(boolean flag)                    { this.disableMsg = flag; }
+    public void setNickname(String name)                        { this.nickname = name; }
+    public String getNickname()                                 { return nickname; }
+    public boolean hasBeenWarned()                              { return this.hasBeenRtpWarned; }
+    public void setHasBeenWarned(boolean flag)                  { this.hasBeenRtpWarned = flag; }
+    public void toggleStaffChat()                               { staffChatEnabled = !staffChatEnabled; }
+    public boolean usingStaffChat()                             { return staffChatEnabled;}
+    public LocalDateTime getFirstJoin()                         { return firstJoin; }
+    public void setUsername(String name)                        { username = name; }
+    public String getUsername()                                 { return username; }
+    public boolean isPatreon()                                  { return isPatreon; }
+    public void setPatreon(boolean flag)                        { isPatreon = flag; }
+    public boolean gotFirstKit()                                { return firstKit; }
+    public void gotFirstKit(boolean flag)                       { firstKit = flag; }
+    public void setLastOnline(long time)                        { lastOnline = time; }
+    public void setPrevLoc(Location loc)                        { prevLoc = loc; }
+
+    public void save()                                          { Main.database.save(this); }
 }
 

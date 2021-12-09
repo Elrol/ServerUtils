@@ -1,17 +1,24 @@
 package com.github.elrol.elrolsutilities.data;
 
+import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
+import com.github.elrol.elrolsutilities.api.data.IPlayerDatabase;
+import com.github.elrol.elrolsutilities.libs.JsonMethod;
+import com.github.elrol.elrolsutilities.libs.Logger;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import com.github.elrol.elrolsutilities.Main;
-import com.github.elrol.elrolsutilities.libs.JsonMethod;
-import com.github.elrol.elrolsutilities.libs.Logger;
-
-public class PlayerDatabase {
+public class PlayerDatabase implements IPlayerDatabase {
     Map<UUID, PlayerData> database = new HashMap<>();
 
+    public PlayerDatabase() {
+        loadAll();
+    }
+
+    @Override
     public boolean isPresent(UUID uuid) {
         return this.database.containsKey(uuid);
     }
@@ -20,7 +27,8 @@ public class PlayerDatabase {
         return this.database;
     }
 
-    public PlayerData get(UUID uuid) {
+    @Override
+    public IPlayerData get(UUID uuid) {
         if(uuid == null) return null;
         if (database.containsKey(uuid)) {
             Logger.debug("Data found. Loading.");
@@ -73,12 +81,14 @@ public class PlayerDatabase {
         }
     }
 
+    @Override
     public void save(UUID uuid) {
         JsonMethod.save(new File(Main.dir, "/playerdata"), "/" + uuid + ".pdat", this.get(uuid));
     }
 
-    public void save(PlayerData data){
-        JsonMethod.save(new File(Main.dir, "/playerdata"), "/" + data.uuid + ".pdat", data);
+    @Override
+    public void save(IPlayerData data){
+        JsonMethod.save(new File(Main.dir, "/playerdata"), "/" + data.getUUID() + ".pdat", data);
     }
 
     public PlayerData load(UUID uuid) {

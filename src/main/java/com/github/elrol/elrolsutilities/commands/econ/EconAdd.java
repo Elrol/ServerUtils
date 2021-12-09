@@ -1,7 +1,7 @@
 package com.github.elrol.elrolsutilities.commands.econ;
 
 import com.github.elrol.elrolsutilities.Main;
-import com.github.elrol.elrolsutilities.data.PlayerData;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -25,7 +25,7 @@ public class EconAdd {
         try {
             ServerPlayerEntity player = EntityArgument.getPlayer(c, "target");
             int amount = IntegerArgumentType.getInteger(c,"amount");
-            PlayerData data = Main.database.get(player.getUUID());
+            IPlayerData data = Main.database.get(player.getUUID());
             data.pay(amount);
             String cur = TextUtils.parseCurrency(amount, false);
 

@@ -1,28 +1,26 @@
 package com.github.elrol.elrolsutilities.init;
 
-import java.io.File;
-
+import com.github.elrol.elrolsutilities.ElrolApi;
 import com.github.elrol.elrolsutilities.Main;
-import com.github.elrol.elrolsutilities.data.PlayerData;
-import com.github.elrol.elrolsutilities.libs.JsonMethod;
-import com.github.elrol.elrolsutilities.libs.Logger;
-
-import net.minecraft.entity.player.ServerPlayerEntity;
+import com.github.elrol.elrolsutilities.api.IElrolAPI;
+import com.github.elrol.elrolsutilities.config.Configs;
+import com.github.elrol.elrolsutilities.data.EconData;
+import com.github.elrol.elrolsutilities.data.PatreonList;
+import com.github.elrol.elrolsutilities.events.*;
+import com.github.elrol.elrolsutilities.libs.ModInfo;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
-import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
+import java.util.HashMap;
 
 public class SideProxy {
     SideProxy() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(SideProxy::commonSetupEvent);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(SideProxy::enqueueIMC);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(SideProxy::proccessIMC);
-        MinecraftForge.EVENT_BUS.addListener(SideProxy::serverStopping);
     }
 
     private static void commonSetupEvent(FMLCommonSetupEvent event) {
@@ -34,49 +32,44 @@ public class SideProxy {
     private static void proccessIMC(InterModProcessEvent event) {
     }
 
-    private static void serverStopping(FMLServerStoppingEvent event) {
-        Logger.debug("Server Stopping. Saving data");
-        Main.database.saveAll();
-        for(ServerPlayerEntity player : Main.mcServer.getPlayerList().getPlayers()){
-            PlayerData data = Main.database.get(player.getUUID());
-            data.enableFly = player.abilities.mayfly;
-            data.isFlying = player.abilities.flying;
-            data.godmode = player.abilities.invulnerable;
-            if(!data.canRankUp && data.nextRank != 0){
-                long t = Main.mcServer.getNextTickTime() - data.lastOnline;
-                if(data.nextRank - t > 0){
-                    data.nextRank -= t;
-                } else {
-                    data.nextRank = 0;
-                    data.canRankUp = true;
-                }
-            }
-            Main.database.save(player.getUUID());
-        }
-        JsonMethod.save(new File(Main.dir, "/data"), "serverdata.dat", Main.serverData);
-        Main.shopRegistry.save();
-    }
-
-    public static class Server
-    extends SideProxy {
+    public static class Server extends SideProxy {
         public Server() {
-            Logger.debug("Loading Server Proxy");
-            FMLJavaModLoadingContext.get().getModEventBus().addListener(Server::serverSetup);
-        }
+            IElrolAPI.setInstance(new ElrolApi());
 
-        private static void serverSetup(FMLDedicatedServerSetupEvent event) {
+            if (!ModInfo.Constants.configdir.exists()) {
+                ModInfo.Constants.configdir.mkdir();
+            }
+            Main.commandDelays = new HashMap<>();
+            Main.commandCooldowns = new HashMap<>();
+            Main.requests = new HashMap<>();
+            Main.kitMap = new HashMap<>();
+            Main.patreonList = new PatreonList();
+            Main.econData = new EconData();
+
+            Main.econData.load();
+            Main.permRegistry.load();
+            Main.blackLists.load();
+
+            Main.getLogger().info("Loading Configs");
+            Configs.reload();
+
+            Main.loadKits();
+
+            MinecraftForge.EVENT_BUS.register(new ChatEventHandler());
+            MinecraftForge.EVENT_BUS.register(new EntityEventHandler());
+            MinecraftForge.EVENT_BUS.register(new LivingDropHandler());
+            MinecraftForge.EVENT_BUS.register(new OnPlayerJoinHandler());
+            MinecraftForge.EVENT_BUS.register(new OnPlayerLeaveHandler());
+            MinecraftForge.EVENT_BUS.register(new PlayerDeathHandler());
+            MinecraftForge.EVENT_BUS.register(new NewCommandEventHandler());
+            MinecraftForge.EVENT_BUS.register(new BlockEventHandler());
+            MinecraftForge.EVENT_BUS.register(new ChunkHandler());
+            MinecraftForge.EVENT_BUS.register(new ServerLifecycleHandler());
         }
     }
 
-    public static class Client
-    extends SideProxy {
-        public Client() {
-            Logger.debug("Loading Client Proxy");
-            FMLJavaModLoadingContext.get().getModEventBus().addListener(Client::clientSetup);
-        }
-
-        private static void clientSetup(FMLClientSetupEvent event) {
-        }
+    public static class Client extends SideProxy {
+        public Client() {}
     }
 
 }

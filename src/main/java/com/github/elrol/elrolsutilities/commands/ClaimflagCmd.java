@@ -1,11 +1,10 @@
 package com.github.elrol.elrolsutilities.commands;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
+import com.github.elrol.elrolsutilities.api.enums.ClaimFlagKeys;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.data.PlayerData;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
-import com.github.elrol.elrolsutilities.libs.ClaimFlagKeys;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
@@ -55,7 +54,7 @@ public class ClaimflagCmd extends _CmdBase {
         String s = StringArgumentType.getString(c, "flag");
         if(ClaimFlagKeys.contains(s)){
             boolean bool = BoolArgumentType.getBool(c, "value");
-            PlayerData data = Main.database.get(player.getUUID());
+            IPlayerData data = Main.database.get(player.getUUID());
             if(FeatureConfig.enable_economy.get() && this.cost > 0){
                 if(!data.charge(this.cost)){
                     TextUtils.err(player, Errs.not_enough_funds(this.cost, data.getBal()));
@@ -80,8 +79,8 @@ public class ClaimflagCmd extends _CmdBase {
         }
         String s = StringArgumentType.getString(c, "flag");
         if(ClaimFlagKeys.contains(s)){
-            PlayerData data = Main.database.get(player.getUUID());
-            boolean flag = data.claimFlags.get(ClaimFlagKeys.valueOf(s));
+            IPlayerData data = Main.database.get(player.getUUID());
+            boolean flag = data.getClaimFlags().get(ClaimFlagKeys.valueOf(s));
             TextUtils.msg(player, Msgs.claim_flag_check(s, flag));
             return 1;
         } else {
@@ -118,7 +117,7 @@ public class ClaimflagCmd extends _CmdBase {
 
         @Override
         public void run() {
-            PlayerData data = Main.database.get(player.getUUID());
+            IPlayerData data = Main.database.get(player.getUUID());
             data.setFlag(flag, value);
             TextUtils.msg(player, Msgs.set_claim_flag(flag.name(), value));
         }

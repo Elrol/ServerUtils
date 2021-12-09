@@ -1,6 +1,5 @@
 package com.github.elrol.elrolsutilities.commands.rank;
 
-import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.commands.ModSuggestions;
 import com.github.elrol.elrolsutilities.data.Rank;
 import com.github.elrol.elrolsutilities.init.Ranks;
@@ -10,7 +9,6 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
-
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 
@@ -36,7 +34,7 @@ public class RankPermissionAdd {
         }
         if (rank.addPerm(perm)) {
             TextUtils.msg(c, Msgs.rank_perm_added(perm, rank.getName()));
-            Main.serverData.updateAllPlayersWithRank(rank.getName());
+            //Main.serverData.updateAllPlayersWithRank(rank.getName());
             return 1;
         }
         TextUtils.err(c, Errs.rank_perm_exists(rank.getName(), perm));

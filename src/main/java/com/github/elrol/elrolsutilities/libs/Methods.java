@@ -1,21 +1,18 @@
 package com.github.elrol.elrolsutilities.libs;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.api.data.Location;
 import com.github.elrol.elrolsutilities.config.Configs;
 import com.github.elrol.elrolsutilities.data.CommandCooldown;
-import com.github.elrol.elrolsutilities.api.data.Location;
 import com.github.elrol.elrolsutilities.data.PlayerData;
 import com.github.elrol.elrolsutilities.events.ChunkHandler;
-import com.github.elrol.elrolsutilities.init.BlackLists;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
 import com.github.elrol.elrolsutilities.init.Ranks;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
@@ -29,7 +26,6 @@ import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SPlayerPositionLookPacket;
 import net.minecraft.util.ClassInheritanceMultiMap;
@@ -38,15 +34,12 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.server.TicketType;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.items.IItemHandler;
-import org.jline.utils.Log;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -70,26 +63,68 @@ public class Methods {
         return 72000L * (long)min;
     }
 
-    public static ItemStack addItemToChest(IItemHandler chest, ItemStack stack) {
+    public static String posToString(BlockPos pos) {
+        return "" + pos.getX() + ", " + pos.getY() + ", " + pos.getZ();
+    }
+
+    public static BlockPos stringToPos(String string) {
+        String[] split = string.split(", ");
+        try {
+            return new BlockPos(
+                    Integer.parseInt(split[0]),
+                    Integer.parseInt(split[1]),
+                    Integer.parseInt(split[2])
+            );
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void takeFromChest(IItemHandler chest, List<ItemStack> items) {
+        for(ItemStack item : items) {
+            int qty = item.getCount();
+            for(int i = 0; i < chest.getSlots(); i++) {
+                ItemStack stack = chest.extractItem(i, qty, true);
+                if(stack.sameItem(item)) {
+                    if(stack.getCount() >= qty) {
+                        chest.extractItem(i, qty, false);
+                        qty = 0;
+                    } else {
+                        qty -= stack.getCount();
+                        chest.extractItem(i, stack.getCount(), false);
+                    }
+                    if(qty == 0) break;
+                }
+            }
+        }
+    }
+
+    public static boolean canAllItemsFit(IItemHandler chest, List<ItemStack> items) {
+        List<ItemStack> leftovers = addItemsToChest(chest, items, true);
+        for(ItemStack stack : leftovers) {
+            if(!stack.isEmpty()) return false;
+        }
+        return true;
+    }
+
+    public static List<ItemStack> addItemsToChest(IItemHandler chest, List<ItemStack> items, boolean test) {
+        ArrayList<ItemStack> extraItems = new ArrayList<>();
+        for (ItemStack item : items) {
+            ItemStack leftOver = item.copy();
+            for(int s = 0; s < chest.getSlots(); s++) {
+                leftOver = chest.insertItem(s, leftOver, test);
+                if(leftOver.isEmpty()) break;
+            }
+            if(!leftOver.isEmpty()) extraItems.add(leftOver);
+        }
+        return extraItems;
+    }
+
+    public static ItemStack addItemToChest(IItemHandler chest, ItemStack stack, boolean test) {
         int qty = stack.getCount();
         for(int i = 0; i < chest.getSlots(); i++) {
-            ItemStack slot = chest.getStackInSlot(i);
-            if(slot.sameItem(stack) && slot.getCount() < slot.getMaxStackSize()) {
-                int dif = slot.getMaxStackSize() - slot.getCount();
-                if(qty > dif) {
-                    qty -= dif;
-                    slot.setCount(slot.getMaxStackSize());
-                } else {
-                    dif -= qty;
-                    qty = 0;
-                    slot.setCount(slot.getMaxStackSize() - dif);
-                    break;
-                }
-            } else if(slot.isEmpty()) {
-                stack.setCount(qty);
-                qty = 0;
-                chest.insertItem(i, stack, false);
-            }
+            chest.insertItem(i, stack, test);
         }
         if(qty == 0) return ItemStack.EMPTY;
         stack.setCount(stack.getCount() - qty);
@@ -125,8 +160,8 @@ public class Methods {
 
     public static void teleport(ServerPlayerEntity player, Location loc, boolean track) {
         if(track) {
-            PlayerData data = Main.database.get(player.getUUID());
-            data.prevLoc = Methods.getPlayerLocation(player);
+            IPlayerData data = Main.database.get(player.getUUID());
+            data.setPrevLoc(Methods.getPlayerLocation(player));
             data.save();
         }
         ServerWorld world = Main.mcServer.getLevel(loc.getWorld());
@@ -276,11 +311,11 @@ public class Methods {
     }
 
     public static String getDisplayName(UUID uuid){
-        PlayerData data = Main.database.get(uuid);
+        IPlayerData data = Main.database.get(uuid);
         GameProfile cache = Main.mcServer.getProfileCache().get(uuid);
-        if(data.nickname == null || data.nickname.isEmpty())
+        if(data.getNickname() == null || data.getNickname().isEmpty())
             return cache == null ? "[Null Player]" : cache.getName();
-        return TextUtils.formatString(data.nickname) + TextFormatting.RESET;
+        return TextUtils.formatString(data.getNickname()) + TextFormatting.RESET;
     }
 
     public static String getDisplayName(PlayerEntity player) {
@@ -291,8 +326,8 @@ public class Methods {
         String name;
         try {
             ServerPlayerEntity player = source.getPlayerOrException();
-            PlayerData data = Main.database.get(player.getUUID());
-            name = data.nickname == null || data.nickname.isEmpty() ? player.getName().getString() : TextUtils.formatString(data.nickname) + TextFormatting.RESET;
+            IPlayerData data = Main.database.get(player.getUUID());
+            name = data.getNickname() == null || data.getNickname().isEmpty() ? player.getName().getString() : TextUtils.formatString(data.getNickname()) + TextFormatting.RESET;
         } catch (CommandSyntaxException e) {
             name = TextFormatting.GOLD + "<" + TextFormatting.YELLOW + "Server" + TextFormatting.GOLD + ">" + TextFormatting.RESET;
         }
@@ -331,6 +366,8 @@ public class Methods {
         Main.database.loadAll();
         Main.serverData.updateAllPlayers();
         Configs.reload();
+
+        Main.bot.init();
     }
 
     public static void clearlag(boolean hostile, boolean passive, boolean items){

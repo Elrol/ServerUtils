@@ -1,11 +1,10 @@
 package com.github.elrol.elrolsutilities.commands;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.ClaimBlock;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.data.PlayerData;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
@@ -45,10 +44,10 @@ public class UnclaimCmd extends _CmdBase {
             return 0;
         }
         ClaimBlock claim = new ClaimBlock(player);
-        PlayerData data = Main.database.get(player.getUUID());
+        IPlayerData data = Main.database.get(player.getUUID());
         if (Main.serverData.isClaimed(claim)) {
             UUID uuid = Main.serverData.getOwner(claim);
-            if(uuid.equals(player.getUUID()) || data.bypass){
+            if(uuid.equals(player.getUUID()) || data.canBypass()){
                 if (FeatureConfig.enable_economy.get() && this.cost > 0) {
                     if (!data.charge(this.cost)) {
                         TextUtils.err(player, Errs.not_enough_funds(this.cost, data.getBal()));
@@ -58,7 +57,7 @@ public class UnclaimCmd extends _CmdBase {
                 CommandDelay.init(this, player, new CommandRunnable(player), false);
                 return 1;
             } else {
-                PlayerData d = Main.database.get(uuid);
+                IPlayerData d = Main.database.get(uuid);
                 TextUtils.err(player, Errs.chunk_not_yours(d.getDisplayName()));
                 return 0;
             }

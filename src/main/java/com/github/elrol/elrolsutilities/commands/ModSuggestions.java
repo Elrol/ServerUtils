@@ -1,28 +1,26 @@
 package com.github.elrol.elrolsutilities.commands;
 
+import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
+import com.github.elrol.elrolsutilities.api.enums.ClaimFlagKeys;
+import com.github.elrol.elrolsutilities.data.PlayerData;
+import com.github.elrol.elrolsutilities.init.Ranks;
+import com.github.elrol.elrolsutilities.libs.Logger;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.suggestion.Suggestions;
+import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import net.minecraft.command.CommandSource;
+import net.minecraft.command.ISuggestionProvider;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-import com.github.elrol.elrolsutilities.Main;
-import com.github.elrol.elrolsutilities.api.IElrolAPI;
-import com.github.elrol.elrolsutilities.data.PlayerData;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
-import com.github.elrol.elrolsutilities.init.Ranks;
-import com.github.elrol.elrolsutilities.libs.ClaimFlagKeys;
-import com.github.elrol.elrolsutilities.libs.Permissions;
-import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.brigadier.suggestion.Suggestions;
-import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.ISuggestionProvider;
-
 public class ModSuggestions {
     public static CompletableFuture<Suggestions> suggestHomes(CommandContext<CommandSource> context, SuggestionsBuilder builder) {
-        PlayerData data;
+        IPlayerData data;
         try {
             data = Main.database.get((context.getSource()).getPlayerOrException().getUUID());
         }
@@ -35,6 +33,16 @@ public class ModSuggestions {
 
     public static CompletableFuture<Suggestions> suggestPerms(CommandContext<CommandSource> context, SuggestionsBuilder builder) {
         return ISuggestionProvider.suggest(Main.permRegistry.getPerms(), builder);
+    }
+
+    public static CompletableFuture<Suggestions> suggestCurrentRanks(CommandContext<CommandSource> context, SuggestionsBuilder builder) {
+        try {
+            List<String> ranks = Main.database.get(context.getSource().getPlayerOrException().getUUID()).getRanks();
+            Logger.log(ranks.toString());
+            return ISuggestionProvider.suggest(ranks, builder);
+        } catch (CommandSyntaxException e) {
+            return suggestRanks(context, builder);
+        }
     }
 
     public static CompletableFuture<Suggestions> suggestRanks(CommandContext<CommandSource> context, SuggestionsBuilder builder) {

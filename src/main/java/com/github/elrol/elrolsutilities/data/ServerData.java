@@ -1,15 +1,7 @@
 package com.github.elrol.elrolsutilities.data;
 
-import java.io.File;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.api.data.Location;
 import com.github.elrol.elrolsutilities.libs.JsonMethod;
 import com.github.elrol.elrolsutilities.libs.Logger;
@@ -17,10 +9,13 @@ import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
-
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PlayerList;
+
+import java.io.File;
+import java.io.Serializable;
+import java.util.*;
 
 public class ServerData implements Serializable {
     private static final long serialVersionUID = -1071261237194140580L;
@@ -118,7 +113,7 @@ public class ServerData implements Serializable {
             Main.getLogger().error("Jail cell doesn't exist: " + name);
             return;
         }
-        PlayerData data = Main.database.get(player.getUUID());
+        IPlayerData data = Main.database.get(player.getUUID());
         data.jail(name, cell, min);
         Methods.teleport(player, jail.cells.get(cell));
         save();
@@ -178,7 +173,7 @@ public class ServerData implements Serializable {
     public void updateAllPlayers() {
         List<ServerPlayerEntity> list = Main.mcServer.getPlayerList().getPlayers();
         for (ServerPlayerEntity player : list) {
-            PlayerData data = Main.database.get(player.getUUID());
+            IPlayerData data = Main.database.get(player.getUUID());
             data.update();
         }
     }
@@ -188,7 +183,7 @@ public class ServerData implements Serializable {
         PlayerList playerList = server.getPlayerList();
         List<ServerPlayerEntity> list = playerList.getPlayers();
         for (ServerPlayerEntity player : list) {
-            PlayerData data = Main.database.get(player.getUUID());
+            IPlayerData data = Main.database.get(player.getUUID());
             if (!data.getRanks().contains(rank)) continue;
             data.update();
         }

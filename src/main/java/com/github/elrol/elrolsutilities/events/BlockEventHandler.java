@@ -1,30 +1,34 @@
 package com.github.elrol.elrolsutilities.events;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.IElrolAPI;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.api.data.Location;
-import com.github.elrol.elrolsutilities.api.econ.IShop;
-import com.github.elrol.elrolsutilities.api.econ.IShopManager;
+import com.github.elrol.elrolsutilities.api.econ.AbstractShop;
+import com.github.elrol.elrolsutilities.api.econ.IShopRegistry;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
-import com.github.elrol.elrolsutilities.data.*;
-import com.github.elrol.elrolsutilities.libs.ClaimFlagKeys;
-import com.github.elrol.elrolsutilities.libs.Methods;
+import com.github.elrol.elrolsutilities.data.ClaimBlock;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
-import net.minecraft.block.*;
-import net.minecraft.entity.Entity;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.WallSignBlock;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.tileentity.SignTileEntity;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
@@ -32,12 +36,11 @@ import net.minecraftforge.event.world.PistonEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class BlockEventHandler {
-    private final List<UUID> tempList = new ArrayList<>();
+
+    protected Map<UUID, Location> locationStorage = new HashMap<>();
 
     @SubscribeEvent
     public void blockBreak(BlockEvent.BreakEvent event) {
@@ -45,7 +48,7 @@ public class BlockEventHandler {
         ServerPlayerEntity player = (ServerPlayerEntity)event.getPlayer();
         if(player.level.isClientSide) return;
         ClaimBlock claim = new ClaimBlock(player);
-        PlayerData data = Main.database.get(player.getUUID());
+        IPlayerData data = Main.database.get(player.getUUID());
         if(Main.serverData.isClaimed(claim)) {
             UUID uuid = Main.serverData.getOwner(claim);
             if (!(player.getUUID().equals(uuid) || !data.isTrusted(player.getUUID()))) {
@@ -63,16 +66,16 @@ public class BlockEventHandler {
                 return;
             }
 
-            IShop shop = Main.shopRegistry.getShop(loc);
+            AbstractShop shop = Main.shopRegistry.getShop(loc);
             if(!shop.isAdmin())
-                data.shops.remove(loc);
+                data.getShops().remove(loc);
             Main.shopRegistry.removeShop(loc);
-            TextUtils.msg(player, Msgs.removed_shop());
+            TextUtils.msg(player, Msgs.removed_shop(shop.tag()));
         } else {
             for (Direction dir : Direction.Plane.HORIZONTAL) {
                 BlockPos otherPos = loc.getBlockPos().relative(dir);
                 if(loc.getWorld() == null) continue;
-                if(data.shops == null) continue;
+                if(data.getShops() == null) continue;
                 if (Main.shopRegistry.exists(new Location(loc.getWorld(), otherPos, 0f, 0f))) {
                     ServerWorld world = Main.mcServer.getLevel(loc.getWorld());
                     if(world == null) break;
@@ -98,7 +101,7 @@ public class BlockEventHandler {
             UUID uuid = Main.serverData.getOwner(claim);
             if(event.getEntityLiving() instanceof ServerPlayerEntity) {
                 ServerPlayerEntity player = (ServerPlayerEntity)event.getEntityLiving();
-                PlayerData data = Main.database.get(uuid);
+                IPlayerData data = Main.database.get(uuid);
                 if (player.getUUID().equals(uuid) || data.isTrusted(player.getUUID())) return;
                 TextUtils.err(player, Errs.chunk_claimed(data.getDisplayName()));
             }
@@ -109,15 +112,20 @@ public class BlockEventHandler {
     @SubscribeEvent
     public void blockPlace(BlockEvent.EntityPlaceEvent event){
         if(!(event.getEntity() instanceof ServerPlayerEntity)) return;
+
         ServerPlayerEntity player = (ServerPlayerEntity)event.getEntity();
+
         if(player.level.isClientSide) return;
+
         ResourceLocation dim = event.getEntity().level.dimension().location();
         ClaimBlock claim = new ClaimBlock(dim, event.getPos());
+
         if(Main.serverData.isClaimed(claim) && !Main.serverData.getOwner(claim).equals(event.getEntity().getUUID())) {
             UUID uuid = Main.serverData.getOwner(claim);
             if (player.getUUID().equals(uuid) || Main.database.get(uuid).isTrusted(player.getUUID())) return;
             TextUtils.err(player, Errs.chunk_claimed(Main.database.get(uuid).getDisplayName()));
             event.setCanceled(true);
+            return;
         }
     }
 
@@ -143,73 +151,62 @@ public class BlockEventHandler {
         World world = event.getWorld();
         if(world.isClientSide) return;
         if(!(event.getPlayer() instanceof ServerPlayerEntity)) return;
-        ServerPlayerEntity player = (ServerPlayerEntity)event.getPlayer();
-        PlayerData pdata = Main.database.get(player.getUUID());
-        if(pdata.isJailed()) {
-            TextUtils.err(player.createCommandSourceStack(), Errs.jailed((int)pdata.getJailTime()));
-            event.setCanceled(true);
-        }
-        ResourceLocation dim = world.dimension().getRegistryName();
-        ClaimBlock claim = new ClaimBlock(dim, event.getPos());
-        if(Main.serverData.isClaimed(claim) && !Main.serverData.getOwner(claim).equals(player.getUUID())){
-            UUID owner = Main.serverData.getOwner(claim);
-            PlayerData data = Main.database.get(owner);
-            if(!data.getFlag(ClaimFlagKeys.allow_switch) || !data.isTrusted(player.getUUID())) {
-                event.setCanceled(true);
-                TextUtils.err(player, Errs.chunk_claimed(data.getDisplayName()));
-            }
-        }
-    }
 
-    @SubscribeEvent
-    public void enterChunkEvent(PlayerEvent.EnteringChunk event){
-        if(!(event.getEntity() instanceof ServerPlayerEntity)) return;
-        if(tempList.contains(event.getEntity().getUUID())){
-            tempList.remove(event.getEntity().getUUID());
+        ServerPlayerEntity player = (ServerPlayerEntity)event.getPlayer();
+        IPlayerData pdata = Main.database.get(player.getUUID());
+        ItemStack hand = player.getMainHandItem();
+        IShopRegistry reg = IElrolAPI.getInstance().getShopInit();
+        TileEntity te = world.getBlockEntity(event.getPos());
+        Location loc = new Location(world, event.getPos(), 0f, 0f);
+
+        boolean hasPerm = IElrolAPI.getInstance().getPermissionHandler().hasChunkPermission(player, event.getPos());
+
+        if(!hasPerm) {
+            event.setCanceled(true);
             return;
         }
-        ResourceLocation dim = event.getEntity().level.dimension().location();
-        ClaimBlock oldPos = new ClaimBlock(dim, new ChunkPos(event.getOldChunkX(), event.getOldChunkZ()));
-        ClaimBlock newPos = new ClaimBlock(dim, new ChunkPos(event.getNewChunkX(), event.getNewChunkZ()));
-        UUID oldOwner = Main.serverData.getOwner(oldPos);
-        UUID newOwner = Main.serverData.getOwner(newPos);
-        ServerPlayerEntity player = (ServerPlayerEntity) event.getEntity();
-        if(newOwner != null) {
-            PlayerData newData = Main.database.get(newOwner);
-            if(!newData.getFlag(ClaimFlagKeys.allow_entry) && !newOwner.equals(player.getUUID()) && !newData.isTrusted(player.getUUID())){
-                tempList.add(player.getUUID());
-                TextUtils.err(player, Errs.no_entry(Methods.getDisplayName(newOwner)));
-                double x = player.blockPosition().getX() + (2 * (event.getOldChunkX() - event.getNewChunkX()));
-                double z = player.blockPosition().getZ() + (2 * (event.getOldChunkZ() - event.getNewChunkZ()));
-                BlockPos prevLoc = new BlockPos(x, player.blockPosition().getY(), z);
-                Methods.teleport(player, new Location(dim, prevLoc, player.yRot, player.xRot));
 
-                return;
-            }
-            if (oldOwner != null) {
-                if (!newOwner.equals(oldOwner)) {
-                    if(newOwner.equals(player.getUUID())) {
-                        TextUtils.msg(player, Msgs.enter_exit_claim(Methods.getDisplayName(oldOwner) + "'s", "your own"));
-                    } else if(oldOwner.equals(player.getUUID())){
-                        TextUtils.msg(player, Msgs.enter_exit_claim("your own", Methods.getDisplayName(newOwner) + "'s"));
+        if(hand.getItem().equals(Items.REDSTONE)) {
+            Location signLoc = locationStorage.get(player.getUUID());
+            if(signLoc != null) {
+                AbstractShop shop = reg.getShop(signLoc);
+                if(shop == null) {
+                    locationStorage.remove(player.getUUID());
+                    event.setCancellationResult(ActionResultType.FAIL);
+                    event.setCanceled(true);
+                    return;
+                }
+
+                if(shop.link(player, signLoc, loc)) TextUtils.msg(player, Msgs.sign_linked(shop.tag()));
+
+                locationStorage.remove(player.getUUID());
+            } else {
+                if(te instanceof SignTileEntity) {
+                    SignTileEntity sign = (SignTileEntity) te;
+                    AbstractShop shop;
+                    if(reg.exists(loc)) {
+                        shop = reg.getShop(loc);
+                        TextUtils.msg(player, Msgs.selected_sign(shop.tag()));
+                        locationStorage.put(player.getUUID(), loc);
                     } else {
-                        TextUtils.msg(player, Msgs.enter_exit_claim(Methods.getDisplayName(oldOwner) + "'s", Methods.getDisplayName(newOwner) + "'s"));
+                        shop = reg.parseSign(sign);
+                        if(shop != null) {
+                            TextUtils.msg(player, Msgs.selected_sign(shop.tag()));
+                            locationStorage.put(player.getUUID(), loc);
+
+                        }
                     }
                 }
-            } else {
-                if(newOwner.equals(player.getUUID()))
-                    TextUtils.msg(player, Msgs.enter_claim("your own"));
-                else
-                    TextUtils.msg(player, Msgs.enter_claim(Methods.getDisplayName(newOwner)));
             }
-        } else {
-            if (oldOwner != null) {
-                if(oldOwner.equals(player.getUUID()))
-                    TextUtils.msg(player, Msgs.exit_claim("your own"));
-                else
-                    TextUtils.msg(player, Msgs.exit_claim(Methods.getDisplayName(oldOwner)));
+        } else if(te instanceof SignTileEntity) {
+            if(reg.exists(loc)) {
+                AbstractShop shop = reg.getShop(loc);
+                if(shop.isLinked()) {
+                    event.setCanceled(shop.useShop(player, loc));
+                }
             }
         }
+
     }
 
     @SubscribeEvent
@@ -224,10 +221,8 @@ public class BlockEventHandler {
         UUID chunkOwner = Main.serverData.getOwner(chunkPos);
         UUID targetOwner = Main.serverData.getOwner(targetChunkPos);
         if(targetOwner != null) {
-            //Main.getLogger().info("Target Owner: " + targetOwner);
-            PlayerData newData = Main.database.get(targetOwner);
+            IPlayerData newData = Main.database.get(targetOwner);
             if (chunkOwner != null) {
-                //Main.getLogger().info("Chunk Owner: " + chunkOwner);
                 if (targetOwner.equals(chunkOwner) || newData.isTrusted(chunkOwner)) {
                     return;
                 }
@@ -237,31 +232,17 @@ public class BlockEventHandler {
     }
 
     @SubscribeEvent
-    public void entityAttack(AttackEntityEvent event) {
-        Entity entitySource = event.getEntity();
-        if (!(entitySource instanceof ServerPlayerEntity)) return;
-        ServerPlayerEntity player = (ServerPlayerEntity) entitySource;
-        ResourceLocation dim = player.level.dimension().location();
-        ClaimBlock chunkPos = new ClaimBlock(dim, new ChunkPos(event.getTarget().blockPosition()));
-        if(Main.serverData == null) return;
-        UUID chunkOwner = Main.serverData.getOwner(chunkPos);
-        if (chunkOwner != null) {
-            Main.getLogger().info("Chunk Owner: " + chunkOwner);
-            PlayerData newData = Main.database.get(chunkOwner);
-            if(!(chunkOwner.equals(player.getUUID()) || newData.isTrusted(player.getUUID())))
-                event.setCanceled(true);
-        }
-    }
-
-    @SubscribeEvent
     public void entityDamage(LivingDamageEvent event) {
         if(event.getEntityLiving() instanceof ServerPlayerEntity) {
             ServerPlayerEntity player = (ServerPlayerEntity)event.getEntityLiving();
-            PlayerData data = Main.database.get(player.getUUID());
+            IPlayerData data = Main.database.get(player.getUUID());
             if(data.isJailed()) {
                 if(FeatureConfig.jailProtection.get() == 1) event.setAmount(0.0f);
                 else if(FeatureConfig.jailProtection.get() == 2) event.setCanceled(true);
             }
         }
+    }
+
+    public void updateSignBlock(EntityEvent.CanUpdate event) {
     }
 }

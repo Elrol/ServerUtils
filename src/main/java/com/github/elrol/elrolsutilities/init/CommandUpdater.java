@@ -21,8 +21,6 @@ public class CommandUpdater {
 
         Collection<CommandNode<CommandSource>> commands = dispatcher.getRoot().getChildren();
         for(CommandNode<CommandSource> command : commands) {
-            CommandNode<CommandSource> redirect = command.getRedirect();
-            if(redirect != null) Logger.err(redirect.getName());
             Logger.log("Updating Command: " + command.getName());
             if(command.getName().equalsIgnoreCase("spark")) continue;
             checkCommand(command, "");
@@ -32,6 +30,7 @@ public class CommandUpdater {
     private static void setPermission(CommandNode<CommandSource> command, String node, String perm){
         try {
             requirementField.set(command, (Predicate<CommandSource>) source -> checkPermission(source, node, perm));
+
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -39,17 +38,23 @@ public class CommandUpdater {
 
     private static void checkCommand(CommandNode<CommandSource> command, String node) {
         String perm = "";
-        node += command.getName();
-        // Logger.log(node);
+
+        CommandNode<CommandSource> redirect = command.getRedirect();
+        if(redirect != null) {
+            node += redirect.getName();
+        } else {
+            node += command.getName();
+        }
+
         if (Main.permRegistry.commandPerms.containsKey(node)){
             perm = Main.permRegistry.commandPerms.get(node);
         } else {
-            perm = "command." + node;
+            perm = "command." + node.replace("_", ".");
             Main.permRegistry.add(node, perm);
         }
         setPermission(command, node, perm);
 
-        String finalNode = node + ".";
+        String finalNode = node + "_";
         command.getChildren().forEach(c -> checkCommand(c, finalNode));
     }
 

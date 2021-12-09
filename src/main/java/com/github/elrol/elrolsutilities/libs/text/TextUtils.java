@@ -2,8 +2,8 @@ package com.github.elrol.elrolsutilities.libs.text;
 
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.IElrolAPI;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
-import com.github.elrol.elrolsutilities.data.PlayerData;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.ModInfo;
@@ -11,6 +11,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -47,20 +48,29 @@ public class TextUtils {
         });
     }
 
-    public static void sendToStaff(CommandSource source, String message) {
-        String name = Methods.getDisplayName(source);
-        ServerPlayerEntity player;
-        UUID sender;
+    public static void sendToStaff(String name, UUID uuid, String message) {
+        ServerPlayerEntity player = Methods.getPlayerFromUUID(uuid);
+
         String tag = FeatureConfig.sc_tag.get();
-        try{
-            player = source.getPlayerOrException();
-            PlayerData data = Main.database.get(player.getUUID());
-            if(data.isJailed()) tag = FeatureConfig.sc_jail_tag.get();
-            sender = player.getUUID();
+        IPlayerData data = Main.database.get(uuid);
+        if(data.isJailed()) tag = FeatureConfig.sc_jail_tag.get();
+        staffChat(tag + "&r " + name + "&r: " + message, uuid);
+        if(!uuid.equals(Main.bot.botUUID)) Main.bot.sendStaffMessage(player, message);
+    }
+
+    public static void sendToStaff(UUID uuid, String message) {
+        sendToStaff(Methods.getDisplayName(uuid), uuid, message);
+
+    }
+
+    public static void sendToStaff(CommandSource source, String message) {
+        UUID uuid;
+        try {
+            uuid = source.getPlayerOrException().getUUID();
         } catch (CommandSyntaxException e) {
-            sender = UUID.randomUUID();
+            uuid = UUID.randomUUID();
         }
-        staffChat(tag + "&r " + name + "&r: " + message, sender);
+        sendToStaff(uuid, message);
     }
 
     public static String listToString(List<String> list) {
@@ -87,17 +97,17 @@ public class TextUtils {
     }
 
     public static StringTextComponent formatChat(ServerPlayerEntity player, String msg){
-        PlayerData data = Main.database.get(player.getUUID());
+        IPlayerData data = Main.database.get(player.getUUID());
         StringTextComponent text = new StringTextComponent("");
-        if (data.isPatreon) text.append(TextUtils.formatString("&5[&dPatreon&5]") + TextFormatting.RESET + " ");
+        if (data.isPatreon()) text.append(TextUtils.formatString("&5[&dPatreon&5]") + TextFormatting.RESET + " ");
         if (!data.getPrefix().isEmpty()) {
             String prefix = TextUtils.formatString(data.getPrefix());
             text.append(prefix + TextFormatting.RESET + " ");
         }
-        if (data.nickname == null || data.nickname.isEmpty()) {
+        if (data.getNickname() == null || data.getNickname().isEmpty()) {
             text.append(player.getDisplayName().getString());
         } else {
-            text.append(TextUtils.formatString(data.nickname) + TextFormatting.RESET);
+            text.append(TextUtils.formatString(data.getNickname()) + TextFormatting.RESET);
         }
         if (!data.getSuffix().isEmpty()) {
             String suffix = TextUtils.formatString(data.getSuffix());
@@ -245,22 +255,22 @@ public class TextUtils {
 
     public static void sendMessage(CommandSource source, ServerPlayerEntity player, String msg) {
         String message = TextFormatting.DARK_GRAY + "[" + TextFormatting.GRAY;
-        PlayerData pData = Main.database.get(player.getUUID());
+        IPlayerData pData = Main.database.get(player.getUUID());
         UUID uuid = UUID.randomUUID();
         try {
             ServerPlayerEntity p = source.getPlayerOrException();
             uuid = p.getUUID();
-            PlayerData sData = Main.database.get(p.getUUID());
-            sData.lastMsg = player.getUUID();
-            pData.lastMsg = p.getUUID();
+            IPlayerData sData = Main.database.get(p.getUUID());
+            sData.setLastMsg(player.getUUID());
+            pData.setLastMsg(p.getUUID());
             Logger.debug("Source was a player");
         } catch (CommandSyntaxException e) {
             Logger.debug("Source was not player");
         }
-        message = message + Methods.getDisplayName(source);
-        message = message + TextFormatting.DARK_GRAY + " >> " + TextFormatting.GRAY;
-        message = message + Methods.getDisplayName(player.createCommandSourceStack());
-        message = message + TextFormatting.DARK_GRAY + "] " + TextFormatting.GRAY;
+        message += Methods.getDisplayName(source);
+        message += TextFormatting.DARK_GRAY + " >> " + TextFormatting.GRAY;
+        message += Methods.getDisplayName(player.createCommandSourceStack());
+        message += TextFormatting.DARK_GRAY + "] " + TextFormatting.GRAY;
         message = FeatureConfig.color_chat_enable.get() && IElrolAPI.getInstance().getPermissionHandler().hasPermission(player.createCommandSourceStack(), FeatureConfig.color_chat_perm.get()) ? message + TextUtils.formatString(msg) : message + msg;
         player.sendMessage(new StringTextComponent(message), uuid);
         source.sendSuccess(new StringTextComponent(message), false);
@@ -333,6 +343,33 @@ public class TextUtils {
             return formatted + " " + FeatureConfig.currency_plural.get();
         }
         return formatted + FeatureConfig.currency_symbol.get();
+    }
+
+    public static float parseCurrency(String string) {
+        String symbol = FeatureConfig.currency_symbol.get();
+        if(string.startsWith(symbol)) {
+            string = string.substring(symbol.length());
+        }
+        return Float.parseFloat(string);
+    }
+
+    public static String stripFormatting(String string) {
+        StringBuilder stripped = new StringBuilder();
+        String[] split = string.split("[&§]");
+        for(int i = 0; i < split.length; i++) {
+            String s = split[i];
+            if(i > 0) s = s.substring(1);
+            stripped.append(s);
+        }
+        return stripped.toString();
+    }
+
+    public static void sendConfirmation(ServerPlayerEntity player, ITextComponent[] lines) {
+        UUID uuid = player.getUUID();
+        TextComponent spacer = new StringTextComponent(TextFormatting.AQUA + String.join("", Collections.nCopies(45, "#")));
+        player.sendMessage(spacer, uuid);
+        for(ITextComponent line : lines) player.sendMessage(line, uuid);
+        player.sendMessage(spacer, uuid);
     }
 }
 

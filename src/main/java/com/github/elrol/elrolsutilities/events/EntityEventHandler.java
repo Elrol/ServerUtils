@@ -1,18 +1,44 @@
 package com.github.elrol.elrolsutilities.events;
 
+import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
+import com.github.elrol.elrolsutilities.data.ClaimBlock;
 import com.github.elrol.elrolsutilities.events.actions.EntityInteractActions;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.ChunkPos;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class EntityInteractHandler {
+import java.util.UUID;
+
+public class EntityEventHandler {
+
+    @SubscribeEvent
+    public void entityAttack(AttackEntityEvent event) {
+        Entity entitySource = event.getEntity();
+        if (!(entitySource instanceof ServerPlayerEntity)) return;
+        ServerPlayerEntity player = (ServerPlayerEntity) entitySource;
+        ResourceLocation dim = player.level.dimension().location();
+        ClaimBlock chunkPos = new ClaimBlock(dim, new ChunkPos(event.getTarget().blockPosition()));
+        if(Main.serverData == null) return;
+        UUID chunkOwner = Main.serverData.getOwner(chunkPos);
+        if (chunkOwner != null) {
+            Main.getLogger().info("Chunk Owner: " + chunkOwner);
+            IPlayerData newData = Main.database.get(chunkOwner);
+            if(!(chunkOwner.equals(player.getUUID()) || newData.isTrusted(player.getUUID())))
+                event.setCanceled(true);
+        }
+    }
+
     @SubscribeEvent(priority=EventPriority.HIGHEST)
     public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         boolean cancel = false;
@@ -22,9 +48,9 @@ public class EntityInteractHandler {
         Entity entity = event.getTarget();
         if (entity instanceof AbstractMinecartEntity) {
             AbstractMinecartEntity cart = (AbstractMinecartEntity)entity;
-            cancel = EntityInteractHandler.inspectHeldItem(event.getPlayer(), cart, Hand.MAIN_HAND);
+            cancel = EntityEventHandler.inspectHeldItem(event.getPlayer(), cart, Hand.MAIN_HAND);
             if (!cancel) {
-                cancel = EntityInteractHandler.inspectHeldItem(event.getPlayer(), cart, Hand.OFF_HAND);
+                cancel = EntityEventHandler.inspectHeldItem(event.getPlayer(), cart, Hand.OFF_HAND);
             }
         }
         if (cancel) {

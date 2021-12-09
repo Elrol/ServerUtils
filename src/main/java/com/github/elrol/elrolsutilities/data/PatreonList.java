@@ -1,6 +1,7 @@
 package com.github.elrol.elrolsutilities.data;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.libs.Logger;
 import com.google.gson.Gson;
 
 import java.io.BufferedInputStream;
@@ -16,7 +17,7 @@ public class PatreonList {
     public ArrayList<UUID> patreons = new ArrayList<>();
 
     public void init(){
-        Main.getLogger().info("Starting loading patreon list.");
+        Logger.log("Starting loading patreon list.");
         try(BufferedInputStream stream = new BufferedInputStream(new URL("https://www.pastebin.com/raw/vvAFUqWG").openStream())) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
             Gson gson = new Gson();
@@ -26,6 +27,7 @@ public class PatreonList {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Logger.log("Patreon list loaded");
     }
 
     public boolean has(UUID uuid){

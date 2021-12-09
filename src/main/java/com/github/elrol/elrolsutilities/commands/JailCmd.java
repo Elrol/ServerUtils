@@ -1,8 +1,10 @@
 package com.github.elrol.elrolsutilities.commands;
 
 import com.github.elrol.elrolsutilities.Main;
-import com.github.elrol.elrolsutilities.data.*;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
+import com.github.elrol.elrolsutilities.data.CommandDelay;
+import com.github.elrol.elrolsutilities.data.JailData;
+import com.github.elrol.elrolsutilities.data.ServerData;
 import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
@@ -160,7 +162,7 @@ extends _CmdBase {
 
         @Override
         public void run() {
-            PlayerData data = Main.database.get(player.getUUID());
+            IPlayerData data = Main.database.get(player.getUUID());
             Main.serverData.jail(player, jail, cell, min);
             TextUtils.msg(source, Msgs.jailed(data.getDisplayName(), jail, String.valueOf(cell)));
         }

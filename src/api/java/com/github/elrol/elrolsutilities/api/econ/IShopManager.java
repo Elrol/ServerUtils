@@ -1,45 +1,34 @@
 package com.github.elrol.elrolsutilities.api.econ;
 
+import com.github.elrol.elrolsutilities.api.IElrolAPI;
 import com.github.elrol.elrolsutilities.api.data.Location;
+import net.minecraft.tileentity.SignTileEntity;
+import net.minecraft.util.text.ITextComponent;
 
-import java.util.HashMap;
+import java.io.File;
 import java.util.Map;
 import java.util.UUID;
 
 public interface IShopManager {
 
-    Map<Location, IShop> shopMap = new HashMap<>();
-
+    File dir = new File(IElrolAPI.getInstance().getDataDir(), "/data/shops");
+    String getFileName();
     String getTag();
 
-    default void registerShop(IShop shop) {
-        if(shopMap.containsKey(shop.getLoc())) return;
-        shopMap.put(shop.getLoc(), shop);
-    }
+    void registerShop(Location loc, AbstractShop shop);
 
-    IShop newShop(UUID owner, Location loc);
+    Map<Location, AbstractShop> getPlayerShops(UUID uuid);
 
-    default Map<Location, IShop> getPlayerShops(UUID uuid) {
-        Map<Location, IShop> newMap = new HashMap<>();
-        shopMap.values().forEach(shop -> {
-            if(shop.getOwner().equals(uuid)) newMap.put(shop.getLoc(), shop);
-        });
-        return newMap;
-    }
+    boolean isShop(Location location);
 
-    default IShop getPlayerShop(UUID uuid, Location location) {
-        return getPlayerShops(uuid).getOrDefault(location, null);
-    }
+    AbstractShop getShop(Location loc);
 
-    default boolean isShop(Location location) {
-        return shopMap.containsKey(location);
-    }
+    void removeShop(Location loc);
 
-    default IShop getShop(Location loc) {
-        return shopMap.get(loc);
-    }
+    AbstractShop parseShop(SignTileEntity sign, ITextComponent[] messages);
 
-    default void removeShop(Location loc) {
-        shopMap.remove(loc);
-    }
+    void save();
+
+    void load();
+
 }

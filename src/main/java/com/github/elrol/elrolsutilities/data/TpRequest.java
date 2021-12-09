@@ -1,5 +1,14 @@
 package com.github.elrol.elrolsutilities.data;
 
+import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
+import com.github.elrol.elrolsutilities.config.CommandConfig;
+import com.github.elrol.elrolsutilities.libs.Methods;
+import com.github.elrol.elrolsutilities.libs.text.Errs;
+import com.github.elrol.elrolsutilities.libs.text.Msgs;
+import com.github.elrol.elrolsutilities.libs.text.TextUtils;
+import net.minecraft.entity.player.ServerPlayerEntity;
+
 import java.io.Serializable;
 import java.util.UUID;
 import java.util.concurrent.Executors;
@@ -7,16 +16,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import com.github.elrol.elrolsutilities.Main;
-import com.github.elrol.elrolsutilities.config.CommandConfig;
-import com.github.elrol.elrolsutilities.libs.Methods;
-import com.github.elrol.elrolsutilities.libs.text.Errs;
-import com.github.elrol.elrolsutilities.libs.text.Msgs;
-import com.github.elrol.elrolsutilities.libs.text.TextUtils;
-
-import net.minecraft.entity.player.ServerPlayerEntity;
-
-public class TpRequest implements Runnable, Serializable {
+public class TpRequest implements Runnable, Serializable, com.github.elrol.elrolsutilities.api.data.ITpRequest {
     private static final long serialVersionUID = 4294708795194730636L;
     private UUID requester;
     private UUID target;
@@ -32,13 +32,14 @@ public class TpRequest implements Runnable, Serializable {
             this.cancel();
         }
         Main.requests.put(this.target, a);
-        PlayerData data = Main.database.get(target.getUUID());
-        if (data.tpRequest != null) {
-            data.tpRequest.cancel();
+        IPlayerData data = Main.database.get(target.getUUID());
+        if (data.getTpRequest() != null) {
+            data.getTpRequest().cancel();
         }
-        data.tpRequest = this;
+        data.setTpRequest(this);
     }
 
+    @Override
     public void accept() {
         final ServerPlayerEntity r = Methods.getPlayerFromUUID(this.requester);
         final ServerPlayerEntity t = Methods.getPlayerFromUUID(this.target);
@@ -52,6 +53,7 @@ public class TpRequest implements Runnable, Serializable {
         this.cancel();
     }
 
+    @Override
     public void deny() {
         ServerPlayerEntity r = Methods.getPlayerFromUUID(this.requester);
         ServerPlayerEntity t = Methods.getPlayerFromUUID(this.target);
@@ -73,8 +75,8 @@ public class TpRequest implements Runnable, Serializable {
         ScheduledFuture<?> a = Main.requests.get(this.target);
         a.cancel(true);
         Main.requests.remove(this.target);
-        PlayerData data = Main.database.get(this.target);
-        data.tpRequest = null;
+        IPlayerData data = Main.database.get(this.target);
+        data.setTpRequest(null);
     }
 
 }

@@ -7,6 +7,12 @@ buildscript {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
     }
 }
+
+plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
+    id 'java'
+}
+
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
@@ -87,20 +93,18 @@ minecraft {
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
-
-
-repositories {
-    flatDir name: 'libs', dirs: 'libs'
-}
+repositories {}
 
 dependencies {
     minecraft 'net.minecraftforge:forge:' + modMinecraftVersion + '-' + modForgeVersion
+    shadow("net.dv8tion:JDA:5.0.0-alpha.1")
     //runtimeOnly fg.deobf("blank:spark:1.0.0")
 }
 
 jar {
     from sourceSets.api.output
     from sourceSets.main.output
+    classifier 'slim'
     manifest {
         attributes([
                 "Specification-Title": "serverutilities",
@@ -119,9 +123,24 @@ task apiJar(type: Jar) {
     classifier 'api'
 }
 
+shadowJar {
+    from sourceSets.api.output
+    from sourceSets.main.output
+
+    classifier ''
+    configurations = [project.configurations.shadow]
+
+    relocate('gnu.trove', 'com.github.elrol.relocated.gnu.trove')
+    relocate('org.apache.commons.collections4', 'com.github.elrol.relocated.org.apache.commons.collections4')
+    relocate('org.slf4j', 'com.github.elrol.relocated.org.slf4j')
+    relocate('javax.annotation', 'com.github.elrol.relocated.javax.annotation')
+    relocate('com.sun.jna', 'com.github.elrol.relocated.com.sun.jna')
+}
+
 reobf {
     jar {}
     apiJar {}
+    shadowJar {}
 }
 
 tasks.named("processResources") {

@@ -1,10 +1,9 @@
 package com.github.elrol.elrolsutilities.commands;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.data.PlayerData;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
@@ -14,7 +13,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -56,8 +54,8 @@ extends _CmdBase {
             Logger.err("Server Data was null");
             return 0;
         }
-        PlayerData data = Main.database.get(player.getUUID());
-        if (!data.homes.containsKey(name) && data.homes.size() >= data.maxHomes && !data.hasPerm("*")) {
+        IPlayerData data = Main.database.get(player.getUUID());
+        if (!data.getHomes().containsKey(name) && data.getHomes().size() >= data.getMaxHomes() && !data.hasPerm("*")) {
             TextUtils.err(c, Errs.max_home());
             return 0;
         }
@@ -79,10 +77,10 @@ extends _CmdBase {
     private static class CommandRunnable
     implements Runnable {
         ServerPlayerEntity player;
-        PlayerData data;
+        IPlayerData data;
         String home;
 
-        public CommandRunnable(ServerPlayerEntity player, PlayerData data, String home) {
+        public CommandRunnable(ServerPlayerEntity player, IPlayerData data, String home) {
             this.player = player;
             this.data = data;
             this.home = home;

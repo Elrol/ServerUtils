@@ -2,8 +2,11 @@ package com.github.elrol.elrolsutilities.api;
 
 import com.github.elrol.elrolsutilities.api.claims.IClaimManager;
 import com.github.elrol.elrolsutilities.api.claims.IClaimSettingRegistry;
+import com.github.elrol.elrolsutilities.api.data.IPlayerDatabase;
 import com.github.elrol.elrolsutilities.api.econ.IShopRegistry;
 import com.github.elrol.elrolsutilities.api.perms.IPermissionHandler;
+
+import java.io.File;
 
 public interface IElrolAPI {
 
@@ -22,4 +25,8 @@ public interface IElrolAPI {
     IClaimManager getClaimManager();
 
     IClaimSettingRegistry getClaimSettingRegistry();
+
+    IPlayerDatabase getPlayerDatabase();
+
+    File getDataDir();
 }

@@ -1,33 +1,37 @@
 package com.github.elrol.elrolsutilities.init;
 
-import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.data.Location;
-import com.github.elrol.elrolsutilities.api.econ.IShop;
+import com.github.elrol.elrolsutilities.api.econ.AbstractShop;
 import com.github.elrol.elrolsutilities.api.econ.IShopManager;
 import com.github.elrol.elrolsutilities.api.econ.IShopRegistry;
-import com.github.elrol.elrolsutilities.libs.JsonMethod;
+import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.SignUtils;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.tileentity.SignTileEntity;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 
-import java.io.File;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class ShopRegistry implements IShopRegistry {
 
-    private static transient final File dir = new File(Main.dir, "/data/");
-
     Map<String, IShopManager> shopMap = new HashMap<>();
+    public static Map<UUID, Location> confirmMap = new HashMap<>();
 
     @Override
     public void registerShopManager(IShopManager shop) {
-        shopMap.put(shop.getTag(), shop);
+        Logger.log("Registering " + shop.getTag());
+        shop.load();
+        shopMap.put(shop.getTag().toLowerCase(), shop);
+        System.out.print(shopMap);
     }
 
     @Override
     public IShopManager getShopManager(String tag) {
-        return shopMap.get(tag);
+        System.out.print(shopMap);
+        return shopMap.get(tag.toLowerCase());
     }
 
     @Override
@@ -46,15 +50,47 @@ public class ShopRegistry implements IShopRegistry {
         if(string.startsWith("[") && string.endsWith("]")) {
             tag = string.substring(1, string.length() - 1);
         }
-        if(!tag.isEmpty() && shopMap.containsKey(tag)) return tag;
+        if(!tag.isEmpty() && shopMap.containsKey(tag.toLowerCase())) return tag;
         return "";
     }
 
     public boolean exists(Location loc) {
+        for(Map.Entry<String, IShopManager> entry : shopMap.entrySet()) {
+            if(entry.getValue().isShop(loc)) return true;
+        }
         return false;
     }
 
-    public IShop getShop(Location loc) {
+    @Override
+    public AbstractShop parseSign(SignTileEntity sign) {
+        ITextComponent[] messages;
+        try {
+            Field f = SignTileEntity.class.getDeclaredField("messages");
+            f.setAccessible(true);
+            messages = (ITextComponent[]) f.get(sign);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        ITextComponent textComp = messages[0];
+        String tag = TextFormatting.stripFormatting(textComp.getString());
+        if(tag == null) {
+            Logger.err("Tag was stripped of formatting and resulted in a null");
+            return null;
+        }
+        if(tag.contains("[") && tag.contains("]")) {
+            tag = tag.substring(1, tag.length() - 1);
+            Logger.log("Tag for sign is: " + tag);
+
+            IShopManager manager = getShopManager(tag);
+            if(manager == null) return null;
+            return manager.parseShop(sign, messages);
+        }
+        return null;
+    }
+
+    public AbstractShop getShop(Location loc) {
         IShopManager manager = getShopManager(loc);
         if(manager == null) return null;
         return manager.getShop(loc);
@@ -73,13 +109,8 @@ public class ShopRegistry implements IShopRegistry {
         return null;
     }
 
-    public void load(){
-        ShopRegistry shopRegistry = JsonMethod.load(dir, "shopRegistry.dat", ShopRegistry.class);
-        if(shopRegistry != null) shopMap = shopRegistry.shopMap;
-
-    }
-
-    public void save(){
-        JsonMethod.save(dir, "shopRegistry.dat", this);
+    public void save() {
+        Logger.log("Saving Shop Registries");
+        shopMap.forEach((tag, handler) -> handler.save());
     }
 }

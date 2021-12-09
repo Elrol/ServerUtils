@@ -2,12 +2,12 @@ package com.github.elrol.elrolsutilities.commands.kit;
 
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.IElrolAPI;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.commands.ModSuggestions;
 import com.github.elrol.elrolsutilities.config.CommandConfig;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
 import com.github.elrol.elrolsutilities.data.Kit;
-import com.github.elrol.elrolsutilities.data.PlayerData;
 import com.github.elrol.elrolsutilities.init.CommandRegistry;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.Methods;
@@ -49,10 +49,10 @@ public class KitClaim {
             TextUtils.err(c, Errs.no_permission());
             return 0;
         }
-        PlayerData data = Main.database.get(player.getUUID());
+        IPlayerData data = Main.database.get(player.getUUID());
         Long timeLeft = data.tillUseKit(kit);
         if (timeLeft > 0L) {
-            TextUtils.err(c, Msgs.kit_in_cd(kit.name, timeLeft.toString() + (timeLeft > 1L ? " minutes" : " minute")));
+            TextUtils.err(c, Msgs.kit_in_cd(kit.name, timeLeft + (timeLeft > 1L ? " minutes" : " minute")));
             return 0;
         }
         if(timeLeft < 0L) {
@@ -82,9 +82,9 @@ public class KitClaim {
             implements Runnable {
         Kit kit;
         ServerPlayerEntity player;
-        PlayerData data;
+        IPlayerData data;
 
-        public CommandRunnable(ServerPlayerEntity player, PlayerData data, Kit kit) {
+        public CommandRunnable(ServerPlayerEntity player, IPlayerData data, Kit kit) {
             this.kit = kit;
             this.player = player;
             this.data = data;
@@ -96,7 +96,7 @@ public class KitClaim {
             int timeNow = Methods.tickToMin(Main.mcServer.getNextTickTime());
             Logger.debug("adding kit cooldown to data " + timeNow);
             if (kit.cooldown > 0) {
-                data.kitCooldowns.put(kit.name, timeNow);
+                data.getKitCooldowns().put(kit.name, timeNow);
             }
             TextUtils.msg(player, Msgs.received_kit(kit.name));
             Main.getLogger().info(data.getDisplayName() + " claimed Kit " + kit.name + (kit.getCost() > 0 ? " for " + TextUtils.parseCurrency(kit.getCost(), true) : ""));

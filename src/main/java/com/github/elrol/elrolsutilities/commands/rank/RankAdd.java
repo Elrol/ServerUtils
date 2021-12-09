@@ -1,10 +1,8 @@
 package com.github.elrol.elrolsutilities.commands.rank;
 
-import java.util.UUID;
-
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.commands.ModSuggestions;
-import com.github.elrol.elrolsutilities.data.PlayerData;
 import com.github.elrol.elrolsutilities.data.Rank;
 import com.github.elrol.elrolsutilities.init.Ranks;
 import com.github.elrol.elrolsutilities.libs.Methods;
@@ -14,9 +12,10 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
-
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
+
+import java.util.UUID;
 
 public class RankAdd {
     public static ArgumentBuilder<CommandSource, ?> register() {
@@ -41,7 +40,7 @@ public class RankAdd {
             TextUtils.err(c, Errs.player_not_found(name));
             return 0;
         }
-        PlayerData data = Main.database.get(uuid);
+        IPlayerData data = Main.database.get(uuid);
         if (data.getRanks().contains(rank.getName())) {
             TextUtils.err(c, Errs.player_has_rank(data.getDisplayName(), rank.getName()));
             return 0;

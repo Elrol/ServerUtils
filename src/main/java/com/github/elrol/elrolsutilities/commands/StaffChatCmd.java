@@ -1,10 +1,9 @@
 package com.github.elrol.elrolsutilities.commands;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.data.PlayerData;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
 import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
@@ -50,15 +49,15 @@ extends _CmdBase {
             return 0;
         }
         if (FeatureConfig.enable_economy.get() && cost > 0) {
-            PlayerData data = Main.database.get(player.getUUID());
+            IPlayerData data = Main.database.get(player.getUUID());
             if (!data.charge(cost)) {
                 TextUtils.err(player, Errs.not_enough_funds(cost, data.getBal()));
                 return 0;
             }
         }
-        PlayerData data = Main.database.get(player.getUUID());
-        data.staffChatEnabled = !data.staffChatEnabled;
-        TextUtils.msg(player, Msgs.staff_chat(data.staffChatEnabled ? "Enabled" : "Disabled"));
+        IPlayerData data = Main.database.get(player.getUUID());
+        data.toggleStaffChat();
+        TextUtils.msg(player, Msgs.staff_chat(data.usingStaffChat() ? "Enabled" : "Disabled"));
         return 1;
     }
 

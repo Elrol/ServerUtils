@@ -17,7 +17,7 @@ public class RankInfo {
     public static ArgumentBuilder<CommandSource, ?> register() {
         return Commands.literal("info")
         				.then(Commands.argument("rank", StringArgumentType.string())
-        						.suggests(ModSuggestions::suggestRanks)
+        						.suggests(ModSuggestions::suggestCurrentRanks)
         						.executes(RankInfo::execute));
     }
 

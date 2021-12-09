@@ -1,11 +1,9 @@
 package com.github.elrol.elrolsutilities.commands;
 
 import com.github.elrol.elrolsutilities.Main;
-import com.github.elrol.elrolsutilities.config.CommandConfig;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.data.PlayerData;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
@@ -38,8 +36,8 @@ public class UnclaimAllCmd extends _CmdBase {
         try {
              sender = c.getSource().getPlayerOrException();
             if(!sender.getUUID().equals(player.getUUID())) {
-                PlayerData data = Main.database.get(sender.getUUID());
-                if(!data.bypass) {
+                IPlayerData data = Main.database.get(sender.getUUID());
+                if(!data.canBypass()) {
                     if(data.hasPerm(Main.permRegistry.getPerm("bypass"))) TextUtils.err(c.getSource(), Errs.bypass_not_enabled());
                     else TextUtils.err(c.getSource(), Errs.no_permission());
                     return 0;
@@ -49,7 +47,7 @@ public class UnclaimAllCmd extends _CmdBase {
             e.printStackTrace();
         }
         if(sender != null) {
-            PlayerData data = Main.database.get(sender.getUUID());
+            IPlayerData data = Main.database.get(sender.getUUID());
             if (FeatureConfig.enable_economy.get() && this.cost > 0) {
                 if (!data.charge(this.cost)) {
                     TextUtils.err(player, Errs.not_enough_funds(this.cost, data.getBal()));
@@ -87,7 +85,7 @@ public class UnclaimAllCmd extends _CmdBase {
         @Override
         public void run() {
             Main.serverData.unclaimAll(player);
-            PlayerData data = Main.database.get(player.getUUID());
+            IPlayerData data = Main.database.get(player.getUUID());
             try {
                 ServerPlayerEntity p = source.getPlayerOrException();
                 if(p.getUUID().equals(player.getUUID())) {

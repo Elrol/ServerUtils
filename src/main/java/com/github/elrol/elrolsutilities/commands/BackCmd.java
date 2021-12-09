@@ -1,11 +1,10 @@
 package com.github.elrol.elrolsutilities.commands;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
+import com.github.elrol.elrolsutilities.api.data.Location;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.api.data.Location;
-import com.github.elrol.elrolsutilities.data.PlayerData;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
@@ -14,7 +13,6 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -47,8 +45,8 @@ public class BackCmd extends _CmdBase {
         if (Methods.hasCooldown(player, this.name)) {
             return 0;
         }
-        PlayerData data = Main.database.get(player.getUUID());
-        if (data.prevLoc == null) {
+        IPlayerData data = Main.database.get(player.getUUID());
+        if (data.getPrevLoc() == null) {
             TextUtils.err(player, Errs.no_back_location());
             return 0;
         }
@@ -59,7 +57,7 @@ public class BackCmd extends _CmdBase {
             }
         }
         Location loc = Methods.getPlayerLocation(player);
-        CommandDelay.init(this, player, new CommandRunnable(player, loc, data.prevLoc), true);
+        CommandDelay.init(this, player, new CommandRunnable(player, loc, data.getPrevLoc()), true);
         return 1;
     }
 

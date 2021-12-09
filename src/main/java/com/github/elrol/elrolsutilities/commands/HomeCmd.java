@@ -1,11 +1,10 @@
 package com.github.elrol.elrolsutilities.commands;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.api.data.Location;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.data.PlayerData;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
@@ -58,9 +57,9 @@ extends _CmdBase {
             Logger.err("Server Data was null");
             return 0;
         }
-        PlayerData data = Main.database.get(player.getUUID());
+        IPlayerData data = Main.database.get(player.getUUID());
         name = data.getHome(name);
-        if (!data.homes.containsKey(name)) {
+        if (!data.getHomes().containsKey(name)) {
             TextUtils.err(player, Errs.home_not_found(name));
             return 0;
         }
@@ -71,7 +70,7 @@ extends _CmdBase {
             }
         }
         Location loc = Methods.getPlayerLocation(player);
-        Location home = data.homes.get(name);
+        Location home = data.getHomes().get(name);
         CommandDelay.init(this, player, new CommandRunnable(player, loc, home, name), true);
         return 1;
     }

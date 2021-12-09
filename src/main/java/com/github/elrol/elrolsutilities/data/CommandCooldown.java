@@ -14,14 +14,13 @@ import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import net.minecraft.entity.player.ServerPlayerEntity;
 
-public class CommandCooldown
-implements Runnable {
+public class CommandCooldown implements Runnable {
 
-    private ServerPlayerEntity player;
+    private final ServerPlayerEntity player;
     public String cmd;
     public int seconds;
-    private ScheduledExecutorService s;
-    private ScheduledFuture<?> a;
+    private final ScheduledExecutorService s;
+    private final ScheduledFuture<?> a;
 
     public CommandCooldown(ServerPlayerEntity player, int seconds, String cmd) {
         this.player = player;
@@ -60,6 +59,11 @@ implements Runnable {
         } else {
             this.seconds -= 5;
         }
+    }
+
+    public void cancel(){
+        a.cancel(true);
+        s.shutdown();
     }
 }
 

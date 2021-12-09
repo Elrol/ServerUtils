@@ -1,10 +1,9 @@
 package com.github.elrol.elrolsutilities.commands;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.data.PlayerData;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
@@ -42,23 +41,23 @@ public class SudoCmd extends _CmdBase {
     }
 
     protected int execute(CommandContext<CommandSource> c, CommandSource source, ServerPlayerEntity target, String cmd) {
-        ServerPlayerEntity player;
+        ServerPlayerEntity player = null;
+        if(cmd.isEmpty()) return 0;
         try {
             player = c.getSource().getPlayerOrException();
-        }
-        catch (CommandSyntaxException e) {
-            TextUtils.err(c, Errs.not_player());
-            return 0;
-        }
-        if(cmd.isEmpty()) return 0;
-        PlayerData data = Main.database.get(player.getUUID());
-        if (FeatureConfig.enable_economy.get() && this.cost > 0) {
-            if (!data.charge(this.cost)) {
-                TextUtils.err(player, Errs.not_enough_funds(this.cost, data.getBal()));
-                return 0;
+            IPlayerData data = Main.database.get(player.getUUID());
+            if (FeatureConfig.enable_economy.get() && this.cost > 0) {
+                if (!data.charge(this.cost)) {
+                    TextUtils.err(player, Errs.not_enough_funds(this.cost, data.getBal()));
+                    return 0;
+                }
             }
+        } catch (CommandSyntaxException e) {
+            new CommandRunnable(source, target, cmd).run();
+            return 1;
         }
-        CommandDelay.init(this, player, new CommandRunnable(source, player, cmd), false);
+
+        CommandDelay.init(this, player, new CommandRunnable(source, target, cmd), false);
         return 1;
     }
 

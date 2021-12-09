@@ -1,24 +1,46 @@
 package com.github.elrol.elrolsutilities.api.data;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 import java.util.Objects;
 
 public class Location {
     public ResourceLocation world;
     private BlockPos pos;
-    private float yaw;
-    private float pitch;
+    private float yaw = 0f;
+    private float pitch = 0f;
+
+    public Location(TileEntity entity){
+        this.world = entity.getLevel().dimension().location();
+        this.pos = entity.getBlockPos();
+    }
+
+    public Location(ResourceLocation dim, BlockPos pos) {
+        this.world = dim;
+        this.pos = pos;
+    }
 
     public Location(Location loc) {
         this.world = loc.getWorld().getRegistryName();
         this.pos = loc.getBlockPos();
         this.pitch = loc.getPitch();
         this.yaw = loc.getYaw();
+    }
+
+    public Location(World world, BlockPos pos, float yaw, float pitch) {
+        this.world = world.dimension().location();
+        this.pos = pos;
+        this.pitch = pitch;
+        this.yaw = yaw;
     }
 
     public Location(RegistryKey<World> world, BlockPos pos, float yaw, float pitch) {
@@ -37,6 +59,11 @@ public class Location {
 
     public RegistryKey<World> getWorld(){
         return RegistryKey.create(Registry.DIMENSION_REGISTRY,  world);
+    }
+
+    public ServerWorld getWorldObj(){
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+        return server.getLevel(getWorld());
     }
 
     public BlockPos getBlockPos() {
@@ -64,7 +91,28 @@ public class Location {
     }
 
     public String toString() {
-        return "Loc[DimId:" + this.world + ",Pos:" + this.pos + ",Yaw:" + this.yaw + ",Pitch:" + this.pitch + "]";
+        // minecraft:overworld@[0,63,0](0.0,0.0)
+        return world.toString() + "@[" + pos.getX() + "," + pos.getY() + "," + pos.getZ() + "](" + yaw + "," + pitch + ")";
+    }
+
+    public static Location fromString(String loc) {
+        String[] loc1 = loc.split("@\\[");
+        String[] loc2 = loc1[1].split("]\\(");
+        String[] rsloc = loc1[0].split(":");
+
+        String[] posLoc = loc2[0].split(",");
+        String[] rotLoc = loc2[1].replace(")", "").split(",");
+
+        int x = Integer.parseInt(posLoc[0]);
+        int y = Integer.parseInt(posLoc[1]);
+        int z = Integer.parseInt(posLoc[2]);
+
+        return new Location(
+            new ResourceLocation(rsloc[0], rsloc[1]),
+            new BlockPos(x,y,z),
+            Float.parseFloat(rotLoc[0]),
+            Float.parseFloat(rotLoc[1])
+        );
     }
 
     public void setYaw(float yaw) { this.yaw = yaw; }
@@ -83,6 +131,14 @@ public class Location {
     public Location modZ(int z) {
         this.pos = new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() + z);
         return this;
+    }
+
+    public TileEntity getTileEntity() {
+        return getWorldObj().getBlockEntity(pos);
+    }
+
+    public BlockState getBlockState() {
+        return getWorldObj().getBlockState(pos);
     }
 
     @Override

@@ -1,10 +1,9 @@
 package com.github.elrol.elrolsutilities.commands;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.data.PlayerData;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
@@ -43,7 +42,7 @@ public class SellCmd extends _CmdBase {
             TextUtils.err(c, Errs.not_player());
             return 0;
         }
-        PlayerData data = Main.database.get(sender.getUUID());
+        IPlayerData data = Main.database.get(sender.getUUID());
         if (FeatureConfig.enable_economy.get() && data.getBal() >= cost) {
             if (!data.charge(cost)) {
                 TextUtils.err(sender, Errs.not_enough_funds(cost, data.getBal()));
@@ -70,7 +69,7 @@ public class SellCmd extends _CmdBase {
 
         @Override
         public void run() {
-            PlayerData senderData = Main.database.get(sender.getUUID());
+            IPlayerData senderData = Main.database.get(sender.getUUID());
             ItemStack stack = sender.getMainHandItem();
             Item item = stack.getItem();
             String output = stack.getDisplayName().getString() + "[x" + qty + "]";

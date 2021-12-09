@@ -1,6 +1,7 @@
 package com.github.elrol.elrolsutilities.data;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.libs.JsonMethod;
 import com.github.elrol.elrolsutilities.libs.Methods;
 
@@ -15,11 +16,11 @@ public class PlayerHistory {
     private Map<UUID, List<String>> bans = new HashMap<>();
 
     public String[] lookUp(UUID uuid) {
-        PlayerData data = Main.database.get(uuid);
+        IPlayerData data = Main.database.get(uuid);
         return new String[] {
                 "Username: " + data.getDisplayName(),
                 "UUId:" + uuid,
-                "First Join: " + data.firstJoin,
+                "First Join: " + data.getFirstJoin(),
                 "Last Seen: " + ""
 
         };

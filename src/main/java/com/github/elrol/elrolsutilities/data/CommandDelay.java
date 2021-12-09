@@ -17,8 +17,7 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 
-public class CommandDelay
-implements Runnable {
+public class CommandDelay implements Runnable {
     private ServerPlayerEntity player;
     private Runnable runnable;
     public int seconds;
@@ -131,6 +130,7 @@ implements Runnable {
         if (this.a != null) {
             this.a.cancel(true);
         }
+        s.shutdown();
         Main.commandDelays.remove(this.player.getUUID());
     }
 
@@ -142,6 +142,7 @@ implements Runnable {
             if (a != null) {
                 a.cancel(false);
             }
+            s.shutdown();
             Main.commandDelays.remove(this.player.getUUID());
             if (cooldown > 0) {
                 Logger.log("Cooldown starting from commandDelays");

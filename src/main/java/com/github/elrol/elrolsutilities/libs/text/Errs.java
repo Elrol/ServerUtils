@@ -450,35 +450,45 @@ public class Errs {
         return new StringTextComponent("The sign was missing at " + a);
     }
 
-    public static TextComponent shop_error() {
+    public static TextComponent shop_error(String a) {
+        a = TextFormatting.DARK_RED + a + TextFormatting.RESET;
         if(FeatureConfig.translation_enable.get())
-            return new TranslationTextComponent("serverutils.command.err.shop-error");
-        return new StringTextComponent("There was an error making the shop.");
+            return new TranslationTextComponent("serverutils.server.err.shop-error", a);
+        return new StringTextComponent("There was an error making the " + a + " Sign.");
     }
 
-    public static TextComponent chest_missing() {
+    public static TextComponent missing_items(String a) {
+        a = TextFormatting.DARK_RED + a + TextFormatting.RESET;
         if(FeatureConfig.translation_enable.get())
-            return new TranslationTextComponent("serverutils.command.err.chest_missing");
-        return new StringTextComponent("The chest for this shop is missing. Contact the shop owner.");
+            return new TranslationTextComponent("serverutils.server.err.missing-items", a);
+        return new StringTextComponent("You are don't have the right items for this " + a + " Sign.");
     }
 
-    public static TextComponent afford_shop(String a, String b) {
+    public static TextComponent container_missing(String a) {
+        a = TextFormatting.DARK_RED + a + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.err.container_missing", a);
+        return new StringTextComponent("The container for this " + a + " Shop is missing. Contact the shop owner.");
+    }
+
+    public static TextComponent afford_shop(String a, String b, String c) {
         a = TextFormatting.DARK_RED + a + TextFormatting.RESET;
         b = TextFormatting.DARK_RED + b + TextFormatting.RESET;
+        c = TextFormatting.DARK_RED + c + TextFormatting.RESET;
         if(FeatureConfig.translation_enable.get())
-            return new TranslationTextComponent("serverutils.command.err.afford_shop", a, b);
-        return new StringTextComponent("You can't afford a shop. Cost: " + a + ", Balance: " + b + ".");
+            return new TranslationTextComponent("serverutils.server.err.afford_shop", a, b, c);
+        return new StringTextComponent("You can't afford a " + a + " Sign. Cost: " + b + ", Balance: " + c + ".");
     }
 
-    public static TextComponent shop_empty() {
+    public static TextComponent container_empty() {
         if(FeatureConfig.translation_enable.get())
-            return new TranslationTextComponent("serverutils.command.err.shop_empty");
-        return new StringTextComponent("The shop that you had tried to link was empty.");
+            return new TranslationTextComponent("serverutils.server.err.shop_empty");
+        return new StringTextComponent("The container that you had tried to link was empty.");
     }
 
     public static TextComponent chest_owned() {
         if(FeatureConfig.translation_enable.get())
-            return new TranslationTextComponent("serverutils.command.err.chest_owned");
+            return new TranslationTextComponent("serverutils.server.err.chest_owned");
         return new StringTextComponent("This chest is already part of someone else's shop.");
     }
 
@@ -531,6 +541,44 @@ public class Errs {
         if(FeatureConfig.translation_enable.get())
             return new TranslationTextComponent("serverutils.command.err.jailed", a);
         return new StringTextComponent("You are Jailed for another " + a + " minute(s).");
+    }
+
+    public static TextComponent not_linked(String a) {
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.err.sign_not_linked");
+        return new StringTextComponent("This sign hasn't been linked yet.");
+    }
+
+    public static TextComponent sign_full() {
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.err.sign_full");
+        return new StringTextComponent("This Sign is full and can't accept more items. Please Contact the shop owner.");
+    }
+
+    public static TextComponent shop_missing_funds(String a) {
+        a = TextFormatting.DARK_RED + a + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.err.shop_missing_funds", a);
+        return new StringTextComponent("This shop is missing funds. Contact " + a + " for help.");
+    }
+
+    public static TextComponent shop_missing_stock(String a) {
+        a = TextFormatting.DARK_RED + a + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.err.missing_stock");
+        return new StringTextComponent("This " + a + " shop is missing stock.");
+    }
+
+    public static TextComponent missing_starting_stock() {
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.err.missing_starting_stock");
+        return new StringTextComponent("You can't link shop to an empty inventory.");
+    }
+
+    public static TextComponent max_shops(){
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.command.err.max-shops");
+        return new StringTextComponent("You already have hit your shop limit.");
     }
 }
 

@@ -1,14 +1,19 @@
 package com.github.elrol.elrolsutilities.libs;
 
 import com.github.elrol.elrolsutilities.Main;
-import com.github.elrol.elrolsutilities.api.perms.IPermissionHandler;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
+import com.github.elrol.elrolsutilities.api.enums.ClaimFlagKeys;
 import com.github.elrol.elrolsutilities.api.perms.IPermission;
-import com.github.elrol.elrolsutilities.data.PlayerData;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
+import com.github.elrol.elrolsutilities.api.perms.IPermissionHandler;
+import com.github.elrol.elrolsutilities.data.ClaimBlock;
+import com.github.elrol.elrolsutilities.libs.text.Errs;
+import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.FakePlayer;
 
 import java.util.Map;
@@ -35,7 +40,7 @@ public class PermissionHandler implements IPermissionHandler {
 
             if(player instanceof FakePlayer) return true;
 
-            PlayerData data = Main.database.get(player.getUUID());
+            IPlayerData data = Main.database.get(player.getUUID());
             if(data.hasPerm("*")) return true;
             if(data.hasPerm(perm)) {
                 return true;
@@ -53,7 +58,6 @@ public class PermissionHandler implements IPermissionHandler {
         boolean hasPerm = false;
         int i = 1;
         Map<String, String> filtered = Main.permRegistry.filterPerms(node);
-        Logger.log(filtered.toString());
         for(Map.Entry<String, String> entry : filtered.entrySet()){
             if(hasPermission(source, entry.getValue())){
                 hasPerm = true;
@@ -67,6 +71,25 @@ public class PermissionHandler implements IPermissionHandler {
         if(hasPerm) return true;
         //Logger.log("1134611-Checking other perm");
         return hasPermission(source, perm);
+    }
+
+    public boolean hasChunkPermission(ServerPlayerEntity player, BlockPos pos) {
+        IPlayerData pdata = Main.database.get(player.getUUID());
+        if(pdata.isJailed()) {
+            TextUtils.err(player.createCommandSourceStack(), Errs.jailed((int)pdata.getJailTime()));
+            return false;
+        }
+        ResourceLocation dim = player.level.dimension().getRegistryName();
+        ClaimBlock claim = new ClaimBlock(dim, pos);
+        if(Main.serverData.isClaimed(claim) && !Main.serverData.getOwner(claim).equals(player.getUUID())){
+            UUID owner = Main.serverData.getOwner(claim);
+            IPlayerData data = Main.database.get(owner);
+            if(!data.getFlag(ClaimFlagKeys.allow_switch) || !data.isTrusted(player.getUUID())) {
+                TextUtils.err(player, Errs.chunk_claimed(data.getDisplayName()));
+                return false;
+            }
+        }
+        return true;
     }
 
 }

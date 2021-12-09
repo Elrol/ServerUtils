@@ -1,9 +1,8 @@
 package com.github.elrol.elrolsutilities.events;
 
 import com.github.elrol.elrolsutilities.Main;
-import com.github.elrol.elrolsutilities.data.PlayerData;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.libs.Logger;
-
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -16,7 +15,7 @@ public class LivingDropHandler {
     public void onLivingDrop(LivingDropsEvent event) {
         if(event.getEntityLiving() instanceof ServerPlayerEntity) {
             ServerPlayerEntity player = (ServerPlayerEntity)event.getEntityLiving();
-            PlayerData data = Main.database.get(player.getUUID());
+            IPlayerData data = Main.database.get(player.getUUID());
             if(data.isJailed()) {
                 event.setCanceled(true);
             }

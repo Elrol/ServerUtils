@@ -1,10 +1,9 @@
 package com.github.elrol.elrolsutilities.commands;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.data.PlayerData;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
@@ -13,7 +12,6 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -52,7 +50,7 @@ extends _CmdBase {
             Logger.err("Server Data was null");
             return 0;
         }
-        PlayerData data = Main.database.get(player.getUUID());
+        IPlayerData data = Main.database.get(player.getUUID());
         if (FeatureConfig.enable_economy.get() && this.cost > 0) {
             if (!data.charge(this.cost)) {
                 TextUtils.err(player, Errs.not_enough_funds(this.cost, data.getBal()));
@@ -66,17 +64,17 @@ extends _CmdBase {
     private static class CommandRunnable
     implements Runnable {
         ServerPlayerEntity player;
-        PlayerData data;
+        IPlayerData data;
 
-        public CommandRunnable(ServerPlayerEntity player, PlayerData data) {
+        public CommandRunnable(ServerPlayerEntity player, IPlayerData data) {
             this.player = player;
             this.data = data;
         }
 
         @Override
         public void run() {
-            this.data.disableMsg = !this.data.disableMsg;
-            TextUtils.msg(this.player, Msgs.toggled_msg(this.data.disableMsg ? "Disabled" : "Enabled"));
+            data.setMsgDisabled(!data.msgDisabled());
+            TextUtils.msg(this.player, Msgs.toggled_msg(data.msgDisabled() ? "Disabled" : "Enabled"));
         }
     }
 

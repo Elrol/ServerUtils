@@ -1,7 +1,10 @@
 package com.github.elrol.elrolsutilities.libs.text;
 
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class Msgs {
     public static TextComponent welcome(String a) {
@@ -843,48 +846,6 @@ public class Msgs {
         return new StringTextComponent("Claim Bypass has been " + a);
     }
 
-    public static TextComponent selected_sign() {
-        if(FeatureConfig.translation_enable.get())
-            return new TranslationTextComponent("serverutils.server.msg.selected-sign");
-        return new StringTextComponent("This sign has been selected. Right click on the chest to link it to the shop.");
-    }
-
-    public static TextComponent created_shop() {
-        if(FeatureConfig.translation_enable.get())
-            return new TranslationTextComponent("serverutils.server.msg.created-shop");
-        return new StringTextComponent("New ChestShop created!");
-    }
-
-    public static TextComponent linked_chest() {
-        if(FeatureConfig.translation_enable.get())
-            return new TranslationTextComponent("serverutils.server.msg.linked-chest");
-        return new StringTextComponent("This chest has been linked to the shop.");
-    }
-
-    public static TextComponent removed_shop() {
-        if(FeatureConfig.translation_enable.get())
-            return new TranslationTextComponent("serverutils.server.msg.removed-shop");
-        return new StringTextComponent("This shop has been removed.");
-    }
-
-    public static TextComponent sold_to_shop(String a, int i, String c) {
-        a = TextFormatting.GREEN + a + TextFormatting.RESET;
-        String b = TextFormatting.GREEN + String.valueOf(i) + TextFormatting.RESET;
-        a = TextFormatting.GREEN + a + TextFormatting.RESET;
-        if(FeatureConfig.translation_enable.get())
-            return new TranslationTextComponent("serverutils.server.msg.sold-to-shop", a, b ,c);
-        return new StringTextComponent("You sold " + a + " [" + b + "] for " + c + ".");
-    }
-
-    public static TextComponent bought_from_shop(String a, int i, String c) {
-        a = TextFormatting.GREEN + a + TextFormatting.RESET;
-        String b = TextFormatting.GREEN + String.valueOf(i) + TextFormatting.RESET;
-        a = TextFormatting.GREEN + a + TextFormatting.RESET;
-        if(FeatureConfig.translation_enable.get())
-            return new TranslationTextComponent("serverutils.server.msg.bought-from-shop", a, b ,c);
-        return new StringTextComponent("You bought " + a + " [" + b + "] for " + c + ".");
-    }
-
     public static TextComponent chunks_unclaimed(String a){
         a = TextFormatting.GREEN + a + TextFormatting.RESET;
         if(FeatureConfig.translation_enable.get())
@@ -966,4 +927,30 @@ public class Msgs {
         return new StringTextComponent("Kit " + a + "'s items have been cleared.");
     }
 
+    public static TextComponent sign_linked(String a){
+        a = TextFormatting.GREEN + a + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.msg.sign_linked", a);
+        return new StringTextComponent("Location linked to your " + a + " Sign!");
+    }
+    public static TextComponent selected_sign(String a) {
+        a = TextFormatting.GREEN + a + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.msg.selected-sign");
+        return new StringTextComponent("Sign has been selected. Right click on a block with redstone to link it.");
+    }
+
+    public static TextComponent created_shop(String a) {
+        a = TextFormatting.GREEN + a + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.msg.created-shop");
+        return new StringTextComponent("New ChestShop created!");
+    }
+
+    public static TextComponent removed_shop(String a) {
+        a = TextFormatting.GREEN + a + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.msg.removed-shop");
+        return new StringTextComponent("This shop has been removed.");
+    }
 }

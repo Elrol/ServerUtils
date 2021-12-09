@@ -14,8 +14,6 @@ import com.github.elrol.elrolsutilities.libs.Logger;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.command.CommandSource;
 
-import java.util.Arrays;
-
 public class CommandRegistry {
     public static BackCmd backCmd = new BackCmd(CommandConfig.back.delay, CommandConfig.back.cooldown, CommandConfig.back.aliases, CommandConfig.back.cost);
     public static BalCmd balCmd = new BalCmd(CommandConfig.bal.delay, CommandConfig.bal.cooldown, CommandConfig.bal.aliases, CommandConfig.bal.cost);
@@ -74,7 +72,7 @@ public class CommandRegistry {
     public static UnclaimCmd unclaimAllCmd = new UnclaimCmd(CommandConfig.unclaimAll.delay, CommandConfig.unclaimAll.cooldown, CommandConfig.unclaimAll.aliases, CommandConfig.unclaimAll.cost);
     public static UntrustCmd untrustCmd = new UntrustCmd(CommandConfig.untrust.delay, CommandConfig.untrust.cooldown, CommandConfig.untrust.aliases, CommandConfig.untrust.cost);
     public static WarpCmd warpCmd = new WarpCmd(CommandConfig.warp.delay, CommandConfig.warp.cooldown, CommandConfig.warp.aliases, CommandConfig.warp.cost);
-    public static WarpsCmd warpsCmd = new WarpsCmd(CommandConfig.warp.delay, CommandConfig.warp.cooldown, CommandConfig.warp.aliases, CommandConfig.warp.cost);
+    public static WarpsCmd warpsCmd = new WarpsCmd(CommandConfig.warps.delay, CommandConfig.warps.cooldown, CommandConfig.warps.aliases, CommandConfig.warps.cost);
 
     public static void registerCommands(CommandDispatcher<CommandSource> dispatcher) {
         Logger.log("Registering Commands");

@@ -1,10 +1,9 @@
 package com.github.elrol.elrolsutilities.commands;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.data.PlayerData;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
 import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
@@ -12,7 +11,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -38,7 +36,7 @@ extends _CmdBase {
 
     @Override
     protected int execute(CommandContext<CommandSource> c) {
-        PlayerData data;
+        IPlayerData data;
         ServerPlayerEntity player;
         ServerPlayerEntity source;
         String msg = StringArgumentType.getString(c, "msg");
@@ -54,8 +52,8 @@ extends _CmdBase {
             TextUtils.err(c, Errs.no_responder());
             return 0;
         }
-        PlayerData targetData = Main.database.get(player.getUUID());
-        if (targetData.disableMsg) {
+        IPlayerData targetData = Main.database.get(player.getUUID());
+        if (targetData.msgDisabled()) {
             TextUtils.err(c, Errs.disabled_msg(Methods.getDisplayName(player)));
             return 0;
         }

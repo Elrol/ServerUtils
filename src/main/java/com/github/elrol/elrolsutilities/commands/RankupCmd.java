@@ -1,10 +1,9 @@
 package com.github.elrol.elrolsutilities.commands;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.data.PlayerData;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
 import com.github.elrol.elrolsutilities.init.Ranks;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.Methods;
@@ -56,7 +55,7 @@ extends _CmdBase {
             return 0;
         }
 
-        PlayerData data = Main.database.get(player.getUUID());
+        IPlayerData data = Main.database.get(player.getUUID());
         if (FeatureConfig.enable_economy.get() && this.cost > 0) {
             if (!data.charge(this.cost)) {
                 TextUtils.err(player, Errs.not_enough_funds(this.cost, data.getBal()));
@@ -89,12 +88,12 @@ extends _CmdBase {
             TextUtils.err(player, Errs.rank_doesnt_exist(rank));
             return 0;
         }
-        PlayerData data = Main.database.get(player.getUUID());
+        IPlayerData data = Main.database.get(player.getUUID());
         if(!data.getDomRank().getNextRanks().contains(rank)){
             TextUtils.err(player, Errs.rank_not_allowed(rank));
             return 0;
         }
-        if(data.canRankUp)
+        if(data.canRankUp())
             CommandDelay.init(this, player, new CommandRunnable(player, rank), false);
         else
             TextUtils.err(player, Errs.early_rankup(rank));
@@ -113,10 +112,10 @@ extends _CmdBase {
 
         @Override
         public void run() {
-            PlayerData data = Main.database.get(player.getUUID());
+            IPlayerData data = Main.database.get(player.getUUID());
             data.removeRank(data.getDomRank().getName());
             data.addRank(Ranks.get(rank));
-            data.canRankUp = false;
+            data.allowRankUp(false);
             TextUtils.msg(this.player, Msgs.player_rank_added(data.getDisplayName(), rank));
             Main.database.save(player.getUUID());
             data.update();

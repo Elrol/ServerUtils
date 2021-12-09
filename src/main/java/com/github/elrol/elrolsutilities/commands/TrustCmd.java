@@ -1,10 +1,9 @@
 package com.github.elrol.elrolsutilities.commands;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.data.PlayerData;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
@@ -60,8 +59,8 @@ extends _CmdBase {
             Logger.err("Server Data was null");
             return 0;
         }
-        PlayerData data = Main.database.get(player.getUUID());
-        PlayerData tdata = Main.database.get(target.getUUID());
+        IPlayerData data = Main.database.get(player.getUUID());
+        IPlayerData tdata = Main.database.get(target.getUUID());
         if(data.isTrusted(target.getUUID())) {
             TextUtils.err(player, Errs.is_trusted(tdata.getDisplayName()));
             return 0;
@@ -89,10 +88,10 @@ extends _CmdBase {
 
         @Override
         public void run() {
-            PlayerData playerData = Main.database.get(player.getUUID());
+            IPlayerData playerData = Main.database.get(player.getUUID());
             playerData.trust(target.getUUID());
 
-            PlayerData targetData = Main.database.get(target.getUUID());
+            IPlayerData targetData = Main.database.get(target.getUUID());
             TextUtils.msg(player, Msgs.trusted_player(targetData.getDisplayName()));
             TextUtils.msg(target, Msgs.trusted_by_player(playerData.getDisplayName()));
         }
