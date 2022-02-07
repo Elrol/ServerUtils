@@ -1,0 +1,27 @@
+modLoader="javafml"
+loaderVersion="[39,)"
+license="All rights reserved"
+
+[[mods]]
+modId="serverutilities" #mandatory
+version="${file.jarVersion}" #mandatory
+displayName="Elrol's Server Utilities" #mandatory
+logoFile="pack.png" #optional
+credits="Thanks to TechnicianLP, for helping fix a Major bug and everyone who has helped get the mod to where it is today!" #optional
+authors="ArrowsendGaming" #optional
+description='''
+A mod that adds server related commands and Utilities
+'''
+[[dependencies.serverutilities]] #optional
+    modId="forge" #mandatory
+    mandatory=true #mandatory
+    versionRange="[39,)" #mandatory
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.serverutilities]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.18.1,1.19)"
+    ordering="NONE"
+    side="BOTH"
