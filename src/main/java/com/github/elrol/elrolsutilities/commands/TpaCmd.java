@@ -74,7 +74,7 @@ extends _CmdBase {
         public void run() {
             TextUtils.msg(this.requester, Msgs.tpa_sent(Methods.getDisplayName(this.target)));
             TextUtils.msg(this.target, Msgs.tpa_received(Methods.getDisplayName(this.requester)));
-            new TpRequest(this.requester, this.target, false);
+            new TpRequest(this.requester.getUUID(), this.target.getUUID(), false);
         }
     }
 

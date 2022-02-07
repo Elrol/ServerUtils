@@ -9,6 +9,7 @@ import com.github.elrol.elrolsutilities.libs.SignUtils;
 import net.minecraft.tileentity.SignTileEntity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -63,15 +64,15 @@ public class ShopRegistry implements IShopRegistry {
 
     @Override
     public AbstractShop parseSign(SignTileEntity sign) {
-        ITextComponent[] messages;
-        try {
-            Field f = SignTileEntity.class.getDeclaredField("messages");
-            f.setAccessible(true);
-            messages = (ITextComponent[]) f.get(sign);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
-            return null;
-        }
+    ITextComponent[] messages;
+    try {
+        Field f = ObfuscationReflectionHelper.findField(SignTileEntity.class, "field_145915_a");
+        f.setAccessible(true);
+        messages = (ITextComponent[]) f.get(sign);
+    } catch (IllegalAccessException e) {
+        e.printStackTrace();
+        return null;
+    }
 
         ITextComponent textComp = messages[0];
         String tag = TextFormatting.stripFormatting(textComp.getString());

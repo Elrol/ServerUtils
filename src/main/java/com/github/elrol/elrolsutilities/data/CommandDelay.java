@@ -130,7 +130,7 @@ public class CommandDelay implements Runnable {
         if (this.a != null) {
             this.a.cancel(true);
         }
-        s.shutdown();
+        if(s != null) s.shutdown();
         Main.commandDelays.remove(this.player.getUUID());
     }
 
@@ -142,7 +142,6 @@ public class CommandDelay implements Runnable {
             if (a != null) {
                 a.cancel(false);
             }
-            s.shutdown();
             Main.commandDelays.remove(this.player.getUUID());
             if (cooldown > 0) {
                 Logger.log("Cooldown starting from commandDelays");

@@ -26,7 +26,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -59,14 +58,20 @@ public class BlockEventHandler {
         }
         Location loc = new Location(player.level.dimension(), event.getPos(), 0f,0f);
         if(Main.shopRegistry.exists(loc)) {
-            boolean flag1 = !Main.shopRegistry.getShop(loc).canEdit(player);
+            AbstractShop shop = Main.shopRegistry.getShop(loc);
+            if(!shop.isLinked()){
+                if(!shop.isAdmin())
+                    data.getShops().remove(loc);
+                Main.shopRegistry.removeShop(loc);
+                return;
+            }
+            boolean flag1 = !shop.canEdit(player);
             boolean flag2 = player.getMainHandItem().isEmpty() || !player.getMainHandItem().getItem().equals(Items.REDSTONE);
             if (flag1|| flag2) {
                 event.setCanceled(true);
                 return;
             }
 
-            AbstractShop shop = Main.shopRegistry.getShop(loc);
             if(!shop.isAdmin())
                 data.getShops().remove(loc);
             Main.shopRegistry.removeShop(loc);
@@ -125,7 +130,6 @@ public class BlockEventHandler {
             if (player.getUUID().equals(uuid) || Main.database.get(uuid).isTrusted(player.getUUID())) return;
             TextUtils.err(player, Errs.chunk_claimed(Main.database.get(uuid).getDisplayName()));
             event.setCanceled(true);
-            return;
         }
     }
 
@@ -153,7 +157,6 @@ public class BlockEventHandler {
         if(!(event.getPlayer() instanceof ServerPlayerEntity)) return;
 
         ServerPlayerEntity player = (ServerPlayerEntity)event.getPlayer();
-        IPlayerData pdata = Main.database.get(player.getUUID());
         ItemStack hand = player.getMainHandItem();
         IShopRegistry reg = IElrolAPI.getInstance().getShopInit();
         TileEntity te = world.getBlockEntity(event.getPos());
@@ -241,8 +244,5 @@ public class BlockEventHandler {
                 else if(FeatureConfig.jailProtection.get() == 2) event.setCanceled(true);
             }
         }
-    }
-
-    public void updateSignBlock(EntityEvent.CanUpdate event) {
     }
 }

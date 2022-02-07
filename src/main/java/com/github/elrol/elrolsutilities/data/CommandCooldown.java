@@ -63,7 +63,7 @@ public class CommandCooldown implements Runnable {
 
     public void cancel(){
         a.cancel(true);
-        s.shutdown();
+        if(s != null)s.shutdown();
     }
 }
 

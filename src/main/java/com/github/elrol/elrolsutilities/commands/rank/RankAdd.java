@@ -14,13 +14,14 @@ import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
+import net.minecraft.command.arguments.EntityArgument;
 
 import java.util.UUID;
 
 public class RankAdd {
     public static ArgumentBuilder<CommandSource, ?> register() {
         return Commands.literal("add")
-        		.then(Commands.argument("player", StringArgumentType.string())
+        		.then(Commands.argument("player", EntityArgument.players())
         				.suggests(ModSuggestions::suggestPlayers)
         				.then(Commands.argument("rank", StringArgumentType.string())
         						.suggests(ModSuggestions::suggestRanks)
