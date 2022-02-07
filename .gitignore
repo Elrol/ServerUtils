@@ -14,6 +14,5 @@ run
 
 # Files from Forge MDK
 forge*changelog.txt
-libs/
 run/
 build/
