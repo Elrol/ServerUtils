@@ -5,7 +5,7 @@ import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.ModInfo;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -17,7 +17,8 @@ public class OnPlayerLeaveHandler {
     @SubscribeEvent(priority=EventPriority.HIGHEST)
     public void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event) {
         Logger.debug("Player left the server");
-        PlayerEntity player = event.getPlayer();
+        if(!(event.getPlayer() instanceof ServerPlayerEntity)) return;
+        ServerPlayerEntity player = (ServerPlayerEntity)event.getPlayer();
         if (Main.commandDelays.containsKey(player.getUUID())) {
             Main.commandDelays.get(player.getUUID()).cancel();
             Logger.log(player.getName().getString() + " logged out and their delay was canceled.");

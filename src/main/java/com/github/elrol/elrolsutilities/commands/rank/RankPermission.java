@@ -1,7 +1,6 @@
 package com.github.elrol.elrolsutilities.commands.rank;
 
 import com.mojang.brigadier.builder.ArgumentBuilder;
-
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 

@@ -1,14 +1,8 @@
 package com.github.elrol.elrolsutilities.events;
 
-import com.github.elrol.elrolsutilities.ElrolApi;
 import com.github.elrol.elrolsutilities.Main;
-import com.github.elrol.elrolsutilities.api.IElrolAPI;
 import com.github.elrol.elrolsutilities.api.data.IPlayerData;
-import com.github.elrol.elrolsutilities.config.Configs;
-import com.github.elrol.elrolsutilities.data.EconData;
-import com.github.elrol.elrolsutilities.data.PatreonList;
-import com.github.elrol.elrolsutilities.data.PlayerDatabase;
-import com.github.elrol.elrolsutilities.data.ServerData;
+import com.github.elrol.elrolsutilities.data.*;
 import com.github.elrol.elrolsutilities.econ.averon.AveronShopManager;
 import com.github.elrol.elrolsutilities.econ.chestshop.ChestShopManager;
 import com.github.elrol.elrolsutilities.econ.chestshop.ChestShopType;
@@ -18,9 +12,7 @@ import com.github.elrol.elrolsutilities.init.TimerInit;
 import com.github.elrol.elrolsutilities.libs.JsonMethod;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.Methods;
-import com.github.elrol.elrolsutilities.libs.ModInfo;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -36,7 +28,6 @@ public class ServerLifecycleHandler {
         Main.database = new PlayerDatabase();
         Main.mcServer = event.getServer();
         Main.patreonList.init();
-
         Main.isCheatMode = Main.mcServer.getWorldData().getAllowCommands();
         Main.dir = Methods.getWorldDir(Main.mcServer.getWorldData().getLevelName());
 
@@ -45,15 +36,16 @@ public class ServerLifecycleHandler {
         Main.shopRegistry.registerShopManager(new ChestShopManager(ChestShopType.AdminSell));
         Main.shopRegistry.registerShopManager(new ChestShopManager(ChestShopType.Buy));
         Main.shopRegistry.registerShopManager(new ChestShopManager(ChestShopType.Sell));
-
         Main.serverData = JsonMethod.load(new File(Main.dir, "/data"), "serverdata.dat", ServerData.class);
+
         if (Main.serverData == null) {
             Main.serverData = new ServerData();
         }
         JsonMethod.save(new File(Main.dir, "/data"), "serverdata.dat", Main.serverData);
         Ranks.init();
         Main.permRegistry.save();
-        TimerInit.init();
+        Logger.log("Starting Timer");
+        //TimerInit.init();
         Main.bot.init();
         Main.bot.sendInfoMessage("Server is starting");
     }
@@ -84,7 +76,12 @@ public class ServerLifecycleHandler {
         JsonMethod.save(new File(Main.dir, "/data"), "serverdata.dat", Main.serverData);
         Logger.log("Saving ShopData");
         Main.shopRegistry.save();
-        Main.shutdown();
+        Logger.log("Stopping Timer");
+        TimerInit.shutdown();
+        CommandCooldown.shutdown();
+        CommandDelay.shutdown();
+        TpRequest.shutdown();
+        Main.bot.shutdown();
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

@@ -14,7 +14,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -28,19 +28,19 @@ public class ChunkHandler {
     private final List<UUID> tempList = new ArrayList<>();
 
     @SubscribeEvent
-    public void enterChunkEvent(PlayerEvent.EnteringChunk event){
+    public void enterChunkEvent(EntityEvent.EnteringChunk event){
         if(!(event.getEntity() instanceof ServerPlayerEntity)) return;
+        ServerPlayerEntity player = (ServerPlayerEntity)event.getEntity();
         if(tempList.contains(event.getEntity().getUUID())){
             tempList.remove(event.getEntity().getUUID());
             return;
         }
         ResourceLocation dim = event.getEntity().level.dimension().location();
+
         ClaimBlock oldPos = new ClaimBlock(dim, new ChunkPos(event.getOldChunkX(), event.getOldChunkZ()));
         ClaimBlock newPos = new ClaimBlock(dim, new ChunkPos(event.getNewChunkX(), event.getNewChunkZ()));
         UUID oldOwner = Main.serverData.getOwner(oldPos);
         UUID newOwner = Main.serverData.getOwner(newPos);
-        ServerPlayerEntity player = (ServerPlayerEntity) event.getEntity();
-        if(player == null) return;
         if(newOwner != null) {
             IPlayerData newData = Main.database.get(newOwner);
             //!newData.getFlag(ClaimFlagKeys.allow_entry) && !newOwner.equals(player.getUUID()) && !newData.isTrusted(player.getUUID())
@@ -51,10 +51,10 @@ public class ChunkHandler {
                     if(!newData.isTrusted(player.getUUID()) && !IElrolAPI.getInstance().getPermissionHandler().hasPermission(player.getUUID(), "*")) {
                         tempList.add(player.getUUID());
                         TextUtils.err(player, Errs.no_entry(Methods.getDisplayName(newOwner)));
-                        double x = player.blockPosition().getX() + (2 * (event.getOldChunkX() - event.getNewChunkX()));
-                        double z = player.blockPosition().getZ() + (2 * (event.getOldChunkZ() - event.getNewChunkZ()));
+                        double x = player.blockPosition().getX() + (2 * (oldPos.getPos().x - newPos.getPos().x));
+                        double z = player.blockPosition().getZ() + (2 * (oldPos.getPos().z - newPos.getPos().z));
                         BlockPos prevLoc = new BlockPos(x, player.blockPosition().getY(), z);
-                        Methods.teleport(player, new Location(dim, prevLoc, player.yRot, player.xRot));
+                        Methods.teleport(player, new Location(dim, prevLoc, player.yHeadRot, player.yHeadRotO));
 
                         return;
                     }

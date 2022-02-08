@@ -25,8 +25,8 @@ public class RankCmds {
                 "Clear: Removes all commands from the Rank."
         };
         StringTextComponent helpMsg = TextUtils.commandHelp(help);
-         TextUtils.msgNoTag(c.getSource(), helpMsg);
-         return 1;
+        TextUtils.msgNoTag(c.getSource(), helpMsg);
+        return 1;
     }
 }
 

@@ -11,13 +11,14 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.util.Constants;
@@ -89,7 +90,7 @@ extends _CmdBase {
         @Override
         public void run() {
             players.forEach(player -> {
-                World world = player.getCommandSenderWorld();
+                World world = player.getLevel();
                 BlockPos pos = player.blockPosition();
                 for (int x = -1; x < 2; ++x) {
                     for (int y = 0; y < 3; ++y) {

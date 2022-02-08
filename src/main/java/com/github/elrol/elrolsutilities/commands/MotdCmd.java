@@ -23,8 +23,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.List;
 
-public class MotdCmd
-extends _CmdBase {
+public class MotdCmd extends _CmdBase {
     public MotdCmd(ForgeConfigSpec.IntValue delay, ForgeConfigSpec.IntValue cooldown, ForgeConfigSpec.ConfigValue<List<? extends String>> aliases, ForgeConfigSpec.IntValue cost) {
         super(delay, cooldown, aliases, cost);
     }

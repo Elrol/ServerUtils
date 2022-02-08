@@ -5,7 +5,6 @@ import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.api.data.Location;
 import com.github.elrol.elrolsutilities.config.Configs;
 import com.github.elrol.elrolsutilities.data.CommandCooldown;
-import com.github.elrol.elrolsutilities.data.PlayerData;
 import com.github.elrol.elrolsutilities.events.ChunkHandler;
 import com.github.elrol.elrolsutilities.init.Ranks;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
@@ -27,7 +26,6 @@ import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.server.SPlayerPositionLookPacket;
 import net.minecraft.util.ClassInheritanceMultiMap;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -164,7 +162,7 @@ public class Methods {
             data.setPrevLoc(Methods.getPlayerLocation(player));
             data.save();
         }
-        ServerWorld world = Main.mcServer.getLevel(loc.getWorld());
+        ServerWorld world = Main.mcServer.getLevel(loc.getLevel());
         if(world == null) {
             System.out.println("[Methods:123] World was null");
             return;
@@ -194,19 +192,17 @@ public class Methods {
         BlockPos blockpos = new BlockPos(x, y, z);
         if (World.isInSpawnableBounds(blockpos)) {
             if (entityIn instanceof ServerPlayerEntity) {
+                ServerPlayerEntity player = (ServerPlayerEntity)entityIn;
                 ChunkPos chunkpos = new ChunkPos(new BlockPos(x, y, z));
                 worldIn.getChunkSource().addRegionTicket(TicketType.POST_TELEPORT, chunkpos, 1, entityIn.getId());
-                entityIn.stopRiding();
-                if (((ServerPlayerEntity)entityIn).isSleeping()) {
-                    ((ServerPlayerEntity)entityIn).stopSleepInBed(true, true);
-                }
-
+                player.teleportTo(worldIn,x,y,z,yaw,pitch);
+                /*
                 if (worldIn == entityIn.level) {
-                    ((ServerPlayerEntity)entityIn).connection.teleport(x, y, z, yaw, pitch, Collections.singleton(SPlayerPositionLookPacket.Flags.X));
+                    player.connection.teleport(x, y, z, yaw, pitch, Collections.singleton(ClientboundPlayerPositionPacket.RelativeArgument.X));
                 } else {
-                    ((ServerPlayerEntity)entityIn).teleportTo(worldIn, x, y, z, yaw, pitch);
+                    player.teleportTo(worldIn, x, y, z, yaw, pitch);
                 }
-
+                */
                 entityIn.setYHeadRot(yaw);
             } else {
                 float f1 = MathHelper.wrapDegrees(yaw);
@@ -242,12 +238,12 @@ public class Methods {
         }
     }
 
-    public static Location getPlayerLocation(PlayerEntity player) {
+    public static Location getPlayerLocation(ServerPlayerEntity player) {
         Vector3d pos = player.position().add(0.0, 0.5, 0.0);
-        return new Location(player.level.dimension(), new BlockPos(pos), player.yRot, player.xRot);
+        return new Location(player.level.dimension(), new BlockPos(pos), player.yHeadRot, player.yHeadRotO);
     }
 
-    public static ChunkPos getChunk(PlayerEntity player){
+    public static ChunkPos getChunk(ServerPlayerEntity player){
         return new ChunkPos(new BlockPos(player.position()));
     }
 
@@ -312,13 +308,13 @@ public class Methods {
 
     public static String getDisplayName(UUID uuid){
         IPlayerData data = Main.database.get(uuid);
-        GameProfile cache = Main.mcServer.getProfileCache().get(uuid);
+        GameProfile cache = getPlayerCachedProfile(uuid);
         if(data.getNickname() == null || data.getNickname().isEmpty())
-            return cache == null ? "[Null Player]" : cache.getName();
+            return cache.getName();
         return TextUtils.formatString(data.getNickname()) + TextFormatting.RESET;
     }
 
-    public static String getDisplayName(PlayerEntity player) {
+    public static String getDisplayName(ServerPlayerEntity player) {
         return getDisplayName(player.createCommandSourceStack());
     }
 
@@ -352,9 +348,9 @@ public class Methods {
     }
 
     public static UUID getUUIDFromName(String name) {
-        for (PlayerData data : Main.database.getDatabase().values()) {
-            if (!data.username.equalsIgnoreCase(name)) continue;
-            return data.uuid;
+        for (IPlayerData data : Main.database.getDatabase().values()) {
+            if (!data.getUsername().equalsIgnoreCase(name)) continue;
+            return data.getUUID();
         }
         return null;
     }

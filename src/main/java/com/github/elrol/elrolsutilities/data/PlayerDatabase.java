@@ -12,7 +12,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class PlayerDatabase implements IPlayerDatabase {
-    Map<UUID, PlayerData> database = new HashMap<>();
+    Map<UUID, IPlayerData> database = new HashMap<>();
+    Map<Long, UUID> discordMap = new HashMap<>();
 
     public PlayerDatabase() {
         loadAll();
@@ -23,7 +24,7 @@ public class PlayerDatabase implements IPlayerDatabase {
         return this.database.containsKey(uuid);
     }
 
-    public Map<UUID, PlayerData> getDatabase() {
+    public Map<UUID, IPlayerData> getDatabase() {
         return this.database;
     }
 
@@ -41,6 +42,16 @@ public class PlayerDatabase implements IPlayerDatabase {
         }
         Logger.debug("Loading data from file.");
         return data;
+    }
+
+    @Override
+    public IPlayerData get(long id) {
+        UUID uuid = discordMap.getOrDefault(id, null);
+        return uuid == null ? null : database.get(uuid);
+    }
+
+    public void link(UUID uuid, long id) {
+        discordMap.put(id, uuid);
     }
 
     private PlayerData registerPlayerData(UUID uuid) {
@@ -76,7 +87,8 @@ public class PlayerDatabase implements IPlayerDatabase {
             if (!f.getName().endsWith(".pdat")) continue;
             String s = f.getName().replace(".pdat", "");
             UUID uuid = UUID.fromString(s);
-            this.load(uuid);
+            IPlayerData data = load(uuid);
+            if(data.getDiscordID() > 0) discordMap.putIfAbsent(data.getDiscordID(), uuid);
             Logger.debug("Loading playerdata for: " + s);
         }
     }

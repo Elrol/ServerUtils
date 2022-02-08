@@ -49,7 +49,7 @@ extends _CmdBase {
             TextUtils.err(c, Errs.no_warp_name());
             return 0;
         }
-        if (!Main.serverData.warpMap.containsKey(name)) {
+        if (Main.serverData.getWarp(name) == null) {
             TextUtils.err(c, Errs.warp_not_found(name));
             return 0;
         }

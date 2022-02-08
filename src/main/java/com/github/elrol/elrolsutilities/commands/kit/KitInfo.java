@@ -1,7 +1,5 @@
 package com.github.elrol.elrolsutilities.commands.kit;
 
-import java.util.List;
-
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.commands.ModSuggestions;
 import com.github.elrol.elrolsutilities.data.Kit;
@@ -12,10 +10,11 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
-
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.item.ItemStack;
+
+import java.util.List;
 
 public class KitInfo {
     public static ArgumentBuilder<CommandSource, ?> register() {

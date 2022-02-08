@@ -1,30 +1,33 @@
 package com.github.elrol.elrolsutilities.data;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.commands._CmdBase;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
-
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.StringTextComponent;
 
-public class CommandDelay implements Runnable {
-    private ServerPlayerEntity player;
-    private Runnable runnable;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+
+public class CommandDelay
+implements Runnable {
+    private static final ScheduledExecutorService s = Executors.newSingleThreadScheduledExecutor();
+
+    private final ServerPlayerEntity player;
+    private final Runnable runnable;
+
     public int seconds;
     public int cooldown;
     public String name;
     public BlockPos pos = null;
-    private ScheduledExecutorService s;
     private ScheduledFuture<?> a;
 
     public CommandDelay(ServerPlayerEntity player, String name, int seconds, int cooldown, Runnable runnable) {
@@ -36,8 +39,7 @@ public class CommandDelay implements Runnable {
         this.name = name;
         Logger.log("CommandDelay[" + name + "] { Delay[" + seconds + "], Cooldown[" + cooldown + "]");
         if (seconds > 0) {
-            this.s = Executors.newSingleThreadScheduledExecutor();
-            this.a = this.s.scheduleWithFixedDelay(this, 0L, 1L, TimeUnit.SECONDS);
+            a = s.scheduleWithFixedDelay(this, 0L, 1L, TimeUnit.SECONDS);
         } else {
             this.run();
         }
@@ -55,8 +57,7 @@ public class CommandDelay implements Runnable {
         }
         //Logger.log("CommandDelay[" + name + "] { Delay[" + seconds + "], Cooldown[" + cooldown + "]");
         if (seconds > 0) {
-            this.s = Executors.newSingleThreadScheduledExecutor();
-            this.a = this.s.scheduleWithFixedDelay(this, 0L, 1L, TimeUnit.SECONDS);
+            this.a = s.scheduleWithFixedDelay(this, 0L, 1L, TimeUnit.SECONDS);
         } else {
             this.run();
         }
@@ -130,8 +131,11 @@ public class CommandDelay implements Runnable {
         if (this.a != null) {
             this.a.cancel(true);
         }
-        if(s != null) s.shutdown();
         Main.commandDelays.remove(this.player.getUUID());
+    }
+
+    public static void shutdown() {
+        s.shutdown();
     }
 
     @Override
@@ -148,8 +152,8 @@ public class CommandDelay implements Runnable {
                 CommandCooldown.init(player, cooldown, name);
             }
         } else {
-            --this.seconds;
-            TextUtils.msg(this.player.createCommandSourceStack(), "" + (this.seconds + 1));
+            TextUtils.action(player, new StringTextComponent(seconds + " Seconds Left"));
+            --seconds;
         }
     }
 }

@@ -23,6 +23,7 @@ public class Rank implements IRank {
 
     private int rank_up;
     private List<String> next_ranks;
+    private float rank_up_cost;
 
     public Rank(String name) {
         this.name = name;
@@ -135,11 +136,17 @@ public class Rank implements IRank {
         return p;
     }
 
-    public long getRankUp(){return rank_up * 60000L;}
+    public long getRankUp() { return rank_up * 60000L; }
     public void setRank_up(int min){
         if(min < 0) min = 0;
         rank_up = min;
         Main.getLogger().info("Rank " + name + "'s rank-up time has been set to " + min + " min(s)");
+    }
+
+    public float getRankUpCost() { return rank_up_cost; }
+
+    public void setRankUpCost(float cost) {
+        rank_up_cost = cost > 0 ? cost : 0;
     }
 
     public List<String> getNextRanks() {
@@ -192,7 +199,6 @@ public class Rank implements IRank {
         Commands manager = Main.mcServer.getCommands();
         CommandSource source = Main.mcServer.createCommandSourceStack();
         GameProfile profile = Methods.getPlayerCachedProfile(uuid);
-        if(profile == null) return;
         for(String cmd : cmds) {
             manager.performCommand(source, cmd.replace("{player}", profile.getName()));
         }

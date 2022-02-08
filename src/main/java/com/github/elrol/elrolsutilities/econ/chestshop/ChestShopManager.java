@@ -4,7 +4,6 @@ import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.data.Location;
 import com.github.elrol.elrolsutilities.api.econ.AbstractShop;
 import com.github.elrol.elrolsutilities.api.econ.IShopManager;
-import com.github.elrol.elrolsutilities.econ.averon.AveronShop;
 import com.github.elrol.elrolsutilities.libs.JsonMethod;
 import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
@@ -13,6 +12,7 @@ import net.minecraft.tileentity.SignTileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,8 +45,8 @@ public class ChestShopManager implements IShopManager {
     public void registerShop(Location loc, AbstractShop shop) {
         if(!(shop instanceof ChestShop)) return;
         if(isShop(loc)) return;
-
         ChestShop chestShop = (ChestShop) shop;
+
         BlockPos pos = loc.getBlockPos();
         Map<BlockPos, ChestShop> shops = shopMap.getOrDefault(loc.world, new HashMap<>());
 

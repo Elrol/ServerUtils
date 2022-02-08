@@ -9,6 +9,7 @@ import net.minecraft.command.CommandSource;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 public class CommandUpdater {
@@ -21,7 +22,7 @@ public class CommandUpdater {
 
         Collection<CommandNode<CommandSource>> commands = dispatcher.getRoot().getChildren();
         for(CommandNode<CommandSource> command : commands) {
-            Logger.log("Updating Command: " + command.getName());
+            Logger.debug("Updating Command: " + command.getName());
             if(command.getName().equalsIgnoreCase("spark")) continue;
             checkCommand(command, "");
         }
@@ -46,7 +47,7 @@ public class CommandUpdater {
             node += command.getName();
         }
 
-        if (Main.permRegistry.commandPerms.containsKey(node)){
+        if (Main.permRegistry.commandPerms.containsKey(node)) {
             perm = Main.permRegistry.commandPerms.get(node);
         } else {
             perm = "command." + node.replace("_", ".");

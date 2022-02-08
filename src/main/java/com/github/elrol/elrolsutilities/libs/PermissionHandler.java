@@ -10,10 +10,9 @@ import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.common.util.FakePlayer;
 
 import java.util.Map;
@@ -36,7 +35,7 @@ public class PermissionHandler implements IPermissionHandler {
 
     public boolean hasPermission(CommandSource source, String perm) {
         try {
-            PlayerEntity player = source.getPlayerOrException();
+            ServerPlayerEntity player = source.getPlayerOrException();
 
             if(player instanceof FakePlayer) return true;
 

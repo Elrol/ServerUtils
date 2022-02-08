@@ -1,5 +1,6 @@
 package com.github.elrol.elrolsutilities.api.data;
 
+
 import net.minecraft.block.BlockState;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
@@ -30,10 +31,10 @@ public class Location {
     }
 
     public Location(Location loc) {
-        this.world = loc.getWorld().getRegistryName();
-        this.pos = loc.getBlockPos();
-        this.pitch = loc.getPitch();
-        this.yaw = loc.getYaw();
+        this.world = loc.world;
+        this.pos = loc.pos;
+        this.pitch = loc.pitch;
+        this.yaw = loc.yaw;
     }
 
     public Location(World world, BlockPos pos, float yaw, float pitch) {
@@ -57,13 +58,13 @@ public class Location {
         this.yaw = yaw;
     }
 
-    public RegistryKey<World> getWorld(){
+    public RegistryKey<World> getLevel(){
         return RegistryKey.create(Registry.DIMENSION_REGISTRY,  world);
     }
 
-    public ServerWorld getWorldObj(){
+    public ServerWorld getLevelObj(){
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-        return server.getLevel(getWorld());
+        return server.getLevel(getLevel());
     }
 
     public BlockPos getBlockPos() {
@@ -133,12 +134,12 @@ public class Location {
         return this;
     }
 
-    public TileEntity getTileEntity() {
-        return getWorldObj().getBlockEntity(pos);
+    public TileEntity getBlockEntity() {
+        return getLevelObj().getBlockEntity(pos);
     }
 
     public BlockState getBlockState() {
-        return getWorldObj().getBlockState(pos);
+        return getLevelObj().getBlockState(pos);
     }
 
     @Override

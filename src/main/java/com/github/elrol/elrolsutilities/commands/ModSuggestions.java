@@ -3,7 +3,6 @@ package com.github.elrol.elrolsutilities.commands;
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.api.enums.ClaimFlagKeys;
-import com.github.elrol.elrolsutilities.data.PlayerData;
 import com.github.elrol.elrolsutilities.init.Ranks;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.mojang.brigadier.context.CommandContext;
@@ -50,7 +49,7 @@ public class ModSuggestions {
     }
 
     public static CompletableFuture<Suggestions> suggestWarps(CommandContext<CommandSource> context, SuggestionsBuilder builder) {
-        return ISuggestionProvider.suggest(Main.serverData.warpMap.keySet(), builder);
+        return ISuggestionProvider.suggest(Main.serverData.getWarpNames(), builder);
     }
 
     public static CompletableFuture<Suggestions> suggestRankups(CommandContext<CommandSource> context, SuggestionsBuilder builder) {
@@ -69,9 +68,9 @@ public class ModSuggestions {
 
     public static CompletableFuture<Suggestions> suggestPlayers(CommandContext<CommandSource> context, SuggestionsBuilder builder) {
         ArrayList<String> userNames = new ArrayList<>();
-        for (PlayerData data : Main.database.getDatabase().values()) {
-            if (data.username.isEmpty()) continue;
-            userNames.add(data.username);
+        for (IPlayerData data : Main.database.getDatabase().values()) {
+            if (data.getUsername().isEmpty()) continue;
+            userNames.add(data.getUsername());
         }
         return ISuggestionProvider.suggest(userNames, builder);
     }
@@ -85,7 +84,11 @@ public class ModSuggestions {
     }
 
     public static CompletableFuture<Suggestions> suggestJails(CommandContext<CommandSource> context, SuggestionsBuilder builder) {
-        return ISuggestionProvider.suggest(Main.serverData.jailMap.keySet(), builder);
+        return ISuggestionProvider.suggest(Main.serverData.getJailMap().keySet(), builder);
+    }
+
+    public static CompletableFuture<Suggestions> suggestTitles(CommandContext<CommandSource> context, SuggestionsBuilder builder) {
+        return ISuggestionProvider.suggest(Main.serverData.getTitleMap().keySet(), builder);
     }
 }
 

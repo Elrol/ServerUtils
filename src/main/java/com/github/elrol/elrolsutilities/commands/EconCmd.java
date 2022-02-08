@@ -4,7 +4,6 @@ import com.github.elrol.elrolsutilities.commands.econ.EconAdd;
 import com.github.elrol.elrolsutilities.commands.econ.EconBal;
 import com.github.elrol.elrolsutilities.commands.econ.EconRemove;
 import com.github.elrol.elrolsutilities.commands.econ.EconSet;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;

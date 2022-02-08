@@ -15,19 +15,23 @@ import java.util.UUID;
 public class PatreonList {
 
     public ArrayList<UUID> patreons = new ArrayList<>();
-
+    boolean flag = false;
     public void init(){
         Logger.log("Starting loading patreon list.");
-        try(BufferedInputStream stream = new BufferedInputStream(new URL("https://www.pastebin.com/raw/vvAFUqWG").openStream())) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-            Gson gson = new Gson();
-            PatreonList list = gson.fromJson(reader, PatreonList.class);
-            if(list.patreons != null) patreons = list.patreons;
-            // Main.getLogger().info("Patreons: " + patreons);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(flag){
+            try(BufferedInputStream stream = new BufferedInputStream(new URL("https://www.pastebin.com/raw/vvAFUqWG").openStream())) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+                Gson gson = new Gson();
+                PatreonList list = gson.fromJson(reader, PatreonList.class);
+                if(list.patreons != null) patreons = list.patreons;
+                Logger.log("Patreon list loaded");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Logger.log("Patreon list loading skipped");
         }
-        Logger.log("Patreon list loaded");
+
     }
 
     public boolean has(UUID uuid){

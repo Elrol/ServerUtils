@@ -5,16 +5,13 @@ import com.github.elrol.elrolsutilities.api.claims.IClaimSetting;
 import com.github.elrol.elrolsutilities.api.claims.IClaimSettingEntry;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.chunk.Chunk;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Claim implements IClaim {
-    private Map<String, IClaimSetting> claimSettings = new HashMap<>();
-    private Map<ChunkPos, Map<String, IClaimSetting>> chunkSettings = new HashMap<>();
+    private final Map<String, IClaimSetting> claimSettings = new HashMap<>();
+    private final Map<ChunkPos, Map<String, IClaimSetting>> chunkSettings = new HashMap<>();
 
     public boolean isClaimed(BlockPos pos) {
         ChunkPos chunk = new ChunkPos(pos);

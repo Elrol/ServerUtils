@@ -9,8 +9,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.tileentity.SignTileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
@@ -20,7 +20,7 @@ import java.util.UUID;
 public abstract class AbstractShop {
 
     protected float cost = 0.0f;
-    protected UUID owner;
+    private UUID owner;
     protected Location linkLoc;
     private transient final String tag;
 
@@ -66,7 +66,7 @@ public abstract class AbstractShop {
      * Called when the sign is used. Returns true if allowed to use and false if not.
      * @return boolean
      */
-    public boolean useShop(ServerPlayerEntity player, Location signLoc) {
+    public boolean useShop(ServerPlayerEntity player, Location loc) {
         if(canCreate(player)) {
             IPlayerDatabase database = IElrolAPI.getInstance().getPlayerDatabase();
             IPlayerData data = database.get(player.getUUID());
@@ -75,7 +75,7 @@ public abstract class AbstractShop {
         return false;
     }
 
-    public abstract ITextComponent[] confirm();
+    public abstract TextComponent[] confirm();
 
     public abstract boolean canCreate(ServerPlayerEntity player);
 
@@ -95,7 +95,7 @@ public abstract class AbstractShop {
 
     public boolean canEdit(ServerPlayerEntity player) {
         if(owner == null) {
-            owner = player.getUUID();
+            setOwner(player.getUUID());
             return true;
         }
         return player.getUUID().equals(owner);

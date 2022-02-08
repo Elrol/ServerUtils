@@ -18,14 +18,15 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.tileentity.SignTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -49,11 +50,12 @@ public class ChestShop extends AbstractShop {
     @Override
     public boolean link(ServerPlayerEntity player, Location signLoc, Location linkLoc) {
         if(!canCreate(player)) return false;
-        World w1 = signLoc.getWorldObj();
+
+        World w1 = signLoc.getLevelObj();
         BlockPos pos1 = signLoc.getBlockPos();
         TileEntity te1 = w1.getBlockEntity(pos1);
 
-        World w2 = linkLoc.getWorldObj();
+        World w2 = linkLoc.getLevelObj();
         BlockPos pos2 = linkLoc.getBlockPos();
         TileEntity te2 = w2.getBlockEntity(pos2);
 
@@ -69,7 +71,9 @@ public class ChestShop extends AbstractShop {
                 int size = itemHandler.getSlots();
                 for(int s = 0; s < size; s++) {
                     ItemStack stack = itemHandler.extractItem(s, 64, true);
-                    if(!stack.isEmpty()) items.add(stack);
+                    if(!stack.isEmpty()) {
+                        items.add(stack);
+                    }
                 }
             });
             if(items.isEmpty()) {
@@ -84,13 +88,12 @@ public class ChestShop extends AbstractShop {
         return false;
     }
 
-    @Override
     public boolean useShop(ServerPlayerEntity player, Location signLoc) {
         if(!isLinked()) {
             TextUtils.err(player, Errs.not_linked(tag()));
             return false;
         }
-        TileEntity te = linkLoc.getTileEntity();
+        TileEntity te = linkLoc.getBlockEntity();
 
         if(te == null) return false;
 
@@ -186,7 +189,7 @@ public class ChestShop extends AbstractShop {
         }
         IPlayerDatabase db = IElrolAPI.getInstance().getPlayerDatabase();
 
-        IPlayerData shopOwner = db.get(owner);
+        IPlayerData shopOwner = db.get(getOwner());
         IPlayerData customer = db.get(player.getUUID());
 
         if(customer.getBal() < cost) return false;
@@ -196,7 +199,7 @@ public class ChestShop extends AbstractShop {
             Methods.takeFromChest(itemHandler, items);
             seller = shopOwner.getDisplayName();
             shopOwner.pay(cost);
-            TextUtils.msg(Methods.getPlayerFromUUID(owner), Msgs.paid_by(customer.getDisplayName(), TextUtils.parseCurrency(cost, false)));
+            TextUtils.msg(Methods.getPlayerFromUUID(getOwner()), Msgs.paid_by(customer.getDisplayName(), TextUtils.parseCurrency(cost, false)));
         }
         for(ItemStack si : items) {
             ItemStack shopItem = si.copy();
@@ -233,26 +236,27 @@ public class ChestShop extends AbstractShop {
             }
         }
         IPlayerDatabase db = IElrolAPI.getInstance().getPlayerDatabase();
-        IPlayerData ownerData = db.get(owner);
+        IPlayerData ownerData = db.get(getOwner());
         IPlayerData sellerData = db.get(player.getUUID());
 
         String seller = "The Server";
         if(!isAdmin()) {
             if(ownerData.getBal() < cost) {
-                TextUtils.err(player, Errs.shop_missing_funds(Methods.getDisplayName(owner)));
+                TextUtils.err(player, Errs.shop_missing_funds(Methods.getDisplayName(getOwner())));
                 return false;
             }
             if(Methods.canAllItemsFit(itemHandler, items)) {
                 Methods.addItemsToChest(itemHandler, items, false);
                 seller = ownerData.getDisplayName();
                 ownerData.charge(cost);
-                TextUtils.msg(Methods.getPlayerFromUUID(owner), Msgs.paid_player(sellerData.getDisplayName(), TextUtils.parseCurrency(cost, false)));
+                TextUtils.msg(Methods.getPlayerFromUUID(getOwner()), Msgs.paid_player(sellerData.getDisplayName(), TextUtils.parseCurrency(cost, false)));
             } else {
                 TextUtils.err(player, Errs.sign_full());
                 return false;
             }
         }
         items.forEach(item -> removeFromPlayer(item.copy(), player.inventory));
+
         sellerData.pay(cost);
         TextUtils.msg(player, Msgs.paid_by(seller, TextUtils.parseCurrency(cost, false)));
         return true;
@@ -299,17 +303,17 @@ public class ChestShop extends AbstractShop {
         int qty = item.getCount();
 
         for(int i = 0; i < limit; i++) {
-            ItemStack stack = inv.getItem(i);
-            if(item.sameItem(stack)) {
-                if(stack.getCount() >= qty) {
-                    stack.setCount(stack.getCount() - qty);
+            ItemStack slot = inv.getItem(i);
+            if(slot.sameItem(item)) {
+                if(slot.getCount() > qty) {
+                    slot.setCount(slot.getCount()-qty);
                     qty = 0;
                 } else {
-                    qty -= stack.getCount();
-                    stack.setCount(0);
+                    qty -= slot.getCount();
+                    slot.setCount(0);
                 }
             }
-            if(qty == 0) {
+            if(qty <= 0) {
                 break;
             }
         }

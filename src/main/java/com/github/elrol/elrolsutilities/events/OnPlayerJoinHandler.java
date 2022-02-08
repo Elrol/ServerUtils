@@ -24,9 +24,7 @@ public class OnPlayerJoinHandler {
     @SubscribeEvent(priority=EventPriority.HIGHEST)
     public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
         if (!event.getPlayer().level.isClientSide) {
-            if (!(event.getPlayer() instanceof ServerPlayerEntity)) {
-                return;
-            }
+            if (!(event.getPlayer() instanceof ServerPlayerEntity)) return;
             ServerPlayerEntity player = (ServerPlayerEntity)event.getPlayer();
             UUID uuid = player.getUUID();
             IPlayerData data = Main.database.get(uuid);
@@ -42,9 +40,9 @@ public class OnPlayerJoinHandler {
             } else {
                 if(FeatureConfig.welcome_msg_enable.get()) {
                     StringTextComponent text = new StringTextComponent(ModInfo.getTag());
-                    String[] raw = FeatureConfig.welcome_msg_text.get().split("\\{player}");
-                    msg = raw[0] + (raw.length > 1 ? data.getDisplayName() + raw[1] : "");
-                    text.append(new StringTextComponent(TextUtils.formatString(msg)));
+                    msg = TextUtils.formatString(FeatureConfig.welcome_msg_text.get()
+                            .replace("{player}", data.getDisplayName()));
+                    text.append(msg);
                     Main.bot.sendInfoMessage(msg);
                     Main.mcServer.getPlayerList().broadcastMessage(text, ChatType.CHAT, player.getUUID());
                 }

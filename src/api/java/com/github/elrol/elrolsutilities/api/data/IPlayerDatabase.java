@@ -8,6 +8,10 @@ public interface IPlayerDatabase {
 
     IPlayerData get(UUID uuid);
 
+    IPlayerData get(long id);
+
+    void link(UUID uuid, long id);
+
     void save(UUID uuid);
 
     void save(IPlayerData data);

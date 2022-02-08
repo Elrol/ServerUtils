@@ -1,19 +1,3 @@
-/*
- * Decompiled with CFR 0.148.
- * 
- * Could not load the following classes:
- *  com.mojang.brigadier.Command
- *  com.mojang.brigadier.arguments.ArgumentType
- *  com.mojang.brigadier.arguments.StringArgumentType
- *  com.mojang.brigadier.builder.ArgumentBuilder
- *  com.mojang.brigadier.builder.RequiredArgumentBuilder
- *  com.mojang.brigadier.context.CommandContext
- *  com.mojang.brigadier.exceptions.CommandSyntaxException
- *  com.mojang.brigadier.suggestion.SuggestionProvider
- *  com.mojang.brigadier.suggestion.SuggestionsBuilder
- *  net.minecraft.command.CommandSource
- *  net.minecraft.command.Commands
- */
 package com.github.elrol.elrolsutilities.commands.permission;
 
 import com.github.elrol.elrolsutilities.Main;

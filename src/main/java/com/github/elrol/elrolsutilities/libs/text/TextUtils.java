@@ -11,7 +11,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -96,26 +96,27 @@ public class TextUtils {
         return text;
     }
 
-    public static StringTextComponent formatChat(ServerPlayerEntity player, String msg){
-        IPlayerData data = Main.database.get(player.getUUID());
+    public static StringTextComponent formatChat(UUID uuid, String msg){
+        IPlayerData data = Main.database.get(uuid);
         StringTextComponent text = new StringTextComponent("");
-        if (data.isPatreon()) text.append(TextUtils.formatString("&5[&dPatreon&5]") + TextFormatting.RESET + " ");
+        StringBuilder string = new StringBuilder();
+        if (data.isPatreon()) string.append("&5[&dPatreon&5]&r");
         if (!data.getPrefix().isEmpty()) {
-            String prefix = TextUtils.formatString(data.getPrefix());
-            text.append(prefix + TextFormatting.RESET + " ");
+            String p = data.getPrefix();
+            string.append(p);
+            if(!p.substring(p.length() - 2).equals("&")) string.append("&r ");
         }
-        if (data.getNickname() == null || data.getNickname().isEmpty()) {
-            text.append(player.getDisplayName().getString());
-        } else {
-            text.append(TextUtils.formatString(data.getNickname()) + TextFormatting.RESET);
+        if (!data.getTitle().isEmpty()) {
+            string.append(data.getTitle()).append("&r ");
         }
+        string.append(data.getDisplayName());
         if (!data.getSuffix().isEmpty()) {
-            String suffix = TextUtils.formatString(data.getSuffix());
-            text.append(suffix);
+            string.append(" ").append(data.getSuffix());
         }
-        text.append(": ");
+        string.append("&r: ");
+        text.append(TextUtils.formatString(string.toString()));
         if (FeatureConfig.color_chat_enable.get()) {
-            if (IElrolAPI.getInstance().getPermissionHandler().hasPermission(player.createCommandSourceStack(), FeatureConfig.color_chat_perm.get())) {
+            if (IElrolAPI.getInstance().getPermissionHandler().hasPermission(uuid, FeatureConfig.color_chat_perm.get())) {
                 Logger.debug("Color chat enabled");
                 text.append(TextUtils.format(msg));
             } else {
@@ -127,6 +128,14 @@ public class TextUtils {
             text.append(msg);
         }
         return text;
+    }
+
+    public static void msgNoTag(ServerPlayerEntity player, TextComponent message) {
+        player.sendMessage(message, player.getUUID());
+    }
+
+    public static void action(ServerPlayerEntity player, TextComponent message) {
+        player.sendMessage(message, ChatType.GAME_INFO, player.getUUID());
     }
 
     public static void msg(CommandContext<CommandSource> context, TextComponent translation) {
@@ -141,7 +150,7 @@ public class TextUtils {
         source.sendSuccess(new StringTextComponent(ModInfo.getTag() + text), false);
     }
 
-    public static void msgNoTag(CommandSource source, TextComponent text){
+    public static void msgNoTag(CommandSource source, StringTextComponent text){
         source.sendSuccess(text, false);
     }
 
@@ -276,7 +285,7 @@ public class TextUtils {
         source.sendSuccess(new StringTextComponent(message), false);
     }
 
-    public static final Map<Character, TextFormatting> getColors() {
+    public static Map<Character, TextFormatting> getColors() {
         Map<Character, TextFormatting> map = new HashMap<>();
 
         map.put('0', TextFormatting.BLACK);
@@ -364,12 +373,23 @@ public class TextUtils {
         return stripped.toString();
     }
 
-    public static void sendConfirmation(ServerPlayerEntity player, ITextComponent[] lines) {
+    public static void sendConfirmation(ServerPlayerEntity player, TextComponent[] lines) {
         UUID uuid = player.getUUID();
-        TextComponent spacer = new StringTextComponent(TextFormatting.AQUA + String.join("", Collections.nCopies(45, "#")));
+        StringTextComponent spacer = new StringTextComponent(TextFormatting.AQUA + String.join("", Collections.nCopies(45, "#")));
         player.sendMessage(spacer, uuid);
-        for(ITextComponent line : lines) player.sendMessage(line, uuid);
+        for(TextComponent line : lines) player.sendMessage(line, uuid);
         player.sendMessage(spacer, uuid);
+    }
+
+    public static String generateString() {
+        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 18) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        return salt.toString();
     }
 }
 

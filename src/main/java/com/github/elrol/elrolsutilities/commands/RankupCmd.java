@@ -4,6 +4,7 @@ import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
+import com.github.elrol.elrolsutilities.data.Rank;
 import com.github.elrol.elrolsutilities.init.Ranks;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.Methods;
@@ -114,7 +115,13 @@ extends _CmdBase {
         public void run() {
             IPlayerData data = Main.database.get(player.getUUID());
             data.removeRank(data.getDomRank().getName());
-            data.addRank(Ranks.get(rank));
+            Rank r = Ranks.get(rank);
+            float cost = r.getRankUpCost();
+            if(cost > 0 && !data.charge(cost)) {
+                TextUtils.err(player, Errs.not_enough_funds(cost, data.getBal()));
+                return;
+            }
+            data.addRank(r);
             data.allowRankUp(false);
             TextUtils.msg(this.player, Msgs.player_rank_added(data.getDisplayName(), rank));
             Main.database.save(player.getUUID());

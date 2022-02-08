@@ -43,7 +43,7 @@ extends _CmdBase {
             return 0;
         }
         ServerData sdata = Main.serverData;
-        if (sdata.warpMap.isEmpty()) {
+        if (sdata.getWarpNames().isEmpty()) {
             TextUtils.err(c, Errs.no_warps());
             return 0;
         }

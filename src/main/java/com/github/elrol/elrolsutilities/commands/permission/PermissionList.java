@@ -1,32 +1,16 @@
-/*
- * Decompiled with CFR 0.148.
- * 
- * Could not load the following classes:
- *  com.mojang.brigadier.Command
- *  com.mojang.brigadier.arguments.ArgumentType
- *  com.mojang.brigadier.arguments.StringArgumentType
- *  com.mojang.brigadier.builder.ArgumentBuilder
- *  com.mojang.brigadier.builder.LiteralArgumentBuilder
- *  com.mojang.brigadier.context.CommandContext
- *  com.mojang.brigadier.exceptions.CommandSyntaxException
- *  net.minecraft.command.CommandSource
- *  net.minecraft.command.Commands
- */
 package com.github.elrol.elrolsutilities.commands.permission;
 
-import java.util.ArrayList;
-
 import com.github.elrol.elrolsutilities.Main;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
-
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
+
+import java.util.ArrayList;
 
 public class PermissionList {
     public static ArgumentBuilder<CommandSource, ?> register() {

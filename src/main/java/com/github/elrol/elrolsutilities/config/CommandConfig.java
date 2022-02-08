@@ -30,6 +30,7 @@ public class CommandConfig {
     public static CommandInfo invsee = new CommandInfo();
     public static CommandInfo jail = new CommandInfo();
     public static CommandInfo kit = new CommandInfo();
+    public static CommandInfo link = new CommandInfo();
     public static CommandInfo msg  = new CommandInfo();
     public static CommandInfo msg_toggle = new CommandInfo();
     public static CommandInfo motd = new CommandInfo();
@@ -55,6 +56,8 @@ public class CommandConfig {
     public static CommandInfo spawn = new CommandInfo();
     public static CommandInfo staffchat = new CommandInfo();
     public static CommandInfo sudo = new CommandInfo();
+    public static CommandInfo title = new CommandInfo();
+    public static CommandInfo titles = new CommandInfo();
     public static CommandInfo tpa = new CommandInfo();
     public static CommandInfo tp_accept = new CommandInfo();
     public static CommandInfo tp_deny = new CommandInfo();
@@ -80,11 +83,13 @@ public class CommandConfig {
     public static ForgeConfigSpec.ConfigValue<String> god_other_perm;
     public static ForgeConfigSpec.ConfigValue<String> heal_other_perm;
     public static ForgeConfigSpec.ConfigValue<String> home_max_perm;
+    public static ForgeConfigSpec.ConfigValue<String> homes_other;
     public static ForgeConfigSpec.ConfigValue<String> kit_modify_perm;
     public static ForgeConfigSpec.ConfigValue<String> motd_modify_perm;
     public static ForgeConfigSpec.ConfigValue<String> nick_other_perm;
     public static ForgeConfigSpec.ConfigValue<String> rank_change_perm;
     public static ForgeConfigSpec.ConfigValue<String> repair_all_perm;
+    public static ForgeConfigSpec.ConfigValue<String> titles_admin;
     public static ForgeConfigSpec.IntValue rtp_max;
     public static ForgeConfigSpec.IntValue rtp_origin_x;
     public static ForgeConfigSpec.IntValue rtp_origin_z;
@@ -249,6 +254,7 @@ public class CommandConfig {
             homes.cooldown = server.defineInRange("cooldown", 0, 0, Integer.MAX_VALUE);
             homes.aliases = server.defineList("aliases", Aliases.homes, o -> o instanceof String);
             homes.cost = server.defineInRange("cost", 0, 0, Integer.MAX_VALUE);
+            homes_other = server.define("other-perm", "command.homes.other");
         server.pop();
         server.push("Invsee");
             invsee.enable = server.define("enable", true);
@@ -271,6 +277,13 @@ public class CommandConfig {
             kit_modify_perm = server.define("modfiy perm", "serverutils.kit.modify");
             kit.aliases = server.defineList("aliases", Aliases.kit, o -> o instanceof String);
             kit.cost = server.defineInRange("cost", 0, 0, Integer.MAX_VALUE);
+        server.pop();
+        server.push("Link");
+            link.enable = server.define("enable", true);
+            link.delay = server.defineInRange("delay", 0, 0, Integer.MAX_VALUE);
+            link.cooldown = server.defineInRange("cooldown", 0, 0, Integer.MAX_VALUE);
+            link.aliases = server.defineList("aliases", Aliases.link, o -> o instanceof String);
+            link.cost = server.defineInRange("cost", 0, 0, Integer.MAX_VALUE);
         server.pop();
         server.push("Msg");
             msg.enable = server.define("enable", true);
@@ -456,6 +469,14 @@ public class CommandConfig {
             sudo.cooldown = server.defineInRange("cooldown", 0, 0, Integer.MAX_VALUE);
             sudo.aliases = server.defineList("aliases", Aliases.sudo, o -> o instanceof String);
             sudo.cost = server.defineInRange("cost", 0, 0, Integer.MAX_VALUE);
+        server.pop();
+        server.push("Titles");
+            titles.enable = server.define("enable", true);
+            titles.delay = server.defineInRange("delay", 0, 0, Integer.MAX_VALUE);
+            titles.cooldown = server.defineInRange("cooldown", 0, 0, Integer.MAX_VALUE);
+            titles.aliases = server.defineList("aliases", Aliases.titles, o -> o instanceof String);
+            titles.cost = server.defineInRange("cost", 0, 0, Integer.MAX_VALUE);
+            titles_admin = server.define("admin", "command.title.admin");
         server.pop();
         server.push("Tpa");
             tpa.enable = server.define("enable", true);

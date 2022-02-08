@@ -1,24 +1,34 @@
 package com.github.elrol.elrolsutilities;
 
+import com.github.elrol.elrolsutilities.api.IElrolAPI;
 import com.github.elrol.elrolsutilities.api.econ.IShopRegistry;
+import com.github.elrol.elrolsutilities.config.Configs;
 import com.github.elrol.elrolsutilities.data.*;
 import com.github.elrol.elrolsutilities.discord.DiscordBot;
-import com.github.elrol.elrolsutilities.init.*;
+import com.github.elrol.elrolsutilities.events.*;
+import com.github.elrol.elrolsutilities.init.BlackLists;
+import com.github.elrol.elrolsutilities.init.PermRegistry;
+import com.github.elrol.elrolsutilities.init.ShopRegistry;
 import com.github.elrol.elrolsutilities.libs.JsonMethod;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.ModInfo;
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.fml.*;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.ExtensionPoint;
+import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.FMLNetworkConstants;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ScheduledFuture;
+import org.apache.commons.lang3.tuple.Pair;
 
 @Mod(value="serverutilities")
 public class Main {
@@ -45,7 +55,40 @@ public class Main {
 
     public Main() {
         ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
-        DistExecutor.safeRunForDist(() -> SideProxy.Client::new, () -> SideProxy.Server::new);
+
+        IElrolAPI.setInstance(new ElrolApi());
+
+        if (!ModInfo.Constants.configdir.exists()) {
+            ModInfo.Constants.configdir.mkdir();
+        }
+        Main.commandDelays = new HashMap<>();
+        Main.commandCooldowns = new HashMap<>();
+        Main.requests = new HashMap<>();
+        Main.kitMap = new HashMap<>();
+        Main.patreonList = new PatreonList();
+        Main.econData = new EconData();
+
+        Main.econData.load();
+        Main.permRegistry.load();
+        Main.blackLists.load();
+
+        Main.getLogger().info("Loading Configs");
+        Configs.reload();
+
+        Main.loadKits();
+
+        MinecraftForge.EVENT_BUS.register(new ChatEventHandler());
+        MinecraftForge.EVENT_BUS.register(new EntityEventHandler());
+        MinecraftForge.EVENT_BUS.register(new LivingDropHandler());
+
+        MinecraftForge.EVENT_BUS.register(new OnPlayerJoinHandler());
+        MinecraftForge.EVENT_BUS.register(new OnPlayerLeaveHandler());
+        MinecraftForge.EVENT_BUS.register(new PlayerDeathHandler());
+
+        MinecraftForge.EVENT_BUS.register(new BlockEventHandler());
+        MinecraftForge.EVENT_BUS.register(new ChunkHandler());
+        MinecraftForge.EVENT_BUS.register(new NewCommandEventHandler());
+        MinecraftForge.EVENT_BUS.register(new ServerLifecycleHandler());
     }
 
 
@@ -75,13 +118,6 @@ public class Main {
             return (o.get()).getModInfo().getVersion().toString();
         }
         return "NONE";
-    }
-
-    public static void shutdown() {
-        commandDelays.forEach((uuid, delay) -> delay.cancel());
-        commandCooldowns.forEach((uuid, map) -> map.forEach((cmd, cd) -> cd.cancel()));
-        requests.forEach((uuid, sf) -> sf.cancel(true));
-        TimerInit.shutdown();
     }
 
     public static boolean isDev() {

@@ -2,8 +2,6 @@ package com.github.elrol.elrolsutilities.data;
 
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.perms.IPermission;
-import com.github.elrol.elrolsutilities.init.PermRegistry;
-import com.github.elrol.elrolsutilities.libs.Permissions;
 
 public class Permission implements IPermission {
     String perm;

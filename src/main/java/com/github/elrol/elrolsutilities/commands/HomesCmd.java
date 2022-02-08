@@ -1,7 +1,9 @@
 package com.github.elrol.elrolsutilities.commands;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.IElrolAPI;
 import com.github.elrol.elrolsutilities.api.data.IPlayerData;
+import com.github.elrol.elrolsutilities.config.CommandConfig;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
 import com.github.elrol.elrolsutilities.libs.Logger;
@@ -14,6 +16,8 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
+import net.minecraft.command.arguments.EntityArgument;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -29,8 +33,30 @@ extends _CmdBase {
     public void register(CommandDispatcher<CommandSource> dispatcher) {
         for (String a : aliases) {
             if(name.isEmpty()) name = a;
-                dispatcher.register(Commands.literal(a).executes(this::execute));
+                dispatcher.register(Commands.literal(a)
+                        .executes(this::execute)
+                        .then(Commands.argument("player", EntityArgument.player())
+                                .requires(c -> IElrolAPI.getInstance().getPermissionHandler().hasPermission(c, CommandConfig.homes_other.get()))
+                                .executes(c -> other(c, EntityArgument.getPlayer(c,"player")))
+                        )
+                );
         }
+    }
+
+    protected int other(CommandContext<CommandSource> c, ServerPlayerEntity player) {
+        IPlayerData data = IElrolAPI.getInstance().getPlayerDatabase().get(player.getUUID());
+        if (data.getHomes().isEmpty()) {
+            TextUtils.err(player, Errs.no_homes());
+            return 0;
+        }
+        if (FeatureConfig.enable_economy.get() && cost > 0) {
+            if (!data.charge(cost)) {
+                TextUtils.err(player, Errs.not_enough_funds(cost, data.getBal()));
+                return 0;
+            }
+        }
+        CommandDelay.init(this, c.getSource(), new CommandRunnable(player, data), false);
+        return 1;
     }
 
     @Override
@@ -77,15 +103,14 @@ extends _CmdBase {
 
         @Override
         public void run() {
-            String homes = null;
-            for (String string : this.data.getHomeNames()) {
-                if (homes == null) {
-                    homes = string;
-                    continue;
-                }
-                homes = homes + ", " + string;
-            }
-            TextUtils.msg(this.player, Msgs.valid_homes(homes));
+            StringBuilder homes = new StringBuilder();
+            data.getHomes().forEach((name, loc) -> {
+                BlockPos pos = loc.getBlockPos();
+                name = "&a" + name;
+                String coords = " &8[&7" + pos.getX() + "," + pos.getY() + "," + pos.getZ() + "&8]";
+                homes.append(name).append(coords).append("\n");
+            });
+            TextUtils.msg(this.player, Msgs.valid_homes(homes.toString()));
         }
     }
 

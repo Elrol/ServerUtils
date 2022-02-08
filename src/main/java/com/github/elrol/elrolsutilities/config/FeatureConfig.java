@@ -1,12 +1,11 @@
 package com.github.elrol.elrolsutilities.config;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.github.elrol.elrolsutilities.libs.Logger;
-
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.Mod;
+
+import java.util.Collections;
+import java.util.List;
 
 @Mod.EventBusSubscriber
 public class FeatureConfig {
@@ -90,9 +89,6 @@ public class FeatureConfig {
                 currency_plural = server.define("plural", "Dollars");
                 currency_symbol = server.define("symbol", "$");
             server.pop();
-            server.push("ChestShops");
-                chestshop_price = server.defineInRange("price", 0F, 0F, Float.MAX_VALUE);
-            server.pop();
         server.pop();
 
         server.push("Auto Clearlag");
@@ -157,7 +153,7 @@ public class FeatureConfig {
         server.comment("Jail Configs");
         server.push("Jails");
             server.comment("A list of commands that can/can't be used while jailed.");
-            jailCommands = server.define("commands", Arrays.asList(""));
+            jailCommands = server.defineList("commands", Collections.singletonList(""), o -> o instanceof String);
 
             server.comment("If true, the commands listed will be allowed, if false then they will not be allowed.");
             jailCommandsWhitelist = server.define("whitelist", false);

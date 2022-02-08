@@ -22,6 +22,8 @@ public interface IRank {
     List<IRank>     getParents();
     long            getRankUp();
     void            setRank_up(int min);
+    float           getRankUpCost();
+    void            setRankUpCost(float cost);
     List<String>    getNextRanks();
     void            addNextRank(String rank);
     void            removeNextRank(String rank);

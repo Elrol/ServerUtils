@@ -59,7 +59,7 @@ public class Msgs {
         a = TextFormatting.GREEN + a + TextFormatting.RESET;
         if(FeatureConfig.translation_enable.get())
             return new TranslationTextComponent("serverutils.command.msg.valid-homes", a);
-        return new StringTextComponent("Your current homes are: " + a + ".");
+        return new StringTextComponent("Current Homes: " + a + ".");
     }
 
     public static TextComponent permissions() {
@@ -936,21 +936,73 @@ public class Msgs {
     public static TextComponent selected_sign(String a) {
         a = TextFormatting.GREEN + a + TextFormatting.RESET;
         if(FeatureConfig.translation_enable.get())
-            return new TranslationTextComponent("serverutils.server.msg.selected-sign");
+            return new TranslationTextComponent("serverutils.server.msg.selected-sign", a);
         return new StringTextComponent("Sign has been selected. Right click on a block with redstone to link it.");
     }
 
     public static TextComponent created_shop(String a) {
         a = TextFormatting.GREEN + a + TextFormatting.RESET;
         if(FeatureConfig.translation_enable.get())
-            return new TranslationTextComponent("serverutils.server.msg.created-shop");
+            return new TranslationTextComponent("serverutils.server.msg.created-shop", a);
         return new StringTextComponent("New ChestShop created!");
     }
 
     public static TextComponent removed_shop(String a) {
         a = TextFormatting.GREEN + a + TextFormatting.RESET;
         if(FeatureConfig.translation_enable.get())
-            return new TranslationTextComponent("serverutils.server.msg.removed-shop");
+            return new TranslationTextComponent("serverutils.server.msg.removed-shop", a);
         return new StringTextComponent("This shop has been removed.");
+    }
+
+    public static TextComponent rank_cost(String a, float b) {
+        a = TextFormatting.GREEN + a + TextFormatting.RESET;
+        String c = TextUtils.parseCurrency(b, false);
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.msg.rank-cost", a, c);
+        return new StringTextComponent("The cost to rank up to " + a + " is " + c);
+    }
+
+    public static TextComponent verification(String a) {
+        a = TextFormatting.GREEN + a + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.msg.verification", a);
+        return new StringTextComponent("Run `/link " + a + "` on the server to link to your Discord account.");
+    }
+
+    public static TextComponent verified(String a) {
+        a = TextFormatting.GREEN + a + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.msg.verified", a);
+        return new StringTextComponent("Your Minecraft account [" + a + "] has been linked successfully.");
+    }
+
+    public static TextComponent setTitle(String a) {
+        a = TextFormatting.GREEN + a + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.msg.set-title", a);
+        return new StringTextComponent("You have set your title to: " + a);
+    }
+
+    public static TextComponent titleCreated(String a, String b) {
+        a = TextFormatting.GREEN + a + TextFormatting.RESET;
+        b = b + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.msg.title-created", a, b);
+        return new StringTextComponent("You have created the " + a + " title: " + b + ".");
+    }
+
+    public static TextComponent titleDeleted(String a, String b) {
+        a = TextFormatting.GREEN + a + TextFormatting.RESET;
+        b = b + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.msg.title-deleted", a, b);
+        return new StringTextComponent("You have deleted the " + a + " title: " + b + ".");
+    }
+
+    public static TextComponent titles(String a) {
+        a = TextFormatting.GREEN + a + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.msg.titles", a);
+        return new StringTextComponent("Unlocked Titles: " + a);
     }
 }

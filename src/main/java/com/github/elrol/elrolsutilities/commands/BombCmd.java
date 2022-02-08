@@ -18,6 +18,7 @@ import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.item.TNTEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.Collection;
@@ -87,9 +88,11 @@ public class BombCmd extends _CmdBase {
         @Override
         public void run() {
             BlockPos pos = new BlockPos(player.blockPosition());
-            TNTEntity tnt = new TNTEntity(player.getCommandSenderWorld(), pos.getX(), pos.getY(), pos.getZ(), player);
+            ServerWorld level = player.getLevel();
+
+            TNTEntity tnt = new TNTEntity(level, pos.getX(), pos.getY(), pos.getZ(), player);
             tnt.setFuse(10);
-            player.getCommandSenderWorld().addFreshEntity(tnt);
+            level.addFreshEntity(tnt);
             Logger.debug(Methods.getDisplayName(player));
             if (source.getTextName().equalsIgnoreCase(player.getName().getString())) {
                 TextUtils.err(player, Errs.bombed_self());

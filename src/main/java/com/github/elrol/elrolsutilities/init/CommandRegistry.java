@@ -1,10 +1,3 @@
-/*
- * Decompiled with CFR 0.148.
- * 
- * Could not load the following classes:
- *  com.mojang.brigadier.CommandDispatcher
- *  net.minecraft.command.CommandSource
- */
 package com.github.elrol.elrolsutilities.init;
 
 import com.github.elrol.elrolsutilities.commands.*;
@@ -39,6 +32,7 @@ public class CommandRegistry {
     public static JailCmd jailCmd = new JailCmd(CommandConfig.jail.delay, CommandConfig.jail.cooldown, CommandConfig.jail.aliases, CommandConfig.jail.cost);
     // public static InvSeeTestCmd invSeeTestCmd = new InvSeeTestCmd(CommandConfig.invsee.perm, CommandConfig.invsee.delay, CommandConfig.invsee.cooldown, CommandConfig.invsee.aliases, CommandConfig.invsee.cost);
     public static KitCmd kitCmd = new KitCmd(CommandConfig.kit.delay, CommandConfig.kit.cooldown, CommandConfig.kit.aliases, CommandConfig.kit.cost);
+    public static LinkCmd linkCmd = new LinkCmd(CommandConfig.link.delay, CommandConfig.link.cooldown, CommandConfig.link.aliases, CommandConfig.link.cost);
     public static MotdCmd motd = new MotdCmd(CommandConfig.motd.delay, CommandConfig.motd.cooldown, CommandConfig.motd.aliases, CommandConfig.motd.cost);
     public static MsgCmd msgCmd = new MsgCmd(CommandConfig.msg.delay, CommandConfig.msg.cooldown, CommandConfig.msg.aliases, CommandConfig.msg.cost);
     public static MsgToggleCmd msgToggleCmd = new MsgToggleCmd(CommandConfig.msg_toggle.delay, CommandConfig.msg_toggle.cooldown, CommandConfig.msg_toggle.aliases, CommandConfig.msg_toggle.cost);
@@ -63,6 +57,7 @@ public class CommandRegistry {
     public static SpawnCmd spawnCmd = new SpawnCmd(CommandConfig.spawn.delay, CommandConfig.spawn.cooldown, CommandConfig.spawn.aliases, CommandConfig.spawn.cost);
     public static StaffChatCmd staffChatCmd = new StaffChatCmd(CommandConfig.staffchat.delay, CommandConfig.staffchat.cooldown, CommandConfig.staffchat.aliases, CommandConfig.staffchat.cost);
     public static SudoCmd sudoCmd = new SudoCmd(CommandConfig.sudo.delay, CommandConfig.sudo.cooldown, CommandConfig.sudo.aliases, CommandConfig.sudo.cost);
+    public static TitlesCmd titlesCmd = new TitlesCmd(CommandConfig.titles.delay, CommandConfig.titles.cooldown, CommandConfig.titles.aliases, CommandConfig.titles.cost);
     public static TpaCmd tpaCmd = new TpaCmd(CommandConfig.tpa.delay, CommandConfig.tpa.cooldown, CommandConfig.tpa.aliases, CommandConfig.tpa.cost);
     public static TpAcceptCmd tpAcceptCmd = new TpAcceptCmd(CommandConfig.tp_accept.delay, CommandConfig.tp_accept.cooldown, CommandConfig.tp_accept.aliases, CommandConfig.tp_accept.cost);
     public static TpDenyCmd tpDenyCmd = new TpDenyCmd(CommandConfig.tp_deny.delay, CommandConfig.tp_deny.cooldown, CommandConfig.tp_deny.aliases, CommandConfig.tp_deny.cost);
@@ -119,6 +114,7 @@ public class CommandRegistry {
         if (CommandConfig.spawn.enable.get()) spawnCmd.register(dispatcher);
         if (CommandConfig.staffchat.enable.get()) staffChatCmd.register(dispatcher);
         if (CommandConfig.sudo.enable.get()) sudoCmd.register(dispatcher);
+        if (CommandConfig.titles.enable.get()) titlesCmd.register(dispatcher);
         if (CommandConfig.tpa.enable.get()) tpaCmd.register(dispatcher);
         if (CommandConfig.tp_accept.enable.get()) tpAcceptCmd.register(dispatcher);
         if (CommandConfig.tp_deny.enable.get()) tpDenyCmd.register(dispatcher);
@@ -136,6 +132,10 @@ public class CommandRegistry {
             if (CommandConfig.pay.enable.get()) payCmd.register(dispatcher);
             if (CommandConfig.price.enable.get()) priceCmd.register(dispatcher);
             if (CommandConfig.sell.enable.get()) sellCmd.register(dispatcher);
+        }
+
+        if (FeatureConfig.discord_bot_enable.get()) {
+            if (CommandConfig.link.enable.get()) linkCmd.register(dispatcher);
         }
 
         if(FeatureConfig.enable_global_perms.get()) {

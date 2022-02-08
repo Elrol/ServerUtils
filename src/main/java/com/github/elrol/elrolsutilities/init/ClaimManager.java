@@ -4,16 +4,16 @@ import com.github.elrol.elrolsutilities.api.claims.IClaim;
 import com.github.elrol.elrolsutilities.api.claims.IClaimManager;
 import com.github.elrol.elrolsutilities.api.claims.IClaimSetting;
 import com.github.elrol.elrolsutilities.data.claimSettings.Claim;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.ChunkPos;
 
 import java.util.*;
 
 public class ClaimManager implements IClaimManager {
 
-    private List<IClaimSetting> settings = new ArrayList<>();
-    private Map<UUID, IClaim> claims = new HashMap<>();
+    private final List<IClaimSetting> settings = new ArrayList<>();
+    private final Map<UUID, IClaim> claims = new HashMap<>();
 
     public void register(IClaimSetting setting) {
 

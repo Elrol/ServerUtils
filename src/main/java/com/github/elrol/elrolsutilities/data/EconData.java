@@ -2,7 +2,6 @@ package com.github.elrol.elrolsutilities.data;
 
 import com.github.elrol.elrolsutilities.libs.JsonMethod;
 import com.github.elrol.elrolsutilities.libs.ModInfo;
-import com.google.gson.reflect.TypeToken;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.HashMap;

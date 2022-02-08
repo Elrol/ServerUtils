@@ -14,8 +14,7 @@ public final class InterfaceAdapter implements JsonSerializer<CompoundNBT>, Json
     }
 
     public CompoundNBT deserialize(JsonElement elem, Type interfaceType, JsonDeserializationContext context) throws JsonParseException {
-        CompoundNBT tag = JsonUtils.readNBT(elem.getAsJsonObject(), "nbt");
-        return tag;
+        return JsonUtils.readNBT(elem.getAsJsonObject(), "nbt");
     }
 }
 

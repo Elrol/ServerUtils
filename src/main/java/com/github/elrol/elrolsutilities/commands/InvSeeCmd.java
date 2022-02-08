@@ -15,13 +15,16 @@ import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.ChestContainer;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -83,12 +86,12 @@ public class InvSeeCmd extends _CmdBase {
         public void run() {
             source.openMenu(new INamedContainerProvider() {
                 @Override
-                public ITextComponent getDisplayName() {
+                public @NotNull ITextComponent getDisplayName() {
                     return player.getDisplayName();
                 }
 
                 @Override
-                public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity p) {
+                public Container createMenu(int id, @NotNull PlayerInventory playerInventory, PlayerEntity p) {
                     return new ChestContainer(ContainerType.GENERIC_9x5, id, playerInventory, new TargetInventory(player), 5);
                 }
             });

@@ -5,7 +5,6 @@ import com.electronwill.nightconfig.core.io.WritingMode;
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.libs.ModInfo;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.common.Mod;
 
 import java.io.File;
 import java.io.IOException;

@@ -14,14 +14,13 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.List;
 
-public class PermissionCmd
-extends _CmdBase {
+public class PermissionCmd extends _CmdBase {
     public PermissionCmd(ForgeConfigSpec.IntValue delay, ForgeConfigSpec.IntValue cooldown, ForgeConfigSpec.ConfigValue<List<? extends String>> aliases, ForgeConfigSpec.IntValue cost) {
         super(delay, cooldown, aliases, cost);
     }

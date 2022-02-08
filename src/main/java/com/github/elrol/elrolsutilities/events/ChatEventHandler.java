@@ -8,6 +8,8 @@ import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponent;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -29,7 +31,7 @@ public class ChatEventHandler {
             TextUtils.sendToStaff(player.createCommandSourceStack(), event.getMessage());
             event.setCanceled(true);
         } else {
-            ITextComponent text = TextUtils.formatChat(player, event.getMessage());
+            ITextComponent text = TextUtils.formatChat(player.getUUID(), event.getMessage());
             if (IElrolAPI.getInstance().getPermissionHandler().hasPermission(player.createCommandSourceStack(), FeatureConfig.link_chat_perm.get()))
                 text = ForgeHooks.newChatWithLinks(text.getString());
             if(data.isJailed()) {

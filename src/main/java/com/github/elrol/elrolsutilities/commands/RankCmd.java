@@ -43,6 +43,7 @@ extends _CmdBase {
                         .then(RankInfo.register())
                         .then(RankList.register())
                         .then(RankCmds.register())
+                        .then(RankCost.register())
                         .then(RankParent.register()));
         }
     }

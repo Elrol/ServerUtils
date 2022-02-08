@@ -52,9 +52,17 @@ public class PermRegistry {
             if (!commandPerms.containsKey(node)) {
                 commandPerms.put(node, perm);
                 add(perm);
-                save();
             }
         }
+    }
+
+    public void remove(String perm) {
+        validPerms.remove(perm);
+    }
+
+    public void remove(String perm, boolean save) {
+        remove(perm);
+        if(save) save();
     }
 
     public String getPerm(String node) {

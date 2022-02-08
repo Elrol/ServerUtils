@@ -13,9 +13,9 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.List;
@@ -38,8 +38,7 @@ extends _CmdBase {
         ServerPlayerEntity player;
         try {
             player = c.getSource().getPlayerOrException();
-        }
-        catch (CommandSyntaxException e) {
+        } catch (CommandSyntaxException e) {
             TextUtils.err(c, Errs.not_player());
             return 0;
         }
@@ -51,8 +50,8 @@ extends _CmdBase {
             return 0;
         }
         IPlayerData data = Main.database.get(player.getUUID());
-        if (FeatureConfig.enable_economy.get() && this.cost > 0) {
-            if (!data.charge(this.cost)) {
+        if (FeatureConfig.enable_economy.get() && cost > 0) {
+            if (!data.charge(cost)) {
                 TextUtils.err(player, Errs.not_enough_funds(this.cost, data.getBal()));
                 return 0;
             }

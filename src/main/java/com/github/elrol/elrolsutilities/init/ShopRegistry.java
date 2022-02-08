@@ -64,15 +64,15 @@ public class ShopRegistry implements IShopRegistry {
 
     @Override
     public AbstractShop parseSign(SignTileEntity sign) {
-    ITextComponent[] messages;
-    try {
-        Field f = ObfuscationReflectionHelper.findField(SignTileEntity.class, "field_145915_a");
-        f.setAccessible(true);
-        messages = (ITextComponent[]) f.get(sign);
-    } catch (IllegalAccessException e) {
-        e.printStackTrace();
-        return null;
-    }
+        ITextComponent[] messages;
+        try {
+            Field f = ObfuscationReflectionHelper.findField(SignTileEntity.class, "field_145915_a");
+            f.setAccessible(true);
+            messages = (ITextComponent[]) f.get(sign);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            return null;
+        }
 
         ITextComponent textComp = messages[0];
         String tag = TextFormatting.stripFormatting(textComp.getString());
@@ -82,7 +82,6 @@ public class ShopRegistry implements IShopRegistry {
         }
         if(tag.contains("[") && tag.contains("]")) {
             tag = tag.substring(1, tag.length() - 1);
-            Logger.log("Tag for sign is: " + tag);
 
             IShopManager manager = getShopManager(tag);
             if(manager == null) return null;

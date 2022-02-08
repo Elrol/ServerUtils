@@ -21,6 +21,7 @@ public class Aliases {
     public static final List<String> homes = Collections.singletonList("homes");
     public static final List<String> kit = Collections.singletonList("kit");
     public static final List<String> jail = Collections.singletonList("jail");
+    public static final List<String> link = Collections.singletonList("link");
     public static final List<String> msg = Arrays.asList("message", "pm", "msg");
     public static final List<String> msg_toggle = Collections.singletonList("msgtoggle");
     public static final List<String> motd = Collections.singletonList("motd");
@@ -43,6 +44,7 @@ public class Aliases {
     public static final List<String> smite = Collections.singletonList("smite");
     public static final List<String> spawn = Collections.singletonList("spawn");
     public static final List<String> sudo = Collections.singletonList("sudo");
+    public static final List<String> titles = Collections.singletonList("titles");
     public static final List<String> tpa = Arrays.asList("tpa", "call");
     public static final List<String> tpa_accept = Collections.singletonList("tpaccept");
     public static final List<String> tpa_deny = Collections.singletonList("tpdeny");

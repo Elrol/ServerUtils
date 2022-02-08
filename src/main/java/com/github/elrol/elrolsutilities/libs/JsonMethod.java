@@ -1,7 +1,6 @@
 package com.github.elrol.elrolsutilities.libs;
 
-import com.github.elrol.elrolsutilities.api.data.ITpRequest;
-import com.github.elrol.elrolsutilities.libs.adapters.ITpRequestAdapter;
+import com.github.elrol.elrolsutilities.libs.adapters.GsonLocalDateTime;
 import com.github.elrol.elrolsutilities.libs.adapters.InterfaceAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,12 +8,13 @@ import com.google.gson.reflect.TypeToken;
 import net.minecraft.nbt.CompoundNBT;
 
 import java.io.*;
+import java.time.LocalDateTime;
 
 public class JsonMethod {
 
     private static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(CompoundNBT.class, new InterfaceAdapter())
-            .registerTypeAdapter(ITpRequest.class, new ITpRequestAdapter())
+            .registerTypeAdapter(LocalDateTime.class, new GsonLocalDateTime())
             .setPrettyPrinting()
             .disableHtmlEscaping()
             .create();

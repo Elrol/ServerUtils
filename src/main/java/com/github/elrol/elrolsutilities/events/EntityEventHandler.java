@@ -6,7 +6,6 @@ import com.github.elrol.elrolsutilities.data.ClaimBlock;
 import com.github.elrol.elrolsutilities.events.actions.EntityInteractActions;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.minecart.AbstractMinecartEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -26,7 +25,7 @@ public class EntityEventHandler {
     public void entityAttack(AttackEntityEvent event) {
         Entity entitySource = event.getEntity();
         if (!(entitySource instanceof ServerPlayerEntity)) return;
-        ServerPlayerEntity player = (ServerPlayerEntity) entitySource;
+        ServerPlayerEntity player = (ServerPlayerEntity)entitySource;
         ResourceLocation dim = player.level.dimension().location();
         ClaimBlock chunkPos = new ClaimBlock(dim, new ChunkPos(event.getTarget().blockPosition()));
         if(Main.serverData == null) return;
@@ -42,15 +41,14 @@ public class EntityEventHandler {
     @SubscribeEvent(priority=EventPriority.HIGHEST)
     public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
         boolean cancel = false;
-        if (event.getWorld().isClientSide) {
-            return;
-        }
+        if(!(event.getPlayer() instanceof ServerPlayerEntity)) return;
+        ServerPlayerEntity player = (ServerPlayerEntity)event.getPlayer();
         Entity entity = event.getTarget();
         if (entity instanceof AbstractMinecartEntity) {
             AbstractMinecartEntity cart = (AbstractMinecartEntity)entity;
-            cancel = EntityEventHandler.inspectHeldItem(event.getPlayer(), cart, Hand.MAIN_HAND);
+            cancel = EntityEventHandler.inspectHeldItem(player, cart, Hand.MAIN_HAND);
             if (!cancel) {
-                cancel = EntityEventHandler.inspectHeldItem(event.getPlayer(), cart, Hand.OFF_HAND);
+                cancel = EntityEventHandler.inspectHeldItem(player, cart, Hand.OFF_HAND);
             }
         }
         if (cancel) {
@@ -58,7 +56,7 @@ public class EntityEventHandler {
         }
     }
 
-    private static boolean inspectHeldItem(PlayerEntity player, AbstractMinecartEntity cart, Hand hand) {
+    private static boolean inspectHeldItem(ServerPlayerEntity player, AbstractMinecartEntity cart, Hand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (stack.getItem().equals(Items.NAME_TAG)) {
             if (!stack.hasCustomHoverName()) {

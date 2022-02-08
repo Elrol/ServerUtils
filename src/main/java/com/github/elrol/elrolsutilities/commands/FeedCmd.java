@@ -24,7 +24,7 @@ import java.util.List;
 public class FeedCmd
 extends _CmdBase {
 
-    //private static final Field saturationLevel = ObfuscationReflectionHelper.findField(FoodStats.class, "saturationLevel");
+    //private static final Field saturationWorld = ObfuscationReflectionHelper.findField(FoodStats.class, "saturationWorld");
 
     public FeedCmd(ForgeConfigSpec.IntValue delay, ForgeConfigSpec.IntValue cooldown, ForgeConfigSpec.ConfigValue<List<? extends String>> aliases, ForgeConfigSpec.IntValue cost) {
         super(delay, cooldown, aliases, cost);
@@ -95,7 +95,7 @@ extends _CmdBase {
                 }
                 player.getFoodData().setFoodLevel(20);
                 /**try {
-                    saturationLevel.set(player.getFoodData(), 20.0f);
+                    saturationWorld.set(player.getFoodData(), 20.0f);
                 } catch (IllegalArgumentException | IllegalAccessException e) {
                     e.printStackTrace();
                 }

@@ -1,33 +1,33 @@
 package com.github.elrol.elrolsutilities.data;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.libs.Logger;
-
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import net.minecraft.entity.player.ServerPlayerEntity;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 public class CommandCooldown implements Runnable {
+
+    private static final ScheduledThreadPoolExecutor EXECUTOR = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(1);
+
 
     private final ServerPlayerEntity player;
     public String cmd;
     public int seconds;
-    private final ScheduledExecutorService s;
-    private final ScheduledFuture<?> a;
+    private ScheduledFuture<?> a;
 
     public CommandCooldown(ServerPlayerEntity player, int seconds, String cmd) {
         this.player = player;
         this.seconds = seconds;
         this.cmd = cmd;
-        this.s = Executors.newSingleThreadScheduledExecutor();
-        this.a = this.s.scheduleWithFixedDelay(this, 0L, 5L, TimeUnit.SECONDS);
+        this.a = EXECUTOR.scheduleWithFixedDelay(this, 0L, 5L, TimeUnit.SECONDS);
         Logger.log("Starting Cooldown[" + cmd + "," + seconds + "]");
     }
 
@@ -63,7 +63,10 @@ public class CommandCooldown implements Runnable {
 
     public void cancel(){
         a.cancel(true);
-        if(s != null)s.shutdown();
+    }
+
+    public static void shutdown() {
+        EXECUTOR.shutdownNow();
     }
 }
 

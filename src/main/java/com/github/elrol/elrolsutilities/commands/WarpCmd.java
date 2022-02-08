@@ -56,7 +56,7 @@ extends _CmdBase {
             Logger.err("Server Data was null");
             return 0;
         }
-        if (!Main.serverData.warpMap.containsKey(warp)) {
+        if (Main.serverData.getWarp(warp) == null) {
             TextUtils.err(player, Errs.warp_not_found(warp));
             return 0;
         }

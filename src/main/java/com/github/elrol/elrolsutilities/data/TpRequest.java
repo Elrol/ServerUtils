@@ -2,7 +2,6 @@ package com.github.elrol.elrolsutilities.data;
 
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.data.IPlayerData;
-import com.github.elrol.elrolsutilities.api.data.ITpRequest;
 import com.github.elrol.elrolsutilities.config.CommandConfig;
 import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
@@ -17,24 +16,24 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-public class TpRequest implements Runnable, Serializable, ITpRequest {
+public class TpRequest implements Runnable, Serializable, com.github.elrol.elrolsutilities.api.data.ITpRequest {
     private static final long serialVersionUID = 4294708795194730636L;
-    
+    private static final ScheduledExecutorService s = Executors.newSingleThreadScheduledExecutor();
+
     private final UUID requester;
     private final UUID target;
     private final boolean tpHere;
 
-    public TpRequest(UUID requester, UUID target, boolean tpHere) {
-        this.requester = requester;
-        this.target = target;
+    public TpRequest(ServerPlayerEntity requester, ServerPlayerEntity target, boolean tpHere) {
+        this.requester = requester.getUUID();
+        this.target = target.getUUID();
         this.tpHere = tpHere;
-        ScheduledExecutorService s = Executors.newSingleThreadScheduledExecutor();
         ScheduledFuture<?> a = s.schedule(this, 30L, TimeUnit.SECONDS);
         if (Main.requests.containsKey(this.target)) {
             this.cancel();
         }
         Main.requests.put(this.target, a);
-        IPlayerData data = Main.database.get(target);
+        IPlayerData data = Main.database.get(target.getUUID());
         if (data.getTpRequest() != null) {
             data.getTpRequest().cancel();
         }
@@ -73,7 +72,6 @@ public class TpRequest implements Runnable, Serializable, ITpRequest {
         this.cancel();
     }
 
-    @Override
     public void cancel() {
         ScheduledFuture<?> a = Main.requests.get(this.target);
         a.cancel(true);
@@ -82,20 +80,8 @@ public class TpRequest implements Runnable, Serializable, ITpRequest {
         data.setTpRequest(null);
     }
 
-    @Override
-    public UUID getRequester() {
-        return requester;
+    public static void shutdown(){
+        s.shutdown();
     }
-
-    @Override
-    public UUID getTarget() {
-        return target;
-    }
-
-    @Override
-    public boolean isTpHere() {
-        return tpHere;
-    }
-
 }
 

@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlackLists {
-    private final transient static File bldir = new File(FMLPaths.CONFIGDIR.get().toFile(), "/serverutils/blacklists");
-    private final transient static String repairDir = "/repair-blacklist.json";
+    private transient static File bldir = new File(FMLPaths.CONFIGDIR.get().toFile(), "/serverutils/blacklists");
+    private transient static String repairDir = "/repair-blacklist.json";
 
     public List<String> blacklist = new ArrayList<>();
 

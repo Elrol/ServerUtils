@@ -20,6 +20,7 @@ public class Permissions {
         perms.add(CommandConfig.home_max_perm.get() + "1");
         perms.add(CommandConfig.claim_max_perm.get() + "9");
         perms.add(reg.getPerm("kit_claim_kit"));
+        perms.add(reg.getPerm("kit_verification"));
         perms.add(reg.getPerm("msg_players_msg"));
         perms.add(reg.getPerm("msgtoggle"));
         perms.add(reg.getPerm("rank_info_rank"));

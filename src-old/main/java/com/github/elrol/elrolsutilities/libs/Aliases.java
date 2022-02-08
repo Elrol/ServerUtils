@@ -1,0 +1,67 @@
+package com.github.elrol.elrolsutilities.libs;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class Aliases {
+    public static final List<String> back = Arrays.asList("back", "return");
+    public static final List<String> bomb = Arrays.asList("bomb", "boom");
+    public static final List<String> bypass = Collections.singletonList("bypass");
+    public static final List<String> delhome = Collections.singletonList("delhome");
+    public static final List<String> delwarp = Collections.singletonList("delwarp");
+    public static final List<String> endchest = Arrays.asList("endchest", "ec");
+    public static final List<String> feed = Collections.singletonList("feed");
+    public static final List<String> flood = Collections.singletonList("drown");
+    public static final List<String> fly = Collections.singletonList("fly");
+    public static final List<String> gamemode = Arrays.asList("gamemode", "gm");
+    public static final List<String> god = Arrays.asList("god", "tgm");
+    public static final List<String> heal = Collections.singletonList("heal");
+    public static final List<String> home = Collections.singletonList("home");
+    public static final List<String> homes = Collections.singletonList("homes");
+    public static final List<String> kit = Collections.singletonList("kit");
+    public static final List<String> jail = Collections.singletonList("jail");
+    public static final List<String> msg = Arrays.asList("message", "pm", "msg");
+    public static final List<String> msg_toggle = Collections.singletonList("msgtoggle");
+    public static final List<String> motd = Collections.singletonList("motd");
+    public static final List<String> mute = Collections.singletonList("mute");
+    public static final List<String> nick = Arrays.asList("nickname", "nick");
+    public static final List<String> perms = Arrays.asList("permission", "perms", "p");
+    public static final List<String> price = Collections.singletonList("price");
+    public static final List<String> rank = Collections.singletonList("rank");
+    public static final List<String> reload = Collections.singletonList("sureload");
+    public static final List<String> repair = Collections.singletonList("repair");
+    public static final List<String> respond = Collections.singletonList("r");
+    public static final List<String> rules = Collections.singletonList("rules");
+    public static final List<String> rtp = Collections.singletonList("rtp");
+    public static final List<String> rtpfar = Collections.singletonList("rtpfar");
+    public static final List<String> rtpnear = Collections.singletonList("rtpnear");
+    public static final List<String> sell = Collections.singletonList("sell");
+    public static final List<String> sethome = Collections.singletonList("sethome");
+    public static final List<String> setspawn = Collections.singletonList("setspawn");
+    public static final List<String> setwarp = Collections.singletonList("setwarp");
+    public static final List<String> smite = Collections.singletonList("smite");
+    public static final List<String> spawn = Collections.singletonList("spawn");
+    public static final List<String> sudo = Collections.singletonList("sudo");
+    public static final List<String> tpa = Arrays.asList("tpa", "call");
+    public static final List<String> tpa_accept = Collections.singletonList("tpaccept");
+    public static final List<String> tpa_deny = Collections.singletonList("tpdeny");
+    public static final List<String> tpa_here = Collections.singletonList("tpahere");
+    public static final List<String> trust = Collections.singletonList("trust");
+    public static final List<String> untrust = Collections.singletonList("untrust");
+    public static final List<String> warp = Collections.singletonList("warp");
+    public static final List<String> warps = Collections.singletonList("warps");
+    public static final List<String> claim = Collections.singletonList("claim");
+    public static final List<String> claimflag = Collections.singletonList("claimflag");
+    public static final List<String> clearlag = Collections.singletonList("clearlag");
+    public static final List<String> rankup = Collections.singletonList("rankup");
+    public static final List<String> unclaim = Collections.singletonList("unclaim");
+    public static final List<String> unclaimAll = Collections.singletonList("unclaimall");
+    public static final List<String> econ = Collections.singletonList("econ");
+    public static final List<String> bal = Collections.singletonList("bal");
+    public static final List<String> pay = Collections.singletonList("pay");
+    public static final List<String> invsee = Collections.singletonList("invsee");
+    public static final List<String> chestshop = Collections.singletonList("chestshop");
+    public static final List<String> staffchat = Arrays.asList("staffchat", "sc");
+}
+

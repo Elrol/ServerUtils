@@ -1,14 +1,13 @@
 package com.github.elrol.elrolsutilities.init;
 
-import java.io.File;
-import java.util.*;
-
 import com.github.elrol.elrolsutilities.data.Rank;
 import com.github.elrol.elrolsutilities.libs.JsonMethod;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.ModInfo;
 import com.github.elrol.elrolsutilities.libs.Permissions;
-import com.google.gson.reflect.TypeToken;
+
+import java.io.File;
+import java.util.*;
 
 public class Ranks {
     public static Rank default_rank = new Rank("default", "&8[&7Player&8]", "", Permissions.defaultRankPerms(), new ArrayList<>(), 0);
@@ -39,6 +38,7 @@ public class Ranks {
     }
 
     public static void load() {
+        rankMap.clear();
         if (!ModInfo.Constants.rankdir.exists()) {
             ModInfo.Constants.rankdir.mkdir();
         }

@@ -41,7 +41,7 @@ public class SudoCmd extends _CmdBase {
     }
 
     protected int execute(CommandContext<CommandSource> c, CommandSource source, ServerPlayerEntity target, String cmd) {
-        ServerPlayerEntity player = null;
+        ServerPlayerEntity player;
         if(cmd.isEmpty()) return 0;
         try {
             player = c.getSource().getPlayerOrException();
@@ -63,7 +63,7 @@ public class SudoCmd extends _CmdBase {
 
     @Override
     protected int execute(CommandContext<CommandSource> c) {
-        ServerPlayerEntity player = null;
+        ServerPlayerEntity player;
         try {
             player = c.getSource().getPlayerOrException();
         }
@@ -74,8 +74,7 @@ public class SudoCmd extends _CmdBase {
         return this.execute(c, c.getSource(), player, "");
     }
 
-    private static class CommandRunnable
-    implements Runnable {
+    private static class CommandRunnable implements Runnable {
         ServerPlayerEntity player;
         CommandSource source;
         String cmd;
@@ -88,7 +87,7 @@ public class SudoCmd extends _CmdBase {
 
         @Override
         public void run() {
-            if(cmd.startsWith("c:")) Main.mcServer.getPlayerList().broadcastMessage(TextUtils.formatChat(player,cmd.substring(2)), ChatType.CHAT, player.getUUID());
+            if(cmd.startsWith("c:")) Main.mcServer.getPlayerList().broadcastMessage(TextUtils.formatChat(player.getUUID(),cmd.substring(2)), ChatType.CHAT, player.getUUID());
             else Main.mcServer.getCommands().performCommand(player.createCommandSourceStack(), cmd);
         }
     }

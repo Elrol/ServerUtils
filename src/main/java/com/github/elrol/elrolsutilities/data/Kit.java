@@ -3,15 +3,14 @@ package com.github.elrol.elrolsutilities.data;
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.data.IKit;
 import com.github.elrol.elrolsutilities.api.perms.IPermission;
-import com.github.elrol.elrolsutilities.config.CommandConfig;
 import com.github.elrol.elrolsutilities.libs.JsonMethod;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.ModInfo;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 
 import java.util.ArrayList;
@@ -56,7 +55,7 @@ public class Kit implements IKit {
             else count += stack.getCount();
             stack.setCount(stack.getCount() - (item.getMaxStackSize() - item.getCount()));
             item.setCount(count);
-            Logger.log("Compressed Stack: " + item.toString());
+            Logger.log("Compressed Stack: " + item);
             newKit.add(item);
         }
         if(stack.getCount() > 0) newKit.add(stack);

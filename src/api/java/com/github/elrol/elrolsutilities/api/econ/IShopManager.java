@@ -4,6 +4,7 @@ import com.github.elrol.elrolsutilities.api.IElrolAPI;
 import com.github.elrol.elrolsutilities.api.data.Location;
 import net.minecraft.tileentity.SignTileEntity;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponent;
 
 import java.io.File;
 import java.util.Map;

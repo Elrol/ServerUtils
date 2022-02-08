@@ -5,6 +5,7 @@ import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.DiscordConfig;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.discord.events.DiscordMessageListener;
+import com.github.elrol.elrolsutilities.discord.init.SlashCommands;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import net.dv8tion.jda.api.JDA;
@@ -12,7 +13,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.*;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 
 import javax.security.auth.login.LoginException;
 import java.util.UUID;
@@ -35,6 +36,7 @@ public class DiscordBot {
     public TextChannel consoleChannel;
 
     private final DiscordMessageListener listener = new DiscordMessageListener();
+    private final SlashCommands commands = new SlashCommands();
 
     public void init() {
         enabled = FeatureConfig.discord_bot_enable.get();
@@ -66,6 +68,7 @@ public class DiscordBot {
         jda.setStatus(OnlineStatus.ONLINE);
 
         jda.addEventListeners(listener);
+        jda.addEventListeners(commands);
 
         try {
             bot = jda.build().awaitReady();
@@ -92,13 +95,14 @@ public class DiscordBot {
             e.printStackTrace();
         }
 
+        commands.init(guild);
     }
 
     public void shutdown() {
-
+        bot.shutdown();
     }
 
-    private String getName(PlayerEntity player) {
+    private String getName(ServerPlayerEntity player) {
         String name = "";
         if(player != null) {
             IPlayerData data = Main.database.get(player.getUUID());
@@ -110,16 +114,16 @@ public class DiscordBot {
         return name;
     }
 
-    public void sendChatMessage(PlayerEntity player, String message) {
-        if(enabled && chatChannel != null) {
+    public void sendChatMessage(ServerPlayerEntity player, String message) {
+        if(enabled && chatChannel != null && isOnline()) {
             MessageBuilder msg = new MessageBuilder(
                     TextUtils.stripFormatting(getName(player) + message));
             chatChannel.sendMessage(msg.build()).queue();
         }
     }
 
-    public void sendStaffMessage(PlayerEntity player, String message) {
-        if(enabled && staffChannel != null) {
+    public void sendStaffMessage(ServerPlayerEntity player, String message) {
+        if(enabled && staffChannel != null && isOnline()) {
             Message msg = new MessageBuilder(
                     TextUtils.stripFormatting(getName(player) + message)).build();
             staffChannel.sendMessage(msg).queue();
@@ -127,18 +131,41 @@ public class DiscordBot {
     }
 
     public void sendInfoMessage(String message) {
-        if(enabled && infoChannel != null) {
+        if(enabled && infoChannel != null && isOnline()) {
             Message msg = new MessageBuilder(
                     TextUtils.stripFormatting(message)).build();
             infoChannel.sendMessage(msg).queue();
         }
     }
 
-    public void sendConsoleMessage(PlayerEntity player, String message) {
-        if(enabled && consoleChannel != null) {
+    public void sendConsoleMessage(ServerPlayerEntity player, String message) {
+        if(enabled && consoleChannel != null && isOnline()) {
             Message msg = new MessageBuilder(
                     TextUtils.stripFormatting(getName(player) + message)).build();
             consoleChannel.sendMessage(msg).queue();
         }
+    }
+
+    public String getDiscordName(long id) {
+        if(guild != null) {
+            Member member = guild.getMemberById(id);
+            if(member != null) {
+                return member.getUser().getName();
+            }
+        }
+        return "NULL";
+    }
+
+    public void update() {
+        int players = Main.mcServer.getPlayerList().getPlayerCount();
+        Logger.log("Current players: " + players);
+        if(players > 0) {
+            bot.getPresence().setActivity(Activity.playing(" currently: " + players));
+        }
+    }
+
+    public boolean isOnline() {
+        JDA.Status status = bot.getStatus();
+        return !(status.equals(JDA.Status.SHUTDOWN) || status.equals(JDA.Status.SHUTTING_DOWN));
     }
 }

@@ -1,6 +1,7 @@
 package com.github.elrol.elrolsutilities.data;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.IElrolAPI;
 import com.github.elrol.elrolsutilities.api.claims.IClaimSetting;
 import com.github.elrol.elrolsutilities.api.data.*;
 import com.github.elrol.elrolsutilities.api.enums.ClaimFlagKeys;
@@ -13,11 +14,10 @@ import com.github.elrol.elrolsutilities.libs.ModInfo;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.GameType;
 import net.minecraftforge.fml.ModList;
@@ -34,6 +34,7 @@ public class PlayerData implements IPlayerData {
     public UUID lastMsg;
     public String username;
     public String nickname;
+    public String title;
     public Map<String, Location> homes;
     public Map<String, Integer> kitCooldowns;
     public Map<ClaimFlagKeys, Boolean> claimFlags;
@@ -41,12 +42,13 @@ public class PlayerData implements IPlayerData {
     public Map<ChunkPos, IClaimSetting> chunkClaimFlags;
     private List<String> perms;
     private List<String> ranks;
-    private List<UUID> trusted;
+    private final List<UUID> trusted;
     public List<Location> shops;
     public Location prevLoc;
     public ITpRequest tpRequest;
     public long lastOnline;
     public long nextRank;
+    private long discordID;
     public int maxHomes;
     public int maxClaims;
     public int maxLoadedClaims;
@@ -58,7 +60,6 @@ public class PlayerData implements IPlayerData {
     public boolean godmode;
     public boolean disableMsg;
     public boolean firstKit;
-    public String custperm = null;
     private double balance = 0;
 
     private long jailed = 0;
@@ -71,6 +72,7 @@ public class PlayerData implements IPlayerData {
     public transient boolean isPatreon = false;
     private transient int tempMaxClaims;
     private transient int tempMaxLoadedClaims;
+    private transient String discordVerification;
 
     public PlayerData(UUID uuid) {
         this.uuid = uuid;
@@ -82,7 +84,7 @@ public class PlayerData implements IPlayerData {
         this.claimFlags =  new HashMap<>();
         this.shops = new ArrayList<>();
         this.ranks.add(Ranks.default_rank.getName());
-        PlayerEntity player = Main.mcServer.getPlayerList().getPlayer(uuid);
+        ServerPlayerEntity player = Main.mcServer.getPlayerList().getPlayer(uuid);
         if(player != null) this.username = player.getName().getString();
         else username = "";
         if(Main.isCheatMode) {
@@ -138,7 +140,7 @@ public class PlayerData implements IPlayerData {
                 } else {
                     nextRank = 0;
                     canRankUp = true;
-                    TextUtils.msg(player, (TextComponent) Msgs.rankup().withStyle(TextFormatting.GREEN));
+                    TextUtils.msg(player, (StringTextComponent) Msgs.rankup().withStyle(TextFormatting.GREEN));
                 }
             }
             save();
@@ -267,12 +269,11 @@ public class PlayerData implements IPlayerData {
         getPerms().forEach(this::checkPerm);
         if(ModList.get().isLoaded(ModInfo.Constants.ftbchunkId)) {
             GameProfile profile = Main.mcServer.getProfileCache().get(uuid);
-            if(profile != null) {
-                if (maxClaims != tempMaxClaims)
-                    Main.mcServer.getCommands().performCommand(Main.mcServer.createCommandSourceStack(), "ftbchunks admin extra_claim_chunks " + profile.getName() + " set " + tempMaxClaims);
-                if (maxLoadedClaims != tempMaxLoadedClaims)
-                    Main.mcServer.getCommands().performCommand(Main.mcServer.createCommandSourceStack(), "ftbchunks admin extra_force_load_chunks " + profile.getName() + " set " + tempMaxLoadedClaims);
-            }
+
+            if (maxClaims != tempMaxClaims)
+                Main.mcServer.getCommands().performCommand(Main.mcServer.createCommandSourceStack(), "ftbchunks admin extra_claim_chunks " + profile.getName() + " set " + tempMaxClaims);
+            if (maxLoadedClaims != tempMaxLoadedClaims)
+                Main.mcServer.getCommands().performCommand(Main.mcServer.createCommandSourceStack(), "ftbchunks admin extra_force_load_chunks " + profile.getName() + " set " + tempMaxLoadedClaims);
         }
         maxClaims = tempMaxClaims;
         maxLoadedClaims = tempMaxLoadedClaims;
@@ -537,10 +538,16 @@ public class PlayerData implements IPlayerData {
         if(shops.contains(loc)) return;
         shops.add(loc);
     }
+    public void removeShop(Location loc) { shops.remove(loc); }
 
-    public void removeShop(Location loc) {
-        shops.remove(loc);
+    public long getDiscordID() { return discordID; }
+    public void setDiscordID(long id) {
+        discordID = id;
+        IElrolAPI.getInstance().getPlayerDatabase().link(uuid, id);
     }
+
+    public String getTitle(){ return title == null ? "" : title; }
+    public void setTitle(String title) { this.title = title; }
 
     public void setFly(boolean flag)                            { this.enableFly = flag; }
     public boolean canFly()                                     { return enableFly; }

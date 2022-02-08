@@ -12,6 +12,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
+import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -27,7 +28,9 @@ public class UnclaimAllCmd extends _CmdBase {
         for (String a : aliases) {
             if(name.isEmpty()) name = a;
                 dispatcher.register((Commands.literal(a)
-                        .executes(this::execute)));
+                        .executes(this::execute))
+                        .then(Commands.argument("player", EntityArgument.player())
+                                .executes(c -> execute(c, EntityArgument.getPlayer(c, "player")))));
         }
     }
 

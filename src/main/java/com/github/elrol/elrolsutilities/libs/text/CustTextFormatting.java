@@ -1,10 +1,10 @@
 package com.github.elrol.elrolsutilities.libs.text;
 
-import java.util.Map;
-
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import net.minecraft.util.text.TextFormatting;
+
+import java.util.Map;
 
 public class CustTextFormatting {
     public static final String rainbow = "4c6e2ab319d5";

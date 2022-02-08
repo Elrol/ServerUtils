@@ -9,8 +9,8 @@ import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.management.PlayerList;
 
 import java.io.File;
@@ -20,14 +20,17 @@ import java.util.*;
 public class ServerData implements Serializable {
     private static final long serialVersionUID = -1071261237194140580L;
     public Location spawnPoint;
-    private Map<UUID, Integer> muteMap = new HashMap<>();
-    public Map<String, Location> warpMap = new HashMap<>();
-    public Map<String, JailData> jailMap = new HashMap<>();
+    private final Map<UUID, Integer> muteMap = new HashMap<>();
+    private final Map<String, Location> warpMap = new HashMap<>();
+    private final Map<String, JailData> jailMap = new HashMap<>();
+    private final Map<String, String> titleMap = new HashMap<>();
     public transient List<UUID> staffList = new ArrayList<>();
+    public transient Map<String, Long> discordVerifications = new HashMap<>();
+    public transient Map<String, UUID> minecraftVerifications = new HashMap<>();
     public List<String> permissions = new ArrayList<>();
 
     private String motd = "";
-    private Map<String, String> claimMap = new HashMap<>();
+    private final Map<String, String> claimMap = new HashMap<>();
 
     public void setMOTD(String motd) {
         this.motd = motd;
@@ -119,6 +122,8 @@ public class ServerData implements Serializable {
         save();
     }
 
+    public Map<String, JailData> getJailMap() { return jailMap; }
+
     public void claim(ClaimBlock claim, UUID uuid){
         claimMap.put(claim.toString(), uuid.toString());
         save();
@@ -134,7 +139,7 @@ public class ServerData implements Serializable {
         claimMap.forEach((key, uuid) -> {
             if(uuid.equals(player.getUUID().toString())) keys.add(key);
         });
-        keys.forEach(key -> claimMap.remove(key));
+        keys.forEach(claimMap::remove);
         save();
     }
 
@@ -212,7 +217,7 @@ public class ServerData implements Serializable {
     }
 
     public void save() {
-        JsonMethod.save(new File(Main.dir, "/data"), "serverdata.dat", Main.serverData);
+        JsonMethod.save(new File(Main.dir, "/data"), "serverdata.dat", this);
     }
 
     public int getMute(UUID uuid) {
@@ -265,5 +270,20 @@ public class ServerData implements Serializable {
         });
 
         return claims;
+    }
+
+    public String getTitle(String name) {
+        return titleMap.getOrDefault(name, "");
+    }
+
+    public void addTitle(String name, String title) {
+        titleMap.put(name, title);
+    }
+
+    public void deleteTitle(String title) {
+        titleMap.remove(title);
+    }
+    public Map<String, String> getTitleMap() {
+        return titleMap;
     }
 }

@@ -26,6 +26,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDestroyBlockEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -58,20 +59,14 @@ public class BlockEventHandler {
         }
         Location loc = new Location(player.level.dimension(), event.getPos(), 0f,0f);
         if(Main.shopRegistry.exists(loc)) {
-            AbstractShop shop = Main.shopRegistry.getShop(loc);
-            if(!shop.isLinked()){
-                if(!shop.isAdmin())
-                    data.getShops().remove(loc);
-                Main.shopRegistry.removeShop(loc);
-                return;
-            }
-            boolean flag1 = !shop.canEdit(player);
+            boolean flag1 = !Main.shopRegistry.getShop(loc).canEdit(player);
             boolean flag2 = player.getMainHandItem().isEmpty() || !player.getMainHandItem().getItem().equals(Items.REDSTONE);
             if (flag1|| flag2) {
                 event.setCanceled(true);
                 return;
             }
 
+            AbstractShop shop = Main.shopRegistry.getShop(loc);
             if(!shop.isAdmin())
                 data.getShops().remove(loc);
             Main.shopRegistry.removeShop(loc);
@@ -79,10 +74,10 @@ public class BlockEventHandler {
         } else {
             for (Direction dir : Direction.Plane.HORIZONTAL) {
                 BlockPos otherPos = loc.getBlockPos().relative(dir);
-                if(loc.getWorld() == null) continue;
+                if(loc.getLevel() == null) continue;
                 if(data.getShops() == null) continue;
-                if (Main.shopRegistry.exists(new Location(loc.getWorld(), otherPos, 0f, 0f))) {
-                    ServerWorld world = Main.mcServer.getLevel(loc.getWorld());
+                if (Main.shopRegistry.exists(new Location(loc.getLevel(), otherPos, 0f, 0f))) {
+                    ServerWorld world = Main.mcServer.getLevel(loc.getLevel());
                     if(world == null) break;
                     BlockState state = world.getBlockState(otherPos);
                     Block block = state.getBlock();
@@ -138,9 +133,9 @@ public class BlockEventHandler {
         World world = event.getWorld();
         if(world.isClientSide) return;
         List<BlockPos> remove = new ArrayList<>();
-        ResourceLocation dim = event.getWorld().dimension().location();
+        ResourceLocation dim = world.dimension().location();
         event.getAffectedBlocks().forEach(pos -> {
-            Location loc = new Location(event.getWorld().dimension(), pos, 0f, 0f);
+            Location loc = new Location(dim, pos, 0f, 0f);
             if (Main.serverData.isClaimed(new ClaimBlock(dim, pos))) {
                 remove.add(pos);
             } else if(Main.shopRegistry.exists(loc)) {
@@ -155,8 +150,8 @@ public class BlockEventHandler {
         World world = event.getWorld();
         if(world.isClientSide) return;
         if(!(event.getPlayer() instanceof ServerPlayerEntity)) return;
-
-        ServerPlayerEntity player = (ServerPlayerEntity)event.getPlayer();
+        ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
+        IPlayerData pdata = Main.database.get(player.getUUID());
         ItemStack hand = player.getMainHandItem();
         IShopRegistry reg = IElrolAPI.getInstance().getShopInit();
         TileEntity te = world.getBlockEntity(event.getPos());
@@ -185,7 +180,7 @@ public class BlockEventHandler {
                 locationStorage.remove(player.getUUID());
             } else {
                 if(te instanceof SignTileEntity) {
-                    SignTileEntity sign = (SignTileEntity) te;
+                    SignTileEntity sign = (SignTileEntity)te;
                     AbstractShop shop;
                     if(reg.exists(loc)) {
                         shop = reg.getShop(loc);
@@ -244,5 +239,8 @@ public class BlockEventHandler {
                 else if(FeatureConfig.jailProtection.get() == 2) event.setCanceled(true);
             }
         }
+    }
+
+    public void updateSignBlock(EntityEvent.CanUpdate event) {
     }
 }

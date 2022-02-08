@@ -75,15 +75,16 @@ extends _CmdBase {
 
     protected int jail(CommandContext<CommandSource> c, ServerPlayerEntity player, String jail, int cell, int min) {
         ServerData serverData = Main.serverData;
+        JailData jailData = serverData.getJail(jail);
         if(player == null) {
             TextUtils.err(c.getSource(), Errs.player_missing());
             return 0;
         }
-        if(!serverData.jailMap.containsKey(jail)) {
+        if(jailData == null) {
             TextUtils.err(c.getSource(), Errs.jail_missing());
             return 0;
         }
-        if(serverData.jailMap.get(jail).cells.size() < cell) {
+        if(jailData.cells.size() < cell) {
             TextUtils.err(c.getSource(), Errs.cell_missing());
             return 0;
         }
@@ -92,7 +93,7 @@ extends _CmdBase {
     }
 
     protected int create(CommandContext<CommandSource> c, String name) {
-        if(Main.serverData.jailMap.containsKey(name)) {
+        if(Main.serverData.getJail(name) != null) {
             TextUtils.err(c.getSource(), Errs.jail_exists(name));
             return 0;
         }
@@ -101,7 +102,7 @@ extends _CmdBase {
     }
 
     protected int delete(CommandContext<CommandSource> c, String jail) {
-        if(!Main.serverData.jailMap.containsKey(jail)) {
+        if(Main.serverData.getJail(jail) == null) {
             TextUtils.err(c, Errs.jail_missing());
         }
         Main.serverData.deleteJail(jail);

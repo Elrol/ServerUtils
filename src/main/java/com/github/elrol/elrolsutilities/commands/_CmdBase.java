@@ -1,16 +1,12 @@
 package com.github.elrol.elrolsutilities.commands;
 
-import com.github.elrol.elrolsutilities.api.perms.IPermission;
-import com.github.elrol.elrolsutilities.data.Permission;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.command.CommandSource;
 import net.minecraftforge.common.ForgeConfigSpec;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class _CmdBase {
     public String name = "";

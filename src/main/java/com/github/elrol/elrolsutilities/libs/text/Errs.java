@@ -580,5 +580,32 @@ public class Errs {
             return new TranslationTextComponent("serverutils.command.err.max-shops");
         return new StringTextComponent("You already have hit your shop limit.");
     }
+
+    public static TextComponent noTitlePerm(String a){
+        a = TextFormatting.DARK_RED + a + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.command.err.no-title-perm", a);
+        return new StringTextComponent("You don't have the permission to use the " + a + " title.");
+    }
+
+    public static TextComponent titleMissing(String a){
+        a = TextFormatting.DARK_RED + a + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.command.err.title-missing", a);
+        return new StringTextComponent("The " + a + " title doesn't exist.");
+    }
+
+    public static TextComponent titleExists(String a){
+        a = TextFormatting.DARK_RED + a + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.command.err.title-exists", a);
+        return new StringTextComponent("The " + a + " title already exists.");
+    }
+
+    public static TextComponent titleEmpty(){
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.command.err.title-empty");
+        return new StringTextComponent("The title can't be empty.");
+    }
 }
 

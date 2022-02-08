@@ -58,7 +58,7 @@ public interface IPlayerData {
 
     String              getPrefix();
     String              getSuffix();
-    ServerPlayerEntity  getLastMsg();
+    ServerPlayerEntity getLastMsg();
     void                setLastMsg(UUID uuid);
     String              getDisplayName();
 
@@ -113,4 +113,14 @@ public interface IPlayerData {
     Map<String, Integer>            getKitCooldowns();
     Map<String, Location>           getHomes();
     Map<ClaimFlagKeys, Boolean>     getClaimFlags();
+
+    // Discord things
+    long                getDiscordID();
+    void                setDiscordID(long id);
+
+    String              getTitle();
+    void                setTitle(String title);
+
+    void                tickJail();
+
 }
