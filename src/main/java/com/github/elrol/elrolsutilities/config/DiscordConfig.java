@@ -16,6 +16,7 @@ public class DiscordConfig {
     public static ForgeConfigSpec.ConfigValue<String> serverName;
 
     public static ForgeConfigSpec.BooleanValue showRank;
+    public static ForgeConfigSpec.BooleanValue showTitles;
     public static ForgeConfigSpec.BooleanValue showNicknames;
     public static ForgeConfigSpec.ConfigValue<String> discordTag;
 
@@ -46,6 +47,7 @@ public class DiscordConfig {
 
         server.push("formatting");
             showRank = server.define("show rank", true);
+            showTitles = server.define("show titles", true);
             showNicknames = server.define("show nicknames", true);
             discordTag = server.define("discord tag", "&8[&eDiscord&8]");
         server.pop();

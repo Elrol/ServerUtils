@@ -43,6 +43,8 @@ public class TitlesCmd extends _CmdBase {
                             .then(Commands.argument("title", StringArgumentType.string())
                                     .suggests(ModSuggestions::suggestTitles)
                                     .executes(c -> title(c, StringArgumentType.getString(c, "title")))))
+                    .then(Commands.literal("unset")
+                            .executes(this::unset))
                     .then(Commands.literal("create")
                             .requires(c -> IElrolAPI.getInstance().getPermissionHandler().hasPermission(c, CommandConfig.titles_admin.get()))
                             .then(Commands.argument("name", StringArgumentType.string())
@@ -74,11 +76,31 @@ public class TitlesCmd extends _CmdBase {
         return 1;
     }
 
+    protected int unset(CommandContext<CommandSourceStack> c) {
+        ServerPlayer player;
+        try {
+            player = c.getSource().getPlayerOrException();
+        } catch (CommandSyntaxException ignored) {
+            TextUtils.err(c, Errs.not_player());
+            return 0;
+        }
+
+        IPlayerData data = Main.database.get(player.getUUID());
+        if (FeatureConfig.enable_economy.get() && cost > 0) {
+            if (!data.charge(cost)) {
+                TextUtils.err(player, Errs.not_enough_funds(cost, data.getBal()));
+                return 0;
+            }
+        }
+        CommandDelay.init(this, c.getSource(), new UnsetRunnable(player), false);
+        return 1;
+    }
+
     protected int delete(CommandContext<CommandSourceStack> c, String title) {
         ServerData data = Main.serverData;
-        name = name.toLowerCase();
-        if(data.getTitle(name).isEmpty()){
-            TextUtils.err(c, Errs.titleMissing(name));
+        title = title.toLowerCase();
+        if(data.getTitle(title).isEmpty()){
+            TextUtils.err(c, Errs.titleMissing(title));
             return 0;
         }
         TextUtils.msg(c, Msgs.titleDeleted(title, TextUtils.formatString(data.getTitle(title))));
@@ -171,5 +193,17 @@ public class TitlesCmd extends _CmdBase {
         }
     }
 
+    private static class UnsetRunnable implements Runnable {
+        ServerPlayer player;
+        public UnsetRunnable(ServerPlayer player) { this.player = player; }
+
+        @Override
+        public void run(){
+            IPlayerData data = IElrolAPI.getInstance().getPlayerDatabase().get(player.getUUID());
+            data.setTitle("");
+            data.save();
+            TextUtils.msg(player, Msgs.unsetTitle());
+        }
+    }
 }
 

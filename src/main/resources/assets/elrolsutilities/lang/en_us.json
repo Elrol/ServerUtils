@@ -224,5 +224,6 @@
 	"serverutils.command.err.title-exists":			"The %s title already exists.",
 	"serverutils.command.err.title-empty": 			"The title can't be empty.",
 	"serverutils.server.msg.title-created": 		"You have created the %s title: %s.",
-	"serverutils.server.msg.titles":				"Unlocked Titles: %s"
+	"serverutils.server.msg.titles":				"Unlocked Titles: %s",
+	"serverutils.server.msg.unset-title": 			"Your title has been cleared."
 }

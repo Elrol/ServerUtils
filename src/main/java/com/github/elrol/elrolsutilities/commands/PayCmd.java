@@ -49,7 +49,11 @@ public class PayCmd extends _CmdBase {
             return 0;
         }
         IPlayerData data = Main.database.get(sender.getUUID());
-        if (FeatureConfig.enable_economy.get() && data.getBal() >= cost + amount) {
+        if (data.getBal() < amount) {
+            TextUtils.err(sender, Errs.not_enough_funds(cost, data.getBal()));
+            return 0;
+        }
+        if (FeatureConfig.enable_economy.get() && cost > 0) {
             if (!data.charge(cost)) {
                 TextUtils.err(sender, Errs.not_enough_funds(cost, data.getBal()));
                 return 0;

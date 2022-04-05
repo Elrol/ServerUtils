@@ -15,7 +15,7 @@ import java.util.UUID;
 public class PatreonList {
 
     public ArrayList<UUID> patreons = new ArrayList<>();
-    boolean flag = true;
+    boolean flag = false;
     public void init(){
         Logger.log("Starting loading patreon list.");
         if(flag){

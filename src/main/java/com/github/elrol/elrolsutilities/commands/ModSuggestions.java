@@ -6,6 +6,7 @@ import com.github.elrol.elrolsutilities.api.enums.ClaimFlagKeys;
 import com.github.elrol.elrolsutilities.data.PlayerData;
 import com.github.elrol.elrolsutilities.init.Ranks;
 import com.github.elrol.elrolsutilities.libs.Logger;
+import com.github.elrol.elrolsutilities.libs.Methods;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.Suggestions;
@@ -69,9 +70,9 @@ public class ModSuggestions {
 
     public static CompletableFuture<Suggestions> suggestPlayers(CommandContext<CommandSourceStack> context, SuggestionsBuilder builder) {
         ArrayList<String> userNames = new ArrayList<>();
-        for (PlayerData data : Main.database.getDatabase().values()) {
-            if (data.username.isEmpty()) continue;
-            userNames.add(data.username);
+        for (IPlayerData data : Main.database.getDatabase().values()) {
+            if (data.getUsername().isEmpty()) continue;
+            userNames.add(data.getUsername());
         }
         return SharedSuggestionProvider.suggest(userNames, builder);
     }

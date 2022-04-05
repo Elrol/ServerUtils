@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Mod.EventBusSubscriber
 public class FeatureConfig {
@@ -72,7 +73,6 @@ public class FeatureConfig {
             server.comment("{player} will be replaced with the player name.");
             welcome_msg_text = server.define("text", "&hWelcome {player}&h to the server!");
         server.pop();
-
         server.comment("enabling global permissions will attempt to change all commands to use permissions generated dynamically by ServerUtils. If disabled, only the commands from ServerUtils will have the permissions.");
         enable_global_perms = server.define("global perms", true);
 

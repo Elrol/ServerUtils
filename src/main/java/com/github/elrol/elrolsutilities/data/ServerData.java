@@ -3,6 +3,7 @@ package com.github.elrol.elrolsutilities.data;
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.api.data.Location;
+import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.libs.JsonMethod;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.Methods;
@@ -12,6 +13,7 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
+import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.io.File;
 import java.io.Serial;
@@ -25,14 +27,19 @@ public class ServerData implements Serializable {
     private final Map<UUID, Integer> muteMap = new HashMap<>();
     private final Map<String, Location> warpMap = new HashMap<>();
     private final Map<String, JailData> jailMap = new HashMap<>();
-    private final Map<String, String> titleMap = new HashMap<>();
     public transient List<UUID> staffList = new ArrayList<>();
     public transient Map<String, Long> discordVerifications = new HashMap<>();
     public transient Map<String, UUID> minecraftVerifications = new HashMap<>();
     public List<String> permissions = new ArrayList<>();
 
+    private final Map<String, String> titleMap = new HashMap<>();
+
     private String motd = "";
     private final Map<String, String> claimMap = new HashMap<>();
+
+    public ServerData() {
+
+    }
 
     public void setMOTD(String motd) {
         this.motd = motd;
@@ -275,17 +282,21 @@ public class ServerData implements Serializable {
     }
 
     public String getTitle(String name) {
-        return titleMap.getOrDefault(name, "");
+        return Main.defaultTitles.get().getOrDefault(name, titleMap.getOrDefault(name, ""));
     }
 
     public void addTitle(String name, String title) {
-        titleMap.put(name, title);
+        if(!Main.defaultTitles.get().containsKey(name))
+            titleMap.put(name, title);
     }
 
     public void deleteTitle(String title) {
         titleMap.remove(title);
     }
+
     public Map<String, String> getTitleMap() {
-        return titleMap;
+        Map<String,String> map = new HashMap<>(Main.defaultTitles.get());
+        map.putAll(titleMap);
+        return map;
     }
 }

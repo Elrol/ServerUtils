@@ -41,9 +41,9 @@ public class OnPlayerJoinHandler {
             } else {
                 if(FeatureConfig.welcome_msg_enable.get()) {
                     TextComponent text = new TextComponent(ModInfo.getTag());
-                    String[] raw = FeatureConfig.welcome_msg_text.get().split("\\{player}");
-                    msg = raw[0] + (raw.length > 1 ? data.getDisplayName() + raw[1] : "");
-                    text.append(new TextComponent(TextUtils.formatString(msg)));
+                    msg = TextUtils.formatString(FeatureConfig.welcome_msg_text.get()
+                            .replace("{player}", data.getDisplayName()));
+                    text.append(msg);
                     Main.bot.sendInfoMessage(msg);
                     Main.mcServer.getPlayerList().broadcastMessage(text, ChatType.CHAT, player.getUUID());
                 }

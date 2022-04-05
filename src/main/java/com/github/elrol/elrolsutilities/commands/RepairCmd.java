@@ -38,8 +38,7 @@ extends _CmdBase {
         ServerPlayer player;
         try {
             player = c.getSource().getPlayerOrException();
-        }
-        catch (CommandSyntaxException e) {
+        } catch (CommandSyntaxException e) {
             TextUtils.err(c, Errs.not_player());
             return 0;
         }
@@ -51,8 +50,8 @@ extends _CmdBase {
             return 0;
         }
         IPlayerData data = Main.database.get(player.getUUID());
-        if (FeatureConfig.enable_economy.get() && this.cost > 0) {
-            if (!data.charge(this.cost)) {
+        if (FeatureConfig.enable_economy.get() && cost > 0) {
+            if (!data.charge(cost)) {
                 TextUtils.err(player, Errs.not_enough_funds(this.cost, data.getBal()));
                 return 0;
             }

@@ -42,6 +42,7 @@ public class Main {
     public static IShopRegistry shopRegistry = new ShopRegistry();
     public static PermRegistry permRegistry = new PermRegistry();
     public static BlackLists blackLists = new BlackLists();
+    public static DefaultTitles defaultTitles = new DefaultTitles();
     public static DiscordBot bot = new DiscordBot();
     public static MinecraftServer mcServer;
     public static boolean isCheatMode;
@@ -62,21 +63,22 @@ public class Main {
         if (!ModInfo.Constants.configdir.exists()) {
             ModInfo.Constants.configdir.mkdir();
         }
-        Main.commandDelays = new HashMap<>();
-        Main.commandCooldowns = new HashMap<>();
-        Main.requests = new HashMap<>();
-        Main.kitMap = new HashMap<>();
-        Main.patreonList = new PatreonList();
-        Main.econData = new EconData();
+        commandDelays = new HashMap<>();
+        commandCooldowns = new HashMap<>();
+        requests = new HashMap<>();
+        kitMap = new HashMap<>();
+        patreonList = new PatreonList();
+        econData = new EconData();
 
-        Main.econData.load();
-        Main.permRegistry.load();
-        Main.blackLists.load();
+        econData.load();
+        permRegistry.load();
+        blackLists.load();
+        defaultTitles.load();
 
-        Main.getLogger().info("Loading Configs");
+        getLogger().info("Loading Configs");
         Configs.reload();
 
-        Main.loadKits();
+        loadKits();
 
         MinecraftForge.EVENT_BUS.register(new ChatEventHandler());
         MinecraftForge.EVENT_BUS.register(new EntityEventHandler());

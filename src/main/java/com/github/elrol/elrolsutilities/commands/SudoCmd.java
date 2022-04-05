@@ -74,8 +74,7 @@ public class SudoCmd extends _CmdBase {
         return this.execute(c, c.getSource(), player, "");
     }
 
-    private static class CommandRunnable
-    implements Runnable {
+    private static class CommandRunnable implements Runnable {
         ServerPlayer player;
         CommandSourceStack source;
         String cmd;
@@ -88,7 +87,7 @@ public class SudoCmd extends _CmdBase {
 
         @Override
         public void run() {
-            if(cmd.startsWith("c:")) Main.mcServer.getPlayerList().broadcastMessage(TextUtils.formatChat(player,cmd.substring(2)), ChatType.CHAT, player.getUUID());
+            if(cmd.startsWith("c:")) Main.mcServer.getPlayerList().broadcastMessage(TextUtils.formatChat(player.getUUID(),cmd.substring(2)), ChatType.CHAT, player.getUUID());
             else Main.mcServer.getCommands().performCommand(player.createCommandSourceStack(), cmd);
         }
     }

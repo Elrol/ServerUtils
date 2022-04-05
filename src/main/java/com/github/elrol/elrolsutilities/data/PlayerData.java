@@ -1,6 +1,7 @@
 package com.github.elrol.elrolsutilities.data;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.IElrolAPI;
 import com.github.elrol.elrolsutilities.api.claims.IClaimSetting;
 import com.github.elrol.elrolsutilities.api.data.*;
 import com.github.elrol.elrolsutilities.api.enums.ClaimFlagKeys;
@@ -545,6 +546,7 @@ public class PlayerData implements IPlayerData {
     public long getDiscordID() { return discordID; }
     public void setDiscordID(long id) {
         discordID = id;
+        IElrolAPI.getInstance().getPlayerDatabase().link(uuid, id);
     }
 
     public String getTitle(){ return title == null ? "" : title; }

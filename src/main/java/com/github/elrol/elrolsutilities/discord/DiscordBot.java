@@ -24,9 +24,9 @@ public class DiscordBot {
 
     private boolean enabled;
     private boolean nicks;
+    private boolean titles;
     private boolean tags;
 
-    private JDABuilder jda;
     public JDA bot;
     private Guild guild;
 
@@ -54,6 +54,7 @@ public class DiscordBot {
         }
 
         nicks = DiscordConfig.showNicknames.get();
+        titles = DiscordConfig.showTitles.get();
         tags = DiscordConfig.showRank.get();
 
         String token = DiscordConfig.token.get();
@@ -61,7 +62,7 @@ public class DiscordBot {
             Logger.err("Discord bot token is empty");
             return;
         }
-        jda = JDABuilder.createDefault(token);
+        JDABuilder jda = JDABuilder.createDefault(token);
 
         String name = DiscordConfig.serverName.get();
         jda.setActivity(Activity.playing(name.isEmpty() ? "Server Utils" : name));
@@ -99,7 +100,8 @@ public class DiscordBot {
     }
 
     public void shutdown() {
-        bot.shutdown();
+        if(bot != null)
+            bot.shutdown();
     }
 
     private String getName(ServerPlayer player) {
@@ -107,6 +109,7 @@ public class DiscordBot {
         if(player != null) {
             IPlayerData data = Main.database.get(player.getUUID());
             if(tags) name += data.getPrefix() + " ";
+            if(titles) name += data.getTitle() + " ";
             if(nicks) name += data.getDisplayName();
             else name += player.getName().getString();
             name += ": ";

@@ -2,6 +2,7 @@ package com.github.elrol.elrolsutilities.events;
 
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.data.IPlayerData;
+import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.*;
 import com.github.elrol.elrolsutilities.econ.averon.AveronShopManager;
 import com.github.elrol.elrolsutilities.econ.chestshop.ChestShopManager;

@@ -1,6 +1,8 @@
 package com.github.elrol.elrolsutilities.discord.events;
 
 import com.github.elrol.elrolsutilities.Main;
+import com.github.elrol.elrolsutilities.api.IElrolAPI;
+import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.DiscordConfig;
 import com.github.elrol.elrolsutilities.discord.DiscordBot;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
@@ -18,11 +20,20 @@ public class DiscordMessageListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if(event.getAuthor().isBot()) return;
-        //Main.mcServer.getPlayerList().broadcastMessage(TextUtils.formatChat(player,cmd.substring(2)), ChatType.CHAT, player.getUUID())
-        String tag = DiscordConfig.discordTag.get();
+
+        long userID = event.getAuthor().getIdLong();
+        IPlayerData data = IElrolAPI.getInstance().getPlayerDatabase().get(userID);
+
         String content = event.getMessage().getContentDisplay();
-        String msg = (tag.isEmpty() ? "" : tag + "&r ") + event.getAuthor().getName() + ": " + content;
-        TextComponent text = new TextComponent(TextUtils.formatString(msg));
+
+        TextComponent text;
+        if(data != null) {
+            text = TextUtils.formatChat(data.getUUID(),content);
+        } else {
+            String tag = DiscordConfig.discordTag.get();
+            String msg = (tag.isEmpty() ? "" : tag + "&r ") + event.getAuthor().getName() + ": " + content;
+            text = new TextComponent(TextUtils.formatString(msg));
+        }
 
         long id = event.getMessage().getGuildChannel().getIdLong();
         DiscordBot bot = Main.bot;
