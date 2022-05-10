@@ -31,6 +31,7 @@ public class ChatEventHandler {
             TextUtils.sendToStaff(player.createCommandSourceStack(), event.getMessage());
             event.setCanceled(true);
         } else {
+            //ITextComponent text = TextUtils.formatChat(player.getUUID(), event.getComponent());
             ITextComponent text = TextUtils.formatChat(player.getUUID(), event.getMessage());
             if (IElrolAPI.getInstance().getPermissionHandler().hasPermission(player.createCommandSourceStack(), FeatureConfig.link_chat_perm.get()))
                 text = ForgeHooks.newChatWithLinks(text.getString());

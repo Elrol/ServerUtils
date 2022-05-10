@@ -1005,4 +1005,10 @@ public class Msgs {
             return new TranslationTextComponent("serverutils.server.msg.titles", a);
         return new StringTextComponent("Unlocked Titles: " + a);
     }
+
+    public static TextComponent unsetTitle() {
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.msg.unset-title");
+        return new StringTextComponent("Your title has been cleared.");
+    }
 }

@@ -273,17 +273,21 @@ public class ServerData implements Serializable {
     }
 
     public String getTitle(String name) {
-        return titleMap.getOrDefault(name, "");
+        return Main.defaultTitles.get().getOrDefault(name, titleMap.getOrDefault(name, ""));
     }
 
     public void addTitle(String name, String title) {
-        titleMap.put(name, title);
+        if(!Main.defaultTitles.get().containsKey(name))
+            titleMap.put(name, title);
     }
 
     public void deleteTitle(String title) {
         titleMap.remove(title);
     }
+
     public Map<String, String> getTitleMap() {
-        return titleMap;
+        Map<String,String> map = new HashMap<>(Main.defaultTitles.get());
+        map.putAll(titleMap);
+        return map;
     }
 }

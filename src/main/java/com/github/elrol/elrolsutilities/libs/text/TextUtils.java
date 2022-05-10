@@ -11,10 +11,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.text.ChatType;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.*;
 
 import java.util.*;
 
@@ -54,7 +51,7 @@ public class TextUtils {
         String tag = FeatureConfig.sc_tag.get();
         IPlayerData data = Main.database.get(uuid);
         if(data.isJailed()) tag = FeatureConfig.sc_jail_tag.get();
-        staffChat(tag + "&r " + name + "&r: " + message, uuid);
+        staffChat(tag + "&r " + name + FeatureConfig.chat_seperator.get() + message, uuid);
         if(!uuid.equals(Main.bot.botUUID)) Main.bot.sendStaffMessage(player, message);
     }
 
@@ -96,6 +93,13 @@ public class TextUtils {
         return text;
     }
 
+    public static StringTextComponent formatChat(UUID uuid, ITextComponent text) {
+        for (ITextComponent sibling : text.getSiblings()) {
+            Logger.log(sibling.getContents());
+        }
+        return formatChat(uuid, "");
+    }
+
     public static StringTextComponent formatChat(UUID uuid, String msg){
         IPlayerData data = Main.database.get(uuid);
         StringTextComponent text = new StringTextComponent("");
@@ -112,8 +116,10 @@ public class TextUtils {
         string.append(data.getDisplayName());
         if (!data.getSuffix().isEmpty()) {
             string.append(" ").append(data.getSuffix());
+        } else {
+            string.append("&r");
         }
-        string.append("&r: ");
+        string.append(FeatureConfig.chat_seperator.get());
         text.append(TextUtils.formatString(string.toString()));
         if (FeatureConfig.color_chat_enable.get()) {
             if (IElrolAPI.getInstance().getPermissionHandler().hasPermission(uuid, FeatureConfig.color_chat_perm.get())) {

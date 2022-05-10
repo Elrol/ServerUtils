@@ -53,6 +53,8 @@ public class FeatureConfig {
     public static ForgeConfigSpec.BooleanValue welcome_msg_enable;
     public static ForgeConfigSpec.ConfigValue<String> welcome_msg_text;
 
+    public static ForgeConfigSpec.ConfigValue<String> chat_seperator;
+
     public static ForgeConfigSpec.ConfigValue<List<? extends String>> jailCommands;
     public static ForgeConfigSpec.BooleanValue jailCommandsWhitelist;
     public static ForgeConfigSpec.IntValue jailMaxDistance;
@@ -71,6 +73,9 @@ public class FeatureConfig {
             server.comment("{player} will be replaced with the player name.");
             welcome_msg_text = server.define("text", "&hWelcome {player}&h to the server!");
         server.pop();
+
+        server.comment("The text to put between username and chat");
+        chat_seperator = server.define("chat seperator", ":");
 
         server.comment("enabling global permissions will attempt to change all commands to use permissions generated dynamically by ServerUtils. If disabled, only the commands from ServerUtils will have the permissions.");
         enable_global_perms = server.define("global perms", true);

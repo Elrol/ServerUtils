@@ -23,8 +23,9 @@ public class DiscordBot {
     public UUID botUUID;
 
     private boolean enabled;
-    private boolean nicks;
     private boolean tags;
+    private boolean titles;
+    private boolean nicks;
 
     private JDABuilder jda;
     public JDA bot;
@@ -53,8 +54,9 @@ public class DiscordBot {
             botUUID = UUID.fromString(id);
         }
 
-        nicks = DiscordConfig.showNicknames.get();
         tags = DiscordConfig.showRank.get();
+        titles = DiscordConfig.showTitles.get();
+        nicks = DiscordConfig.showNicknames.get();
 
         String token = DiscordConfig.token.get();
         if(token.isEmpty()) {
@@ -91,15 +93,15 @@ public class DiscordBot {
             consoleChannel = bot.getTextChannelById(DiscordConfig.consoleChannelID.get());
             if(consoleChannel == null) Logger.err("Console Channel ID was invalid");
 
+            commands.init(guild);
         } catch (LoginException | InterruptedException e) {
             e.printStackTrace();
         }
-
-        commands.init(guild);
     }
 
     public void shutdown() {
-        bot.shutdown();
+        if(bot != null)
+            bot.shutdown();
     }
 
     private String getName(ServerPlayerEntity player) {
@@ -107,6 +109,7 @@ public class DiscordBot {
         if(player != null) {
             IPlayerData data = Main.database.get(player.getUUID());
             if(tags) name += data.getPrefix() + " ";
+            if(titles) name += data.getTitle() + " ";
             if(nicks) name += data.getDisplayName();
             else name += player.getName().getString();
             name += ": ";

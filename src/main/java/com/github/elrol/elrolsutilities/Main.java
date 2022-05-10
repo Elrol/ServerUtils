@@ -40,18 +40,19 @@ public class Main {
     public static ServerData serverData;
     public static PlayerDatabase database;
     public static PlayerHistory history;
-    public static PatreonList patreonList;
-    public static EconData econData;
+    public static PatreonList patreonList = new PatreonList();
+    public static EconData econData = new EconData();
     public static IShopRegistry shopRegistry = new ShopRegistry();
     public static PermRegistry permRegistry = new PermRegistry();
     public static BlackLists blackLists = new BlackLists();
+    public static DefaultTitles defaultTitles = new DefaultTitles();
     public static DiscordBot bot = new DiscordBot();
     public static MinecraftServer mcServer;
     public static boolean isCheatMode;
-    public static Map<UUID, ScheduledFuture<?>> requests;
-    public static Map<UUID, CommandDelay> commandDelays;
-    public static Map<UUID, Map<String, CommandCooldown>> commandCooldowns;
-    public static Map<String, Kit> kitMap;
+    public static Map<UUID, ScheduledFuture<?>> requests = new HashMap<>();
+    public static Map<UUID, CommandDelay> commandDelays = new HashMap<>();
+    public static Map<UUID, Map<String, CommandCooldown>> commandCooldowns = new HashMap<>();
+    public static Map<String, Kit> kitMap = new HashMap<>();
 
     public Main() {
         ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
@@ -61,21 +62,16 @@ public class Main {
         if (!ModInfo.Constants.configdir.exists()) {
             ModInfo.Constants.configdir.mkdir();
         }
-        Main.commandDelays = new HashMap<>();
-        Main.commandCooldowns = new HashMap<>();
-        Main.requests = new HashMap<>();
-        Main.kitMap = new HashMap<>();
-        Main.patreonList = new PatreonList();
-        Main.econData = new EconData();
 
-        Main.econData.load();
-        Main.permRegistry.load();
-        Main.blackLists.load();
+        econData.load();
+        permRegistry.load();
+        blackLists.load();
+        defaultTitles.load();
 
-        Main.getLogger().info("Loading Configs");
+        getLogger().info("Loading Configs");
         Configs.reload();
 
-        Main.loadKits();
+        loadKits();
 
         MinecraftForge.EVENT_BUS.register(new ChatEventHandler());
         MinecraftForge.EVENT_BUS.register(new EntityEventHandler());

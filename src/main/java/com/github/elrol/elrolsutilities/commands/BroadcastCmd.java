@@ -21,8 +21,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import java.util.Collection;
 import java.util.List;
 
-public class BroadcastCmd
-extends _CmdBase {
+public class BroadcastCmd extends _CmdBase {
 
     public BroadcastCmd(ForgeConfigSpec.IntValue delay, ForgeConfigSpec.IntValue cooldown, ForgeConfigSpec.ConfigValue<List<? extends String>> aliases, ForgeConfigSpec.IntValue cost) {
         super(delay, cooldown, aliases, cost);
