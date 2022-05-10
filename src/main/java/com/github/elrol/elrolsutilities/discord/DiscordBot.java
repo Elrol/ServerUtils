@@ -16,6 +16,8 @@ import net.dv8tion.jda.api.entities.*;
 import net.minecraft.server.level.ServerPlayer;
 
 import javax.security.auth.login.LoginException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class DiscordBot {
@@ -28,12 +30,14 @@ public class DiscordBot {
     private boolean tags;
 
     public JDA bot;
-    private Guild guild;
+    private List<Guild> guilds = new ArrayList<>();
 
-    public TextChannel chatChannel;
-    public TextChannel staffChannel;
-    public TextChannel infoChannel;
-    public TextChannel consoleChannel;
+    public List<TextChannel> chatChannels = new ArrayList<>();
+    public List<TextChannel> staffChannels = new ArrayList<>();
+    public List<TextChannel> infoChannels = new ArrayList<>();
+    public List<TextChannel> consoleChannels = new ArrayList<>();
+
+    public List<DiscordServerInfo> guildInfo;
 
     private final DiscordMessageListener listener = new DiscordMessageListener();
     private final SlashCommands commands = new SlashCommands();
@@ -45,6 +49,7 @@ public class DiscordBot {
             Logger.log("Discord bot not enabled");
             return;
         }
+        guildInfo = DiscordConfig.discordInfo.get();
         String id = DiscordConfig.botUUID.get();
         if(id.isEmpty()) {
             botUUID = UUID.randomUUID();
@@ -73,30 +78,39 @@ public class DiscordBot {
 
         try {
             bot = jda.build().awaitReady();
-            Long guildID = DiscordConfig.guildID.get();
-            guild = bot.getGuildById(guildID);
-            if(guild == null) {
-                Logger.err("Guild ID was invalid");
-                bot.getGuilds().forEach(g -> Logger.err(g.getName() + ": " + g.getIdLong()));
+
+            if(guildInfo != null) {
+                for(DiscordServerInfo info : guildInfo) {
+                    if(info.guildID > 0L) {
+                        Guild guild = bot.getGuildById(info.guildID);
+                        if(guild == null) {
+                            Main.getLogger().error("Discord Guild ID [" + info.guildID + "] was invalid.");
+                            continue;
+                        }
+                        guilds.add(guild);
+                        commands.init(guild);
+                        if(info.chatID > 0L) {
+                            TextChannel channel = bot.getTextChannelById(info.chatID);
+                            if(channel != null) chatChannels.add(channel);
+                        }
+                        if(info.infoID > 0L) {
+                            TextChannel channel = bot.getTextChannelById(info.infoID);
+                            if(channel != null) infoChannels.add(channel);
+                        }
+                        if(info.staffID > 0L) {
+                            TextChannel channel = bot.getTextChannelById(info.staffID);
+                            if(channel != null) staffChannels.add(channel);
+                        }
+                        if(info.consoleID > 0L) {
+                            TextChannel channel = bot.getTextChannelById(info.consoleID);
+                            if(channel != null) consoleChannels.add(channel);
+                        }
+                    }
+                }
             }
-
-            chatChannel = bot.getTextChannelById(DiscordConfig.chatChannelID.get());
-            if(chatChannel == null) Logger.err("Chat Channel ID was invalid");
-
-            staffChannel = bot.getTextChannelById(DiscordConfig.staffChannelID.get());
-            if(staffChannel == null) Logger.err("Staff Channel ID was invalid");
-
-            infoChannel = bot.getTextChannelById(DiscordConfig.infoChannelID.get());
-            if(infoChannel == null) Logger.err("Info Channel ID was invalid");
-
-            consoleChannel = bot.getTextChannelById(DiscordConfig.consoleChannelID.get());
-            if(consoleChannel == null) Logger.err("Console Channel ID was invalid");
-
         } catch (LoginException | InterruptedException e) {
             e.printStackTrace();
         }
-
-        commands.init(guild);
     }
 
     public void shutdown() {
@@ -104,53 +118,52 @@ public class DiscordBot {
             bot.shutdown();
     }
 
-    private String getName(ServerPlayer player) {
+    public String getName(ServerPlayer player) {
+        if(player == null) return "NULL";
+        return getName(player.getUUID());
+    }
+
+    public String getName(UUID uuid) {
+        if(uuid == null) return "NULL";
         String name = "";
-        if(player != null) {
-            IPlayerData data = Main.database.get(player.getUUID());
-            if(tags) name += data.getPrefix() + " ";
-            if(titles) name += data.getTitle() + " ";
-            if(nicks) name += data.getDisplayName();
-            else name += player.getName().getString();
-            name += ": ";
-        }
+        IPlayerData data = Main.database.get(uuid);
+        if(tags) name += data.getPrefix() + " ";
+        if(titles) name += data.getTitle() + " ";
+        if(nicks) name += data.getDisplayName();
+        name += ": ";
         return name;
     }
 
     public void sendChatMessage(ServerPlayer player, String message) {
-        if(enabled && chatChannel != null && isOnline()) {
-            MessageBuilder msg = new MessageBuilder(
-                    TextUtils.stripFormatting(getName(player) + message));
-            chatChannel.sendMessage(msg.build()).queue();
+        if(enabled && isOnline()) {
+            Message msg = new MessageBuilder(TextUtils.stripFormatting(getName(player) + message)).build();
+            chatChannels.forEach(c -> c.sendMessage(msg).queue());
         }
     }
 
     public void sendStaffMessage(ServerPlayer player, String message) {
-        if(enabled && staffChannel != null && isOnline()) {
-            Message msg = new MessageBuilder(
-                    TextUtils.stripFormatting(getName(player) + message)).build();
-            staffChannel.sendMessage(msg).queue();
+        if(enabled && isOnline()) {
+            Message msg = new MessageBuilder(TextUtils.stripFormatting(getName(player) + message)).build();
+            staffChannels.forEach(c -> c.sendMessage(msg).queue());
         }
     }
 
     public void sendInfoMessage(String message) {
-        if(enabled && infoChannel != null && isOnline()) {
-            Message msg = new MessageBuilder(
-                    TextUtils.stripFormatting(message)).build();
-            infoChannel.sendMessage(msg).queue();
+        if(enabled && isOnline()) {
+            Message msg = new MessageBuilder(TextUtils.stripFormatting(message)).build();
+            infoChannels.forEach(c -> c.sendMessage(msg).queue());
         }
     }
 
     public void sendConsoleMessage(ServerPlayer player, String message) {
-        if(enabled && consoleChannel != null && isOnline()) {
-            Message msg = new MessageBuilder(
-                    TextUtils.stripFormatting(getName(player) + message)).build();
-            consoleChannel.sendMessage(msg).queue();
+        if(enabled && isOnline()) {
+            Message msg = new MessageBuilder(TextUtils.stripFormatting(getName(player) + message)).build();
+            consoleChannels.forEach(c -> c.sendMessage(msg).queue());
         }
     }
 
     public String getDiscordName(long id) {
-        if(guild != null) {
+        for(Guild guild : guilds) {
             Member member = guild.getMemberById(id);
             if(member != null) {
                 return member.getUser().getName();
@@ -170,5 +183,50 @@ public class DiscordBot {
     public boolean isOnline() {
         JDA.Status status = bot.getStatus();
         return !(status.equals(JDA.Status.SHUTDOWN) || status.equals(JDA.Status.SHUTTING_DOWN));
+    }
+
+    public boolean isChatChannel(Long id) {
+        for(TextChannel channel : chatChannels) {
+            if(channel.getIdLong() == id) return true;
+        }
+        return false;
+    }
+
+    public boolean isInfoChannel(Long id) {
+        for(TextChannel channel : chatChannels) {
+            if(channel.getIdLong() == id) return true;
+        }
+        return false;
+    }
+
+    public boolean isStaffChannel(Long id) {
+        for(TextChannel channel : chatChannels) {
+            if(channel.getIdLong() == id) return true;
+        }
+        return false;
+    }
+
+    public boolean isConsoleChannel(Long id) {
+        for(TextChannel channel : chatChannels) {
+            if(channel.getIdLong() == id) return true;
+        }
+        return false;
+    }
+
+    public static class DiscordServerInfo {
+        Long guildID = 0L;
+        Long chatID = 0L;
+        Long staffID = 0L;
+        Long infoID = 0L;
+        Long consoleID = 0L;
+
+        public DiscordServerInfo() {}
+        public DiscordServerInfo(Long gID, Long cID, Long sID, Long iID, Long conID) {
+            guildID = gID;
+            chatID = cID;
+            staffID = sID;
+            infoID = iID;
+            consoleID = conID;
+        }
     }
 }

@@ -59,7 +59,7 @@ public class SmiteCmd
                 return 0;
             }
         }
-        CommandDelay.init(this, player, new CommandRunnable(c.getSource(), player), false);
+        CommandDelay.init(this, player, new CommandRunnable(c.getSource(), target), false);
         return 0;
     }
 

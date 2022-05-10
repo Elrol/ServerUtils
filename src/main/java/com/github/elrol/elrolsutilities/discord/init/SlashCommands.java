@@ -5,11 +5,14 @@ import com.github.elrol.elrolsutilities.api.IElrolAPI;
 import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,6 +22,10 @@ import java.util.UUID;
 public class SlashCommands extends ListenerAdapter {
 
     public void init(Guild guild) {
+        if(guild == null) {
+            Main.getLogger().error("Discord Server was NULL");
+            return;
+        }
         guild.upsertCommand("run", "runs a command on the server.")
                 .addOption(OptionType.STRING, "command", "The command to execute on the server", true)
                 .queue();
@@ -30,8 +37,17 @@ public class SlashCommands extends ListenerAdapter {
     @Override
     public void onSlashCommand(@NotNull SlashCommandEvent event) {
         String cmd = event.getName();
+        Member member = event.getMember();
+        if(member == null) {
+            event.reply("Error: Member was Null").setEphemeral(true).queue();
+            return;
+        }
         Logger.log("Discord Command: " + cmd);
         if(cmd.equalsIgnoreCase("run")) {
+            if(!event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
+                event.reply("Error: You don't have permission to use this command.").setEphemeral(true).queue();
+                return;
+            }
             OptionMapping option = event.getOption("command");
             String command = option == null ? "" : option.getAsString();
             CommandSourceStack console = Main.mcServer.createCommandSourceStack();
