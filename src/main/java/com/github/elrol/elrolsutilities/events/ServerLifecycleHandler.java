@@ -46,7 +46,7 @@ public class ServerLifecycleHandler {
         Ranks.init();
         Main.permRegistry.save();
         Logger.log("Starting Timer");
-        //TimerInit.init();
+        TimerInit.init();
         Main.bot.init();
         Main.bot.sendInfoMessage("Server is starting");
     }

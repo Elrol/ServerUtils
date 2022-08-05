@@ -536,7 +536,7 @@ public class Errs {
         return new TextComponent("The " + a + " Jail already exists.");
     }
 
-    public static BaseComponent jailed(int i) {
+    public static BaseComponent jailed(long i) {
         String a = ChatFormatting.DARK_RED + String.valueOf(i) + ChatFormatting.RESET;
         if(FeatureConfig.translation_enable.get())
             return new TranslatableComponent("serverutils.command.err.jailed", a);
@@ -607,5 +607,11 @@ public class Errs {
             return new TranslatableComponent("serverutils.command.err.title-empty");
         return new TextComponent("The title can't be empty.");
     }
-}
 
+    public static BaseComponent not_jailed(String a){
+        a = ChatFormatting.DARK_RED + a + ChatFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslatableComponent("serverutils.command.err.not-jailed", a);
+        return new TextComponent(a + " is not currently in jail.");
+    }
+}

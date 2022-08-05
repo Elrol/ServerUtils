@@ -38,8 +38,9 @@ public class DiscordConfig {
             showNicknames = server.define("show nicknames", true);
             discordTag = server.define("discord tag", "&8[&eDiscord&8]");
         server.pop();
-
-        discordInfo = server.define("discord server info", Collections.singletonList(new DiscordBot.DiscordServerInfo()));
+        server.push("Server info");
+            discordInfo = server.define("server info", Collections.singletonList(new DiscordBot.DiscordServerInfo()));
+        server.pop();
     }
 
 

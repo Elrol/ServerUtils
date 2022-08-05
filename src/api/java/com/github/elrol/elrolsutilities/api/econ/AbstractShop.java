@@ -83,7 +83,7 @@ public abstract class AbstractShop {
         IPlayerData data = IElrolAPI.getInstance().getPlayerDatabase().get(player.getUUID());
         int max = 0;
         for(String s : data.getPerms()) {
-            if(s.startsWith(perm)) {
+            if(s != null && s.startsWith(perm)) {
                 int i = Integer.parseInt(s.replace(perm, ""));
                 if(max < i ){
                     max = i;

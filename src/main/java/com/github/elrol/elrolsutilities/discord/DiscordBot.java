@@ -6,7 +6,9 @@ import com.github.elrol.elrolsutilities.config.DiscordConfig;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.discord.events.DiscordMessageListener;
 import com.github.elrol.elrolsutilities.discord.init.SlashCommands;
+import com.github.elrol.elrolsutilities.libs.JsonMethod;
 import com.github.elrol.elrolsutilities.libs.Logger;
+import com.github.elrol.elrolsutilities.libs.ModInfo;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -22,25 +24,36 @@ import java.util.UUID;
 
 public class DiscordBot {
 
-    public UUID botUUID;
+    private String token = "";
+    private String botID = "";
 
-    private boolean enabled;
-    private boolean nicks;
-    private boolean titles;
-    private boolean tags;
+    private String discordTag = "&8[&eDiscord&8]";
+    private String serverName = "";
 
-    public JDA bot;
-    private List<Guild> guilds = new ArrayList<>();
+    private transient boolean enabled;
+    private boolean nicks = true;
+    private boolean titles = true;
+    private boolean tags = true;
 
-    public List<TextChannel> chatChannels = new ArrayList<>();
-    public List<TextChannel> staffChannels = new ArrayList<>();
-    public List<TextChannel> infoChannels = new ArrayList<>();
-    public List<TextChannel> consoleChannels = new ArrayList<>();
+    public List<DiscordServerInfo> guildInfo = new ArrayList<>();
 
-    public List<DiscordServerInfo> guildInfo;
+    public transient UUID botUUID;
+    public transient JDA bot;
+    private final transient List<Guild> guilds = new ArrayList<>();
 
-    private final DiscordMessageListener listener = new DiscordMessageListener();
-    private final SlashCommands commands = new SlashCommands();
+    public transient List<TextChannel> chatChannels = new ArrayList<>();
+    public transient List<TextChannel> staffChannels = new ArrayList<>();
+    public transient List<TextChannel> infoChannels = new ArrayList<>();
+    public transient List<TextChannel> consoleChannels = new ArrayList<>();
+
+
+    private transient final DiscordMessageListener listener = new DiscordMessageListener();
+    private transient final SlashCommands commands = new SlashCommands();
+
+    public DiscordBot() {
+        guildInfo.add(new DiscordServerInfo());
+        save();
+    }
 
     public void init() {
         enabled = FeatureConfig.discord_bot_enable.get();
@@ -50,27 +63,21 @@ public class DiscordBot {
             return;
         }
         guildInfo = DiscordConfig.discordInfo.get();
-        String id = DiscordConfig.botUUID.get();
-        if(id.isEmpty()) {
-            botUUID = UUID.randomUUID();
-            DiscordConfig.botUUID.set(botUUID.toString());
-        } else {
-            botUUID = UUID.fromString(id);
+        if(guildInfo.isEmpty()) {
+            guildInfo.add(new DiscordServerInfo());
         }
-
-        nicks = DiscordConfig.showNicknames.get();
-        titles = DiscordConfig.showTitles.get();
-        tags = DiscordConfig.showRank.get();
-
-        String token = DiscordConfig.token.get();
+        if(botID.isEmpty()) {
+            botUUID = UUID.randomUUID();
+            botID = botUUID.toString();
+        } else {
+            botUUID = UUID.fromString(botID);
+        }
         if(token.isEmpty()) {
             Logger.err("Discord bot token is empty");
             return;
         }
         JDABuilder jda = JDABuilder.createDefault(token);
-
-        String name = DiscordConfig.serverName.get();
-        jda.setActivity(Activity.playing(name.isEmpty() ? "Server Utils" : name));
+        jda.setActivity(Activity.playing(serverName.isEmpty() ? "Server Utils" : serverName));
         jda.setStatus(OnlineStatus.ONLINE);
 
         jda.addEventListeners(listener);
@@ -111,6 +118,7 @@ public class DiscordBot {
         } catch (LoginException | InterruptedException e) {
             e.printStackTrace();
         }
+        save();
     }
 
     public void shutdown() {
@@ -172,6 +180,8 @@ public class DiscordBot {
         return "NULL";
     }
 
+    public String getDiscordTag() { return discordTag; }
+
     public void update() {
         int players = Main.mcServer.getPlayerList().getPlayerCount();
         Logger.log("Current players: " + players);
@@ -181,6 +191,7 @@ public class DiscordBot {
     }
 
     public boolean isOnline() {
+        if(bot == null) return false;
         JDA.Status status = bot.getStatus();
         return !(status.equals(JDA.Status.SHUTDOWN) || status.equals(JDA.Status.SHUTTING_DOWN));
     }
@@ -213,14 +224,29 @@ public class DiscordBot {
         return false;
     }
 
-    public static class DiscordServerInfo {
-        Long guildID = 0L;
-        Long chatID = 0L;
-        Long staffID = 0L;
-        Long infoID = 0L;
-        Long consoleID = 0L;
+    public static DiscordBot load() {
+        return JsonMethod.load(ModInfo.Constants.configdir, "DiscordSettings.json", DiscordBot.class);
+    }
 
-        public DiscordServerInfo() {}
+    public void save() {
+        JsonMethod.save(ModInfo.Constants.configdir, "DiscordSettings.json", this);
+    }
+
+    public static class DiscordServerInfo {
+        public final Long guildID;
+        public final Long chatID;
+        public final Long staffID;
+        public final Long infoID;
+        public final Long consoleID;
+
+        public DiscordServerInfo() {
+            guildID = 0L;
+            chatID = 0L;
+            staffID = 0L;
+            infoID = 0L;
+            consoleID = 0L;
+        }
+
         public DiscordServerInfo(Long gID, Long cID, Long sID, Long iID, Long conID) {
             guildID = gID;
             chatID = cID;

@@ -1011,4 +1011,31 @@ public class Msgs {
             return new TranslatableComponent("serverutils.server.msg.unset-title");
         return new TextComponent("Your title has been cleared.");
     }
+
+    public static BaseComponent unjailed() {
+        if(FeatureConfig.translation_enable.get())
+            return new TranslatableComponent("serverutils.server.msg.unjailed");
+        return new TextComponent("You have been released from jail.");
+    }
+
+    public static BaseComponent unjailed_player(String a) {
+        a = ChatFormatting.GREEN + a + ChatFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslatableComponent("serverutils.server.msg.unjailed_player", a);
+        return new TextComponent("You have pardoned " + a + " from their jail sentence.");
+    }
+
+    public static BaseComponent jail_created(String a) {
+        a = ChatFormatting.GREEN + a + ChatFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslatableComponent("serverutils.server.msg.jail_created", a);
+        return new TextComponent("You have created the " + a + " jail.");
+    }
+
+    public static BaseComponent jail_deleted(String a) {
+        a = ChatFormatting.GREEN + a + ChatFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslatableComponent("serverutils.server.msg.jail_deleted", a);
+        return new TextComponent("You have deleted the " + a + " jail.");
+    }
 }

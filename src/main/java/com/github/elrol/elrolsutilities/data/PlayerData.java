@@ -165,7 +165,14 @@ public class PlayerData implements IPlayerData {
     public void jail(String jail, int cell, int min) {
         this.jail = jail;
         this.cell = cell;
-        jailed = min * 60;
+        jailed = min * 60L;
+        update();
+    }
+
+    public void unjail() {
+        this.jail = "";
+        this.cell = -1;
+        jailed = 0;
         update();
     }
 
@@ -174,6 +181,10 @@ public class PlayerData implements IPlayerData {
     public boolean isJailed() {
         return jailed > 0;
     }
+
+    public String getJail() { return jail; }
+
+    public int getJailCell() { return cell; }
 
     public boolean isStaff() {
         return hasPerm(Main.permRegistry.getPerm("staffchat")) || hasPerm("*");
@@ -390,6 +401,7 @@ public class PlayerData implements IPlayerData {
             cell = -1;
             player.setGameMode(GameType.SURVIVAL);
             Methods.teleport(player, prevLoc, false);
+            TextUtils.msg(player, Msgs.unjailed());
         }
         save();
     }

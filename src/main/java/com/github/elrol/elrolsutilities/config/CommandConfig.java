@@ -65,6 +65,7 @@ public class CommandConfig {
     public static CommandInfo trust = new CommandInfo();
     public static CommandInfo unclaim = new CommandInfo();
     public static CommandInfo unclaimAll = new CommandInfo();
+    public static CommandInfo unjail = new CommandInfo();
     public static CommandInfo untrust = new CommandInfo();
     public static CommandInfo warp = new CommandInfo();
     public static CommandInfo warps = new CommandInfo();
@@ -527,6 +528,13 @@ public class CommandConfig {
             unclaimAll.cooldown = server.defineInRange("cooldown", 0, 0, Integer.MAX_VALUE);
             unclaimAll.aliases = server.defineList("aliases", Aliases.unclaimAll, o -> o instanceof String);
             unclaimAll.cost = server.defineInRange("cost", 0, 0, Integer.MAX_VALUE);
+        server.pop();
+        server.push("Unjail");
+            unjail.enable = server.define("enable", true);
+            unjail.delay = server.defineInRange("delay", 0, 0, Integer.MAX_VALUE);
+            unjail.cooldown = server.defineInRange("cooldown", 0, 0, Integer.MAX_VALUE);
+            unjail.aliases = server.defineList("aliases", Aliases.unjail, o -> o instanceof String);
+            unjail.cost = server.defineInRange("cost", 0, 0, Integer.MAX_VALUE);
         server.pop();
         server.push("Untrust");
             untrust.enable = server.define("enable", true);

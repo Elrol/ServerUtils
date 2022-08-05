@@ -4,6 +4,7 @@ import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.data.CommandCooldown;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
 import com.github.elrol.elrolsutilities.data.TpRequest;
+import com.github.elrol.elrolsutilities.libs.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,14 +19,22 @@ public class TimerInit {
 
     private static final ScheduledThreadPoolExecutor EXECUTOR = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(1);
 
-    private static final Runnable secondTask = () -> Main.serverData.tickJails();
+    private static final Runnable secondTask = () -> {
+        Logger.debug("Second Task");
+        Main.serverData.tickJails();
+    };
+
     private static final Runnable minuteTask = () -> {
+        Logger.debug("Minute Task");
         Main.serverData.tickMutes();
         if(Main.bot.bot != null) {
             Main.bot.update();
         }
     };
-    private static final Runnable fiveMinuteTask = () -> Main.shopRegistry.save();
+    private static final Runnable fiveMinuteTask = () -> {
+        Logger.debug("Five Minute Task");
+        Main.shopRegistry.save();
+    };
 
     public static void init() {
         EXECUTOR.scheduleAtFixedRate(secondTask, 1, 1, TimeUnit.SECONDS);
