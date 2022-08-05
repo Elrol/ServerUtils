@@ -98,6 +98,7 @@ extends _CmdBase {
             return 0;
         }
         Main.serverData.createJail(name);
+        TextUtils.msg(c.getSource(), Msgs.jail_created(name));
         return 1;
     }
 
@@ -106,6 +107,7 @@ extends _CmdBase {
             TextUtils.err(c, Errs.jail_missing());
         }
         Main.serverData.deleteJail(jail);
+        TextUtils.msg(c.getSource(), Msgs.jail_deleted(name));
         return 1;
     }
 

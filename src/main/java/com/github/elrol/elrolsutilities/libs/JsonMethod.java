@@ -1,5 +1,7 @@
 package com.github.elrol.elrolsutilities.libs;
 
+import com.github.elrol.elrolsutilities.discord.DiscordBot;
+import com.github.elrol.elrolsutilities.libs.adapters.DiscordServerInfoAdapter;
 import com.github.elrol.elrolsutilities.libs.adapters.GsonLocalDateTime;
 import com.github.elrol.elrolsutilities.libs.adapters.InterfaceAdapter;
 import com.google.gson.Gson;
@@ -15,6 +17,7 @@ public class JsonMethod {
     private static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(CompoundNBT.class, new InterfaceAdapter())
             .registerTypeAdapter(LocalDateTime.class, new GsonLocalDateTime())
+            .registerTypeAdapter(DiscordBot.DiscordServerInfo.class, new DiscordServerInfoAdapter())
             .setPrettyPrinting()
             .disableHtmlEscaping()
             .create();

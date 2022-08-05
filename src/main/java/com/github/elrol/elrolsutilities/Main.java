@@ -46,7 +46,7 @@ public class Main {
     public static PermRegistry permRegistry = new PermRegistry();
     public static BlackLists blackLists = new BlackLists();
     public static DefaultTitles defaultTitles = new DefaultTitles();
-    public static DiscordBot bot = new DiscordBot();
+    public static DiscordBot bot = DiscordBot.load();
     public static MinecraftServer mcServer;
     public static boolean isCheatMode;
     public static Map<UUID, ScheduledFuture<?>> requests = new HashMap<>();
@@ -67,6 +67,8 @@ public class Main {
         permRegistry.load();
         blackLists.load();
         defaultTitles.load();
+
+        if(bot == null) bot = new DiscordBot();
 
         getLogger().info("Loading Configs");
         Configs.reload();

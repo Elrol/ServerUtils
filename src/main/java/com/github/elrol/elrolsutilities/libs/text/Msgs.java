@@ -1011,4 +1011,31 @@ public class Msgs {
             return new TranslationTextComponent("serverutils.server.msg.unset-title");
         return new StringTextComponent("Your title has been cleared.");
     }
+
+    public static TextComponent unjailed() {
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.msg.unjailed");
+        return new StringTextComponent("You have been released from jail.");
+    }
+
+    public static TextComponent unjailed_player(String a) {
+        a = TextFormatting.GREEN + a + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.msg.unjailed_player", a);
+        return new StringTextComponent("You have pardoned " + a + " from their jail sentence.");
+    }
+
+    public static TextComponent jail_created(String a) {
+        a = TextFormatting.GREEN + a + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.msg.jail_created", a);
+        return new StringTextComponent("You have created the " + a + " jail.");
+    }
+
+    public static TextComponent jail_deleted(String a) {
+        a = TextFormatting.GREEN + a + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.server.msg.jail_deleted", a);
+        return new StringTextComponent("You have deleted the " + a + " jail.");
+    }
 }

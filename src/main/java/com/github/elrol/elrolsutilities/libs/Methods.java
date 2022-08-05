@@ -336,15 +336,14 @@ public class Methods {
     }
 
     public static int tickToMin(Long tick) {
-
         Long ticksPerMin = 72000L;
-        Long time = tick;
+        long time = tick * ticksPerMin;
         Logger.debug("Server time: " + time);
         time = time - time % ticksPerMin;
         Logger.debug("Server time rounded: " + time);
         time = time / ticksPerMin;
         Logger.debug("Server time in min: " + time);
-        return time.intValue();
+        return (int)time;
     }
 
     public static UUID getUUIDFromName(String name) {

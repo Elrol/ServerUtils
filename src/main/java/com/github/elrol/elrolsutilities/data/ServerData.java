@@ -122,6 +122,15 @@ public class ServerData implements Serializable {
         save();
     }
 
+    public void unjail(ServerPlayerEntity player) {
+        IPlayerData data = Main.database.get(player.getUUID());
+        if(data != null && data.isJailed()) {
+            data.unjail();
+            Methods.teleport(player, data.getPrevLoc());
+        }
+        save();
+    }
+
     public Map<String, JailData> getJailMap() { return jailMap; }
 
     public void claim(ClaimBlock claim, UUID uuid){
@@ -265,7 +274,6 @@ public class ServerData implements Serializable {
         List<ClaimBlock> claims = new ArrayList<>();
         if(claimMap.isEmpty()) return claims;
         claimMap.forEach((claim, id) -> {
-            //Main.getLogger().info("Claim:" + claim + ", " + id);
             if(id.equals(uuid.toString())) claims.add(ClaimBlock.of(claim));
         });
 

@@ -536,7 +536,7 @@ public class Errs {
         return new StringTextComponent("The " + a + " Jail already exists.");
     }
 
-    public static TextComponent jailed(int i) {
+    public static TextComponent jailed(long i) {
         String a = TextFormatting.DARK_RED + String.valueOf(i) + TextFormatting.RESET;
         if(FeatureConfig.translation_enable.get())
             return new TranslationTextComponent("serverutils.command.err.jailed", a);
@@ -606,6 +606,13 @@ public class Errs {
         if(FeatureConfig.translation_enable.get())
             return new TranslationTextComponent("serverutils.command.err.title-empty");
         return new StringTextComponent("The title can't be empty.");
+    }
+
+    public static TextComponent not_jailed(String a) {
+        a = TextFormatting.DARK_RED + a + TextFormatting.RESET;
+        if(FeatureConfig.translation_enable.get())
+            return new TranslationTextComponent("serverutils.command.err.not-jailed", a);
+        return new StringTextComponent(a + " is not currently in jail.");
     }
 }
 

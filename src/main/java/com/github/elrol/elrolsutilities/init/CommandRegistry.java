@@ -64,7 +64,8 @@ public class CommandRegistry {
     public static TpaHereCmd tpaHereCmd = new TpaHereCmd(CommandConfig.tp_here.delay, CommandConfig.tp_here.cooldown, CommandConfig.tp_here.aliases, CommandConfig.tp_here.cost);
     public static TrustCmd trustCmd = new TrustCmd(CommandConfig.trust.delay, CommandConfig.trust.cooldown, CommandConfig.trust.aliases, CommandConfig.trust.cost);
     public static UnclaimCmd unclaimCmd = new UnclaimCmd(CommandConfig.unclaim.delay, CommandConfig.unclaim.cooldown, CommandConfig.unclaim.aliases, CommandConfig.unclaim.cost);
-    public static UnclaimCmd unclaimAllCmd = new UnclaimCmd(CommandConfig.unclaimAll.delay, CommandConfig.unclaimAll.cooldown, CommandConfig.unclaimAll.aliases, CommandConfig.unclaimAll.cost);
+    public static UnclaimAllCmd unclaimAllCmd = new UnclaimAllCmd(CommandConfig.unclaimAll.delay, CommandConfig.unclaimAll.cooldown, CommandConfig.unclaimAll.aliases, CommandConfig.unclaimAll.cost);
+    public static UnjailCmd unjailCmd = new UnjailCmd(CommandConfig.unjail.delay, CommandConfig.unjail.cooldown, CommandConfig.unjail.aliases, CommandConfig.unjail.cost);
     public static UntrustCmd untrustCmd = new UntrustCmd(CommandConfig.untrust.delay, CommandConfig.untrust.cooldown, CommandConfig.untrust.aliases, CommandConfig.untrust.cost);
     public static WarpCmd warpCmd = new WarpCmd(CommandConfig.warp.delay, CommandConfig.warp.cooldown, CommandConfig.warp.aliases, CommandConfig.warp.cost);
     public static WarpsCmd warpsCmd = new WarpsCmd(CommandConfig.warps.delay, CommandConfig.warps.cooldown, CommandConfig.warps.aliases, CommandConfig.warps.cost);
@@ -122,6 +123,7 @@ public class CommandRegistry {
         if (CommandConfig.trust.enable.get()) trustCmd.register(dispatcher);
         if (CommandConfig.unclaim.enable.get()) unclaimCmd.register(dispatcher);
         if (CommandConfig.unclaimAll.enable.get()) unclaimAllCmd.register(dispatcher);
+        if (CommandConfig.unjail.enable.get()) unjailCmd.register(dispatcher);
         if (CommandConfig.untrust.enable.get()) untrustCmd.register(dispatcher);
         if (CommandConfig.warps.enable.get()) warpsCmd.register(dispatcher);
         if (CommandConfig.warp.enable.get()) warpCmd.register(dispatcher);

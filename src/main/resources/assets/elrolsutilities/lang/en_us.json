@@ -225,5 +225,10 @@
 	"serverutils.command.err.title-empty": 			"The title can't be empty.",
 	"serverutils.server.msg.title-created": 		"You have created the %s title: %s.",
 	"serverutils.server.msg.titles":				"Unlocked Titles: %s",
-	"serverutils.server.msg.unset-title": 			"Your title has been cleared."
+	"serverutils.server.msg.unset-title": 			"Your title has been cleared.",
+	"serverutils.command.err.not-jailed": 			"%s is not currently in jail.",
+	"serverutils.server.msg.unjailed": 				"You have been pardoned from your jail sentence.",
+	"serverutils.server.msg.unjailed_player": 		"You have pardoned %s from their jail sentence.",
+	"serverutils.server.msg.jail_created": 			"You have created the %s jail.",
+	"serverutils.server.msg.jail_deleted": 			"You have deleted the %s jail."
 }

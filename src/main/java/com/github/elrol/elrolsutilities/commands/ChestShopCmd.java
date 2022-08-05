@@ -33,7 +33,7 @@ public class ChestShopCmd extends _CmdBase {
                 "To create a shop",
                 "1: Place a sign with either [sell] or [buy] on the first line (or [adminbuy] / [adminsell])",
                 "2: Set the quantity on the second line, if left blank will default to 1",
-                "3: Set the price for the quantity on the third line.",
+                "3: Set the price for the quantity on the fourth line.",
                 "4: Place a chest somewhere with the item that you want to buy/sell.",
                 "5: Right click the sign with redstone, then right click on the chest."
         };

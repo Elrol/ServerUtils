@@ -31,7 +31,8 @@ public class ServerLifecycleHandler {
         Main.isCheatMode = Main.mcServer.getWorldData().getAllowCommands();
         Main.dir = Methods.getWorldDir(Main.mcServer.getWorldData().getLevelName());
 
-        Main.shopRegistry.registerShopManager(new AveronShopManager());
+        if(Main.isDev())
+            Main.shopRegistry.registerShopManager(new AveronShopManager());
         Main.shopRegistry.registerShopManager(new ChestShopManager(ChestShopType.AdminBuy));
         Main.shopRegistry.registerShopManager(new ChestShopManager(ChestShopType.AdminSell));
         Main.shopRegistry.registerShopManager(new ChestShopManager(ChestShopType.Buy));
@@ -45,7 +46,7 @@ public class ServerLifecycleHandler {
         Ranks.init();
         Main.permRegistry.save();
         Logger.log("Starting Timer");
-        //TimerInit.init();
+        TimerInit.init();
         Main.bot.init();
         Main.bot.sendInfoMessage("Server is starting");
     }
@@ -78,7 +79,6 @@ public class ServerLifecycleHandler {
         Main.shopRegistry.save();
         Logger.log("Stopping Timer");
         TimerInit.shutdown();
-        CommandCooldown.shutdown();
         CommandDelay.shutdown();
         TpRequest.shutdown();
         Main.bot.shutdown();

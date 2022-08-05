@@ -59,6 +59,7 @@ public class Aliases {
     public static final List<String> rankup = Collections.singletonList("rankup");
     public static final List<String> unclaim = Collections.singletonList("unclaim");
     public static final List<String> unclaimAll = Collections.singletonList("unclaimall");
+    public static final List<String> unjail = Arrays.asList("unjail", "pardon");
     public static final List<String> econ = Collections.singletonList("econ");
     public static final List<String> bal = Collections.singletonList("bal");
     public static final List<String> pay = Collections.singletonList("pay");

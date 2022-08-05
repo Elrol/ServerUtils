@@ -20,8 +20,11 @@ public interface IPlayerData {
     Long                tillUseKit(IKit kit);
 
     void                jail(String jail, int cell, int min);
+    void                unjail();
     long                getJailTime();
     boolean             isJailed();
+    String              getJail();
+    int                 getJailCell();
 
     boolean             isStaff();
     void                toggleBypass();

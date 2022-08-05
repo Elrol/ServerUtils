@@ -8,6 +8,8 @@ import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.ImmutableStringReader;
 import com.mojang.brigadier.ParseResults;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.context.CommandContextBuilder;
 import com.mojang.brigadier.context.ParsedCommandNode;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
@@ -32,8 +34,10 @@ public class NewCommandEventHandler {
             if(data.isJailed()) {
                 boolean wl = FeatureConfig.jailCommandsWhitelist.get();
                 int flag = -1;
+                CommandContextBuilder<CommandSource> commandCB = pr.getContext();
+                String command = commandCB.getNodes().get(0).getNode().getName();
                 for(String cmd : FeatureConfig.jailCommands.get()) {
-                    if(cmd.equalsIgnoreCase(pr.getContext().getRootNode().getName())) {
+                    if(cmd.equalsIgnoreCase(command)) {
                         if(wl) {
                             flag = 1;
                         } else {
@@ -50,7 +54,7 @@ public class NewCommandEventHandler {
                     }
                 }
                 if(flag == 0) {
-                    TextUtils.err(player.createCommandSourceStack(), Errs.jailed(Methods.tickToMin(data.getJailTime())));
+                    TextUtils.err(player.createCommandSourceStack(), Errs.jailed(data.getJailTime()));
                     event.setCanceled(true);
                     return;
                 }
