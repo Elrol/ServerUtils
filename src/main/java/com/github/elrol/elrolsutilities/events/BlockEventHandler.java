@@ -8,6 +8,7 @@ import com.github.elrol.elrolsutilities.api.econ.AbstractShop;
 import com.github.elrol.elrolsutilities.api.econ.IShopRegistry;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.ClaimBlock;
+import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
@@ -44,8 +45,7 @@ public class BlockEventHandler {
 
     @SubscribeEvent
     public void blockBreak(BlockEvent.BreakEvent event) {
-        if(!(event.getPlayer() instanceof ServerPlayer)) return;
-        ServerPlayer player = (ServerPlayer)event.getPlayer();
+        if(!(event.getPlayer() instanceof ServerPlayer player)) return;
         if(player.level.isClientSide) return;
         ClaimBlock claim = new ClaimBlock(player);
         IPlayerData data = Main.database.get(player.getUUID());
@@ -99,8 +99,7 @@ public class BlockEventHandler {
         ClaimBlock claim = new ClaimBlock(event.getEntityLiving());
         if(Main.serverData.isClaimed(claim)) {
             UUID uuid = Main.serverData.getOwner(claim);
-            if(event.getEntityLiving() instanceof ServerPlayer) {
-                ServerPlayer player = (ServerPlayer)event.getEntityLiving();
+            if(event.getEntityLiving() instanceof ServerPlayer player) {
                 IPlayerData data = Main.database.get(uuid);
                 if (player.getUUID().equals(uuid) || data.isTrusted(player.getUUID())) return;
                 TextUtils.err(player, Errs.chunk_claimed(data.getDisplayName()));
@@ -111,9 +110,7 @@ public class BlockEventHandler {
 
     @SubscribeEvent
     public void blockPlace(BlockEvent.EntityPlaceEvent event){
-        if(!(event.getEntity() instanceof ServerPlayer)) return;
-
-        ServerPlayer player = (ServerPlayer)event.getEntity();
+        if(!(event.getEntity() instanceof ServerPlayer player)) return;
 
         if(player.level.isClientSide) return;
 
@@ -149,9 +146,8 @@ public class BlockEventHandler {
     public void interactEvent(PlayerInteractEvent.RightClickBlock event) {
         Level world = event.getWorld();
         if(world.isClientSide) return;
-        if(!(event.getPlayer() instanceof ServerPlayer)) return;
+        if(!(event.getPlayer() instanceof ServerPlayer player)) return;
 
-        ServerPlayer player = (ServerPlayer)event.getPlayer();
         IPlayerData pdata = Main.database.get(player.getUUID());
         ItemStack hand = player.getMainHandItem();
         IShopRegistry reg = IElrolAPI.getInstance().getShopInit();
@@ -166,8 +162,10 @@ public class BlockEventHandler {
         }
 
         if(hand.getItem().equals(Items.REDSTONE)) {
+            Logger.debug("Used Redstone");
             Location signLoc = locationStorage.get(player.getUUID());
             if(signLoc != null) {
+                Logger.debug("Sign location found");
                 AbstractShop shop = reg.getShop(signLoc);
                 if(shop == null) {
                     locationStorage.remove(player.getUUID());
@@ -181,25 +179,31 @@ public class BlockEventHandler {
                 locationStorage.remove(player.getUUID());
             } else {
                 if(te instanceof SignBlockEntity sign) {
+                    Logger.debug("on a sign");
                     AbstractShop shop;
                     if(reg.exists(loc)) {
+                        Logger.debug("that is linked to a shop");
                         shop = reg.getShop(loc);
                         TextUtils.msg(player, Msgs.selected_sign(shop.tag()));
                         locationStorage.put(player.getUUID(), loc);
                     } else {
+                        Logger.debug("that isn't linked to a shop");
                         shop = reg.parseSign(sign);
                         if(shop != null) {
+                            Logger.debug("And stored the location");
                             TextUtils.msg(player, Msgs.selected_sign(shop.tag()));
                             locationStorage.put(player.getUUID(), loc);
-
                         }
                     }
                 }
             }
         } else if(te instanceof SignBlockEntity) {
+            Logger.debug("Clicked sign");
             if(reg.exists(loc)) {
+                Logger.debug("with a shop");
                 AbstractShop shop = reg.getShop(loc);
                 if(shop.isLinked()) {
+                    Logger.debug("that is linked");
                     event.setCanceled(shop.useShop(player, loc));
                 }
             }
@@ -211,8 +215,7 @@ public class BlockEventHandler {
     public void pistonPush(PistonEvent.Pre event){
         BlockPos pos = event.getPos();
         BlockPos target = event.getFaceOffsetPos();
-        if(!(event.getWorld() instanceof Level)) return;
-        Level world = (Level) event.getWorld();
+        if(!(event.getWorld() instanceof Level world)) return;
         ResourceLocation dim = world.dimension().location();
         ClaimBlock chunkPos = new ClaimBlock(dim, new ChunkPos(pos));
         ClaimBlock targetChunkPos = new ClaimBlock(dim, new ChunkPos(target));
@@ -231,8 +234,7 @@ public class BlockEventHandler {
 
     @SubscribeEvent
     public void entityDamage(LivingDamageEvent event) {
-        if(event.getEntityLiving() instanceof ServerPlayer) {
-            ServerPlayer player = (ServerPlayer)event.getEntityLiving();
+        if(event.getEntityLiving() instanceof ServerPlayer player) {
             IPlayerData data = Main.database.get(player.getUUID());
             if(data.isJailed()) {
                 if(FeatureConfig.jailProtection.get() == 1) event.setAmount(0.0f);

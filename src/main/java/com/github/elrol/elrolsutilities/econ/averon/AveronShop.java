@@ -1,5 +1,6 @@
 package com.github.elrol.elrolsutilities.econ.averon;
 
+import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.data.Location;
 import com.github.elrol.elrolsutilities.api.econ.AbstractShop;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
@@ -50,7 +51,7 @@ public class AveronShop extends AbstractShop {
             TextUtils.err(player, Errs.not_linked(tag()));
             return false;
         }
-        if(super.useShop(player, loc)) {
+        if(Main.isDev()) {
             BlockState linked = linkLoc.getLevelObj().getBlockState(linkLoc.getBlockPos());
             if(linked.getBlock().equals(Blocks.AIR)) {
                 linkLoc.getLevelObj().setBlock(linkLoc.getBlockPos(), Blocks.DIAMOND_BLOCK.defaultBlockState(), 3);

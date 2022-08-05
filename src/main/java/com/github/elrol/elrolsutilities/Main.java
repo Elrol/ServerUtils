@@ -123,7 +123,7 @@ public class Main {
     }
 
     public static boolean isDev() {
-        return false;
+        return true;
     }
 
     public static org.apache.logging.log4j.Logger getLogger() {

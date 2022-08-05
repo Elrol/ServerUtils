@@ -20,7 +20,7 @@ public class TimerInit {
     private static final ScheduledThreadPoolExecutor EXECUTOR = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(1);
 
     private static final Runnable secondTask = () -> {
-        Logger.debug("Second Task");
+        //Logger.debug("Second Task");
         Main.serverData.tickJails();
     };
 

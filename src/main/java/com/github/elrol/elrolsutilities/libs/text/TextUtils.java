@@ -362,6 +362,7 @@ public class TextUtils {
         if(string.startsWith(symbol)) {
             string = string.substring(symbol.length());
         }
+        if(string.isEmpty()) return 0F;
         return Float.parseFloat(string);
     }
 
