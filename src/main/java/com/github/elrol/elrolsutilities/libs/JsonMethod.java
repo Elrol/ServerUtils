@@ -48,7 +48,7 @@ public class JsonMethod {
         Logger.log("Data file: " + f.getAbsolutePath());
         if (f.exists()) {
             if (f.setWritable(true)) {
-                Logger.err("File was set to be writeable");
+                //Logger.err("File was set to be writeable");
             }
             try (BufferedReader bufferedReader = new BufferedReader(new FileReader(f))) {
                 return gson.fromJson(bufferedReader, clazz);

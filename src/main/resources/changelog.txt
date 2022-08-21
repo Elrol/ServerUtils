@@ -1,6 +1,0 @@
-[2.2.2-Beta]
-    Added:
-     - Rankup cost to ranks
-
-    Fixed:
-     - Reloading ranks to refresh the list

@@ -4,7 +4,6 @@ import com.github.elrol.elrolsutilities.discord.DiscordBot;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 

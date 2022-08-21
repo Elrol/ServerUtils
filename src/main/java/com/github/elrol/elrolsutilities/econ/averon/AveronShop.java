@@ -8,7 +8,6 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.google.gson.JsonObject;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.BaseComponent;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
