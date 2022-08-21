@@ -3,7 +3,6 @@ package com.github.elrol.elrolsutilities.discord.events;
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.IElrolAPI;
 import com.github.elrol.elrolsutilities.api.data.IPlayerData;
-import com.github.elrol.elrolsutilities.config.DiscordConfig;
 import com.github.elrol.elrolsutilities.discord.DiscordBot;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import net.dv8tion.jda.api.MessageBuilder;
@@ -11,6 +10,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.minecraft.util.text.ChatType;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponent;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -28,7 +28,7 @@ public class DiscordMessageListener extends ListenerAdapter {
         String sender = data == null ? event.getAuthor().getName() : bot.getName(data.getUUID());
         String content = event.getMessage().getContentDisplay();
 
-        StringTextComponent text;
+        TextComponent text;
         if(data != null) {
             text = TextUtils.formatChat(data.getUUID(),content);
         } else {

@@ -12,7 +12,6 @@ import net.minecraft.tileentity.SignTileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponent;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -108,7 +108,8 @@ public class TextUtils {
         if (!data.getPrefix().isEmpty()) {
             String p = data.getPrefix();
             string.append(p);
-            if(!p.substring(p.length() - 2).equals("&")) string.append("&r ");
+            String s = p.substring(p.length() - 2);
+            if(!s.startsWith("&")) string.append("&r ");
         }
         if (!data.getTitle().isEmpty()) {
             string.append(data.getTitle()).append("&r ");

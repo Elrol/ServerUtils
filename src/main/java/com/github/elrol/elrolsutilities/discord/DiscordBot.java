@@ -2,7 +2,6 @@ package com.github.elrol.elrolsutilities.discord;
 
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.data.IPlayerData;
-import com.github.elrol.elrolsutilities.config.DiscordConfig;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.discord.events.DiscordMessageListener;
 import com.github.elrol.elrolsutilities.discord.init.SlashCommands;

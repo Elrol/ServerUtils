@@ -8,10 +8,10 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.google.gson.JsonObject;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.tileentity.SignTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.TextComponent;
 import net.minecraft.world.World;
 
