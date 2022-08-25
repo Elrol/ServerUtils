@@ -10,9 +10,9 @@ import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.FakePlayer;
 
 import java.util.Map;
@@ -21,8 +21,9 @@ import java.util.UUID;
 public class PermissionHandler implements IPermissionHandler {
 
     public boolean hasPermission(UUID uuid, String perm) {
-        ServerPlayerEntity player = Methods.getPlayerFromUUID(uuid);
-        return hasPermission(player, perm);
+        IPlayerData data = Main.database.get(uuid);
+        if(data.hasPerm("*")) return true;
+        return data.hasPerm(perm);
     }
 
     public boolean hasPermission(ServerPlayerEntity player, String perm) {
@@ -36,19 +37,9 @@ public class PermissionHandler implements IPermissionHandler {
     public boolean hasPermission(CommandSource source, String perm) {
         try {
             ServerPlayerEntity player = source.getPlayerOrException();
-
             if(player instanceof FakePlayer) return true;
-
-            IPlayerData data = Main.database.get(player.getUUID());
-            if(data.hasPerm("*")) return true;
-            if(data.hasPerm(perm)) {
-                return true;
-            } else {
-                //Main.getLogger().debug(source.getDisplayName().getString() + " does not have the '" + perm + "' permission");
-                return false;
-            }
-        }
-        catch (CommandSyntaxException e) {
+            return hasPermission(player.getUUID(), perm);
+        } catch (CommandSyntaxException e) {
             return true;
         }
     }
