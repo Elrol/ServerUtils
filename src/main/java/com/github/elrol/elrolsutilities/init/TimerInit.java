@@ -1,17 +1,10 @@
 package com.github.elrol.elrolsutilities.init;
 
 import com.github.elrol.elrolsutilities.Main;
-import com.github.elrol.elrolsutilities.data.CommandCooldown;
-import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.data.TpRequest;
+import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.libs.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -33,7 +26,7 @@ public class TimerInit {
     };
     private static final Runnable fiveMinuteTask = () -> {
         Logger.debug("Five Minute Task");
-        Main.shopRegistry.save();
+        if(FeatureConfig.enable_economy.get()) Main.shopRegistry.save();
     };
 
     public static void init() {

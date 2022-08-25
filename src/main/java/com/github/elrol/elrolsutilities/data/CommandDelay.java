@@ -135,7 +135,8 @@ implements Runnable {
     }
 
     public static void shutdown() {
-        s.shutdown();
+        if(s != null)
+            s.shutdown();
     }
 
     @Override
