@@ -57,7 +57,7 @@ public class PermissionCmd extends _CmdBase {
             CommandDelay.init(this, player, new CommandRunnable(player, data), false);
         }
         catch (CommandSyntaxException e) {
-            TextUtils.msg(c, Msgs.permissions());
+            TextUtils.msg(c, Msgs.permission.get());
             c.getSource().sendFailure(new TextComponent("*"));
         }
         return 1;
@@ -75,7 +75,7 @@ public class PermissionCmd extends _CmdBase {
 
         @Override
         public void run() {
-            TextUtils.msg(this.player, Msgs.permissions());
+            TextUtils.msg(this.player, Msgs.permission.get());
             for (String p : this.data.getPerms()) {
                 TextUtils.sendMessage(player.createCommandSourceStack(), player, p);
             }

@@ -33,7 +33,7 @@ public class RankPermissionAdd {
             perm = s;
         }
         if (rank.addPerm(perm)) {
-            TextUtils.msg(c, Msgs.rank_perm_added(perm, rank.getName()));
+            TextUtils.msg(c, Msgs.rank_perm_added.get(perm, rank.getName()));
             //Main.serverData.updateAllPlayersWithRank(rank.getName());
             return 1;
         }

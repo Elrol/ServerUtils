@@ -73,7 +73,7 @@ public class MsgToggleCmd extends _CmdBase {
         @Override
         public void run() {
             data.setMsgDisabled(!data.msgDisabled());
-            TextUtils.msg(this.player, Msgs.toggled_msg(data.msgDisabled() ? "Disabled" : "Enabled"));
+            TextUtils.msg(this.player, Msgs.toggled_msg.get(data.msgDisabled() ? "Disabled" : "Enabled"));
         }
     }
 

@@ -11,8 +11,6 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.math.Vector3d;
-import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -95,8 +93,8 @@ public class SmiteCmd
             if (source.getTextName().equalsIgnoreCase(player.getName().getString())) {
                 TextUtils.err(source, Errs.smitten_self());
             } else {
-                TextUtils.msg(source, Msgs.smite(Methods.getDisplayName(player)));
-                TextUtils.msg(player, Msgs.smitten());
+                TextUtils.msg(source, Msgs.smite.get(Methods.getDisplayName(player)));
+                TextUtils.msg(player, Msgs.smitten.get());
             }
         }
     }

@@ -45,7 +45,7 @@ public class RankAdd {
             TextUtils.err(c, Errs.player_has_rank(data.getDisplayName(), rank.getName()));
             return 0;
         }
-        TextUtils.msg(c, Msgs.player_rank_added(data.getDisplayName(), rank.getName()));
+        TextUtils.msg(c, Msgs.player_rank_added.get(data.getDisplayName(), rank.getName()));
         data.addRank(rank);
         Main.database.save(uuid);
         data.update();

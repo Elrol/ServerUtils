@@ -14,9 +14,9 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.List;
@@ -94,7 +94,7 @@ extends _CmdBase {
                 ResourceLocation item = mainHand.getItem().getRegistryName();
                 if(item != null) {
                     Price price = Main.econData.setPrice(item, buy, sell);
-                    TextUtils.msg(player, Msgs.price_change(mainHand.getDisplayName().getString(), TextUtils.parseCurrency(price.buy, true), TextUtils.parseCurrency(price.sell, true)));
+                    TextUtils.msg(player, Msgs.price_change.get(mainHand.getDisplayName().getString(), TextUtils.parseCurrency(price.buy, true), TextUtils.parseCurrency(price.sell, true)));
                 }
             }
         }

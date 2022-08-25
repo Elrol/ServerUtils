@@ -87,7 +87,7 @@ extends _CmdBase {
         @Override
         public void run() {
             if(Methods.teleport(player, loc, Main.serverData.getWarp(warp)))
-                TextUtils.msg(this.player, Msgs.welcome_warp(this.warp));
+                TextUtils.msg(this.player, Msgs.warpWelcome.get(this.warp));
         }
     }
 

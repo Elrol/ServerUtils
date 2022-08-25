@@ -614,4 +614,31 @@ public class Errs {
             return new TranslatableComponent("serverutils.command.err.not-jailed", a);
         return new TextComponent(a + " is not currently in jail.");
     }
+
+    public static Err heldItemMissing = new Err("serverutils.command.err.item-missing", "You aren't holding an item.");
+    public static Err noModelData = new Err("serverutils.command.err.model-not-set", "%s has no CustomModelData");
+
+    public static class Err {
+
+        final String id;
+        final String text;
+
+        public Err(String id, String text) {
+            this.id = id;
+            this.text = text;
+        }
+
+        public BaseComponent get(String... args) {
+            for (int i = 0; i < args.length; i++) {
+                args[i] = ChatFormatting.DARK_RED + args[i] + ChatFormatting.RESET;
+            }
+            if(FeatureConfig.translation_enable.get())
+                return new TranslatableComponent(id, (Object[]) args);
+            String output = text;
+            for (String arg : args) {
+                output = output.replaceFirst("%s", arg);
+            }
+            return new TextComponent(output);
+        }
+    }
 }

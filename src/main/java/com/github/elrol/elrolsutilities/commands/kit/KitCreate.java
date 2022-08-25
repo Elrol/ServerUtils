@@ -34,7 +34,7 @@ public class KitCreate {
         Kit kit = new Kit(name);
         kit.save();
         Main.kitMap.put(name, kit);
-        TextUtils.msg(c, Msgs.kit_created(name));
+        TextUtils.msg(c, Msgs.kit_created.get(name));
         return 1;
     }
 }

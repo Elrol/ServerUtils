@@ -32,7 +32,7 @@ public class RankSuffix {
             Rank rank = Ranks.rankMap.get(rankName);
             suffix = StringArgumentType.getString(c, "string");
             rank.setSuffix(suffix);
-            TextUtils.msg(c, Msgs.rank_suffix(rank.getName(), TextUtils.formatString(suffix)));
+            TextUtils.msg(c, Msgs.rank_suffix.get(rank.getName(), TextUtils.formatString(suffix)));
             return 1;
         }
         TextUtils.err(c, Errs.rank_doesnt_exist(rankName));

@@ -11,9 +11,9 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
@@ -103,8 +103,8 @@ extends _CmdBase {
                 if (source.getTextName().equalsIgnoreCase(player.getName().getString())) {
                     TextUtils.err(source, Errs.flooded_self());
                 } else {
-                    TextUtils.msg(source, Msgs.flood(Methods.getDisplayName(player)));
-                    TextUtils.msg(player, Msgs.flooded());
+                    TextUtils.msg(source, Msgs.flood.get(Methods.getDisplayName(player)));
+                    TextUtils.msg(player, Msgs.flooded.get());
                 }
             });
         }

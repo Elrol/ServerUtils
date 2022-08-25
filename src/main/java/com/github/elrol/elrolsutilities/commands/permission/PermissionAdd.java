@@ -52,7 +52,7 @@ public class PermissionAdd {
         data.addPerm(perm);
         Main.database.save(uuid);
         data.update();
-        TextUtils.msg(c, Msgs.added_perm(perm, data.getDisplayName()));
+        TextUtils.msg(c, Msgs.addedPerm.get(perm, data.getDisplayName()));
         return 1;
     }
 }

@@ -12,10 +12,10 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.List;
@@ -104,7 +104,7 @@ public class SellCmd extends _CmdBase {
                 }
             }
             senderData.pay(payout);
-            TextUtils.msg(sender, Msgs.items_sold(output, TextUtils.parseCurrency(payout, true)));
+            TextUtils.msg(sender, Msgs.items_sold.get(output, TextUtils.parseCurrency(payout, true)));
         }
     }
 

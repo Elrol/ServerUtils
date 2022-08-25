@@ -81,7 +81,7 @@ public class ClaimflagCmd extends _CmdBase {
         if(ClaimFlagKeys.contains(s)){
             IPlayerData data = Main.database.get(player.getUUID());
             boolean flag = data.getClaimFlags().get(ClaimFlagKeys.valueOf(s));
-            TextUtils.msg(player, Msgs.claim_flag_check(s, flag));
+            TextUtils.msg(player, Msgs.claim_flag_check.get(s, String.valueOf(flag)));
             return 1;
         } else {
             TextUtils.err(player, Errs.no_flag(s));
@@ -99,7 +99,7 @@ public class ClaimflagCmd extends _CmdBase {
             TextUtils.err(c.getSource(), Errs.not_player());
             return 0;
         }
-        TextUtils.msg(player, Msgs.claim_flags(ClaimFlagKeys.list().toString()));
+        TextUtils.msg(player, Msgs.claim_flags.get(ClaimFlagKeys.list().toString()));
         return 1;
     }
 
@@ -119,7 +119,7 @@ public class ClaimflagCmd extends _CmdBase {
         public void run() {
             IPlayerData data = Main.database.get(player.getUUID());
             data.setFlag(flag, value);
-            TextUtils.msg(player, Msgs.set_claim_flag(flag.name(), value));
+            TextUtils.msg(player, Msgs.set_claim_flag.get(flag.name(), String.valueOf(value)));
         }
     }
 

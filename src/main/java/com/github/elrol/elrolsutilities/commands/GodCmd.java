@@ -12,10 +12,9 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -88,10 +87,10 @@ extends _CmdBase {
         public void run() {
             boolean flag = !this.player.getAbilities().invulnerable;
             if (this.source.getTextName().equalsIgnoreCase(this.player.getName().getString())) {
-                TextUtils.msg(this.source, Msgs.god_self(flag ? "enabled" : "disabled"));
+                TextUtils.msg(this.source, Msgs.god_self.get(flag ? "enabled" : "disabled"));
             } else {
-                TextUtils.msg(this.source, Msgs.god_other(flag ? "enabled" : "disabled", Methods.getDisplayName(this.player)));
-                TextUtils.msg(this.player, Msgs.god(flag ? "enabled" : "disabled"));
+                TextUtils.msg(this.source, Msgs.god_other.get(flag ? "enabled" : "disabled", Methods.getDisplayName(this.player)));
+                TextUtils.msg(this.player, Msgs.god.get(flag ? "enabled" : "disabled"));
             }
             this.player.getAbilities().invulnerable = flag;
             this.player.onUpdateAbilities();

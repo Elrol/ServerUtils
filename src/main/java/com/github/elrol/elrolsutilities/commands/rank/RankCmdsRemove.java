@@ -36,7 +36,7 @@ public class RankCmdsRemove {
                 TextUtils.err(c, Errs.rank_cmd_null(cmd, String.valueOf(index)));
                 return 0;
             }
-            TextUtils.msg(c, Msgs.rank_cmd_removed(cmd, rank.getName()));
+            TextUtils.msg(c, Msgs.rank_cmd_removed.get(cmd, rank.getName()));
             return 1;
         }
         TextUtils.err(c, Errs.rank_doesnt_exist(rankName));

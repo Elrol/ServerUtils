@@ -84,7 +84,7 @@ extends _CmdBase {
         @Override
         public void run() {
             this.data.delHome(this.name);
-            TextUtils.msg(this.player, Msgs.delhome(this.name));
+            TextUtils.msg(this.player, Msgs.delHome.get(this.name));
         }
     }
 

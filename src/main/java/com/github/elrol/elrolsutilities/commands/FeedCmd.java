@@ -11,10 +11,9 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -89,10 +88,10 @@ extends _CmdBase {
         public void run() {
             players.forEach(player -> {
                 if (this.source.getTextName().equalsIgnoreCase(player.getName().getString())) {
-                    TextUtils.msg(this.source, Msgs.fed_self());
+                    TextUtils.msg(this.source, Msgs.fed_self.get());
                 } else {
-                    TextUtils.msg(this.source, Msgs.feed(Methods.getDisplayName(player)));
-                    TextUtils.msg(player, Msgs.fed());
+                    TextUtils.msg(this.source, Msgs.feed.get(Methods.getDisplayName(player)));
+                    TextUtils.msg(player, Msgs.fed.get());
                 }
                 player.getFoodData().setFoodLevel(20);
                 /**try {

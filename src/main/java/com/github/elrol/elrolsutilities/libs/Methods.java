@@ -4,9 +4,7 @@ import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.api.data.Location;
 import com.github.elrol.elrolsutilities.config.Configs;
-import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandCooldown;
-import com.github.elrol.elrolsutilities.data.PlayerData;
 import com.github.elrol.elrolsutilities.events.ChunkHandler;
 import com.github.elrol.elrolsutilities.init.Ranks;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
@@ -17,12 +15,14 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.protocol.game.ClientboundPlayerPositionPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.TicketType;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.Villager;
@@ -270,7 +270,7 @@ public class Methods {
                 randLoc = new Location(player.level.dimension(), tpPos.offset(0, 1,0), 0.0f, 0.0f);
                 Logger.log(player.level.getBlockState(tpPos).getBlock().toString());
                 Methods.teleport(player, randLoc);
-                TextUtils.msg(player, Msgs.rtp(randLoc.getBlockPos().toString()));
+                TextUtils.msg(player, Msgs.rtp.get(randLoc.getBlockPos().toString()));
             }
             Logger.log("Log8");
             return;
@@ -376,7 +376,7 @@ public class Methods {
         Main.getLogger().info("Wiped entities: " + hc + ", " + pc + ", " + ic);
         Main.mcServer.getPlayerList().getPlayers().forEach(player -> {
             System.out.println(player);
-            TextUtils.msg(player, Msgs.entity_wipe(hc.get(), pc.get(), ic.get()));
+            TextUtils.msg(player, Msgs.entity_wipe.get(String.valueOf(hc.get()), String.valueOf(pc.get()), String.valueOf(ic.get())));
         });
     }
 

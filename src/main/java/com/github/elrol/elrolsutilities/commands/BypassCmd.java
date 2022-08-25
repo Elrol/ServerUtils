@@ -61,7 +61,7 @@ public class BypassCmd extends _CmdBase {
         public void run() {
             IPlayerData data = Main.database.get(player.getUUID());
             data.toggleBypass();
-            TextUtils.msg(player, Msgs.set_bypass(Main.database.get(player.getUUID()).canBypass() ? "Enabled" : "Disabled"));
+            TextUtils.msg(player, Msgs.set_bypass.get(Main.database.get(player.getUUID()).canBypass() ? "Enabled" : "Disabled"));
         }
     }
 

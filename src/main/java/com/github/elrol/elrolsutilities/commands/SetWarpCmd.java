@@ -79,7 +79,7 @@ extends _CmdBase {
         @Override
         public void run() {
             Main.serverData.addWarp(this.warp, Methods.getPlayerLocation(this.player));
-            TextUtils.msg(this.player, Msgs.set_warp(this.warp));
+            TextUtils.msg(this.player, Msgs.setWarp.get(this.warp));
         }
     }
 

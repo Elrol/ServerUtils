@@ -11,7 +11,6 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -99,9 +98,9 @@ extends _CmdBase {
             players.forEach(player -> {
                 IPlayerData data = Main.database.get(player.getUUID());
                 if(self){
-                    TextUtils.msg(source, Msgs.bal_self(TextUtils.parseCurrency(data.getBal(), true)));
+                    TextUtils.msg(source, Msgs.bal_self.get(TextUtils.parseCurrency(data.getBal(), true)));
                 } else {
-                    TextUtils.msg(source, Msgs.bal_other(data.getDisplayName(), TextUtils.parseCurrency(data.getBal(), true)));
+                    TextUtils.msg(source, Msgs.bal_other.get(data.getDisplayName(), TextUtils.parseCurrency(data.getBal(), true)));
                 }
             });
         }

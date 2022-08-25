@@ -3,7 +3,6 @@ package com.github.elrol.elrolsutilities.data;
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.api.data.Location;
-import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.libs.JsonMethod;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.Methods;
@@ -13,7 +12,6 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
-import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.io.File;
 import java.io.Serial;
@@ -229,7 +227,7 @@ public class ServerData implements Serializable {
     public void unmutePlayer(ServerPlayer player) {
         if (this.muteMap.containsKey(player.getUUID())) {
             this.muteMap.remove(player.getUUID());
-            TextUtils.msg(player, Msgs.unmuted());
+            TextUtils.msg(player, Msgs.unmuted.get());
             this.save();
         }
     }
@@ -264,7 +262,7 @@ public class ServerData implements Serializable {
                 return;
             }
             if (time <= 0) {
-                TextUtils.msg(player, Msgs.unmuted());
+                TextUtils.msg(player, Msgs.unmuted.get());
                 unmuteList.add(uuid);
             } else {
                 muteMap.replace(uuid, time);

@@ -3,18 +3,12 @@ package com.github.elrol.elrolsutilities.commands;
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.data.JailData;
-import com.github.elrol.elrolsutilities.data.PlayerData;
 import com.github.elrol.elrolsutilities.data.ServerData;
-import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -84,8 +78,8 @@ extends _CmdBase {
         public void run() {
             IPlayerData data = Main.database.get(player.getUUID());
             Main.serverData.unjail(player);
-            TextUtils.msg(source, Msgs.unjailed_player(data.getDisplayName()));
-            TextUtils.msg(player, Msgs.unjailed());
+            TextUtils.msg(source, Msgs.unjailed_player.get(data.getDisplayName()));
+            TextUtils.msg(player, Msgs.unjailed.get());
         }
     }
 }

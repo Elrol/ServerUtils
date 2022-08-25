@@ -41,7 +41,7 @@ public class RankParentAdd {
         }
         Rank rank = Ranks.rankMap.get(name);
         rank.addParent(parent);
-        TextUtils.msg(c, Msgs.parentRankAdd(name, parent));
+        TextUtils.msg(c, Msgs.parentRankAdd.get(name, parent));
         return 1;
     }
 }

@@ -32,7 +32,7 @@ public class RankCreate {
         Rank rank = new Rank(name.toLowerCase());
         Ranks.rankMap.put(name.toLowerCase(), rank);
         Ranks.save(rank);
-        TextUtils.msg(c, Msgs.rank_made(name.toLowerCase()));
+        TextUtils.msg(c, Msgs.rank_made.get(name.toLowerCase()));
         return 1;
     }
 }

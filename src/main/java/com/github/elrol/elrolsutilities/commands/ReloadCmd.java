@@ -11,7 +11,6 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerPlayer;
@@ -45,7 +44,7 @@ public class ReloadCmd extends _CmdBase {
         }
         if(player == null){
             Methods.reload();
-            TextUtils.msg(c.getSource(), Msgs.reloaded());
+            TextUtils.msg(c.getSource(), Msgs.reloaded.get());
         } else {
             IPlayerData data = Main.database.get(player.getUUID());
             if (FeatureConfig.enable_economy.get() && this.cost > 0) {
@@ -70,7 +69,7 @@ public class ReloadCmd extends _CmdBase {
         @Override
         public void run() {
             Methods.reload();
-            TextUtils.msg(source, Msgs.reloaded());
+            TextUtils.msg(source, Msgs.reloaded.get());
         }
     }
 

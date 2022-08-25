@@ -12,7 +12,6 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerPlayer;
@@ -84,7 +83,7 @@ extends _CmdBase {
                 }
                 warps = warps + ", " + string;
             }
-            TextUtils.msg(this.source, Msgs.valid_warps(warps));
+            TextUtils.msg(this.source, Msgs.validWarps.get(warps));
         }
     }
 

@@ -14,8 +14,8 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 
 public class KitRemove {
     public static ArgumentBuilder<CommandSourceStack, ?> register() {
@@ -46,7 +46,7 @@ public class KitRemove {
             return 0;
         }
         if (kit.removeItem(stack)) {
-            TextUtils.msg(c, Msgs.kit_item_removed(stack.getDisplayName().getString(), name));
+            TextUtils.msg(c, Msgs.kit_item_removed.get(stack.getDisplayName().getString(), name));
             return 1;
         }
         TextUtils.err(player, Errs.kit_missing_item(name, stack.getDisplayName().getString()));

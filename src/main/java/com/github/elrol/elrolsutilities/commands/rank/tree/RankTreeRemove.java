@@ -35,7 +35,7 @@ public class RankTreeRemove {
         }
         Rank rank = Ranks.rankMap.get(rankName);
         rank.removeNextRank(nextName);
-        TextUtils.msg(c, Msgs.rankRemoveFromTree(nextName, rankName));
+        TextUtils.msg(c, Msgs.rankRemoveFromTree.get(nextName, rankName));
         return 1;
     }
 }

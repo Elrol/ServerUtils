@@ -31,7 +31,7 @@ public class RankCmdsAdd {
             Rank rank = Ranks.rankMap.get(rankName);
             String cmd = StringArgumentType.getString(c, "cmd");
             rank.addCmd(cmd);
-            TextUtils.msg(c, Msgs.rank_cmd_added(cmd, rank.getName()));
+            TextUtils.msg(c, Msgs.rank_cmd_added.get(cmd, rank.getName()));
             return 1;
         }
         TextUtils.err(c, Errs.rank_doesnt_exist(rankName));

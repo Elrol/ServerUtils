@@ -6,7 +6,6 @@ import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.config.CommandConfig;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.data.PlayerData;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
@@ -15,7 +14,6 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -112,7 +110,7 @@ extends _CmdBase {
                 String coords = " &8[&7" + pos.getX() + "," + pos.getY() + "," + pos.getZ() + "&8]";
                 homes.append(name).append(coords).append("\n");
             });
-            TextUtils.msg(this.player, Msgs.valid_homes(homes.toString()));
+            TextUtils.msg(this.player, Msgs.validHomes.get(homes.toString()));
         }
     }
 

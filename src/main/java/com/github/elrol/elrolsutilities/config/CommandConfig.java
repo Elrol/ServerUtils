@@ -28,6 +28,7 @@ public class CommandConfig {
     public static CommandInfo home = new CommandInfo();
     public static CommandInfo homes = new CommandInfo();
     public static CommandInfo invsee = new CommandInfo();
+    public static CommandInfo item = new CommandInfo();
     public static CommandInfo jail = new CommandInfo();
     public static CommandInfo kit = new CommandInfo();
     public static CommandInfo link = new CommandInfo();
@@ -263,6 +264,13 @@ public class CommandConfig {
             invsee.cooldown = server.defineInRange("cooldown", 0, 0, Integer.MAX_VALUE);
             invsee.aliases = server.defineList("aliases", Aliases.invsee, o -> o instanceof String);
             invsee.cost = server.defineInRange("cost", 0, 0, Integer.MAX_VALUE);
+        server.pop();
+        server.push("Item");
+            item.enable = server.define("enable", true);
+            item.delay = server.defineInRange("delay", 0, 0, Integer.MAX_VALUE);
+            item.cooldown = server.defineInRange("cooldown", 0, 0, Integer.MAX_VALUE);
+            item.aliases = server.defineList("aliases", Aliases.item, o -> o instanceof String);
+            item.cost = server.defineInRange("cost", 0, 0, Integer.MAX_VALUE);
         server.pop();
         server.push("Jail");
             jail.enable = server.define("enable", true);

@@ -29,7 +29,7 @@ public class PermissionList {
             }
             Logger.debug("Filter did not match: " + perm);
         }
-        TextUtils.msg(c, Msgs.permission_list());
+        TextUtils.msg(c, Msgs.permission_list.get());
         for (String p : filtered) {
             TextUtils.tab_msg(c.getSource(), p);
         }
@@ -37,7 +37,7 @@ public class PermissionList {
     }
 
     private static int execute(CommandContext<CommandSourceStack> c) {
-        TextUtils.msg(c, Msgs.permission_list());
+        TextUtils.msg(c, Msgs.permission_list.get());
         for (String p : Main.permRegistry.commandPerms.values()) {
             TextUtils.tab_msg(c.getSource(), p);
         }

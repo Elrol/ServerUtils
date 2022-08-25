@@ -12,7 +12,6 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -98,8 +97,8 @@ public class BombCmd extends _CmdBase {
             if (source.getTextName().equalsIgnoreCase(player.getName().getString())) {
                 TextUtils.err(player, Errs.bombed_self());
             } else {
-                TextUtils.msg(source, Msgs.bombed(Methods.getDisplayName(player)));
-                TextUtils.msg(player, Msgs.boom());
+                TextUtils.msg(source, Msgs.bombed.get(Methods.getDisplayName(player)));
+                TextUtils.msg(player, Msgs.boom.get());
             }
         }
     }

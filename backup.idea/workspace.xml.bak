@@ -1,0 +1,947 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8b3ee60c-2a6b-4e48-8d7d-66008b6d05ad" name="Default Changelist" comment="Initial update to 1.19.2">
+      <change afterPath="$PROJECT_DIR$/../1.19.2/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/gradle.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/ElrolAPIProxy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/IElrolAPI.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/IShopType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/claims/IClaim.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/claims/IClaimManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/claims/IClaimSetting.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/claims/IClaimSettingEntry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/claims/IClaimSettingRegistry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/data/IKit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/data/IPlayerData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/data/IPlayerDatabase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/data/IRank.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/data/ITpRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/data/Location.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/econ/AbstractShop.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/econ/IShopManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/econ/IShopRegistry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/enums/ClaimFlagKeys.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/perms/IPermission.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/api/java/com/github/elrol/elrolsutilities/api/perms/IPermissionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/ElrolApi.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/BackCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/BalCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/BombCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/BroadcastCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/BypassCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/ChestShopCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/ClaimCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/ClaimflagCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/ClearLagCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/DelHomeCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/DelWarpCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/EconCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/EndChestCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/FeedCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/FloodCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/FlyCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/GamemodeCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/GodCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/HealCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/HomeCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/HomesCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/InvSeeCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/ItemCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/JailCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/KitCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/KitEditCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/LinkCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/ModSuggestions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/MotdCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/MsgCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/MsgToggleCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/MuteCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/NickNameCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/PayCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/PermissionCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/PriceCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/RankCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/RankupCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/ReloadCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/RepairCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/RespondCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/RtpCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/RtpFarCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/RtpNearCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/SellCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/SetHomeCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/SetSpawnCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/SetWarpCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/SmiteCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/SpawnCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/StaffChatCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/SudoCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/TitlesCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/TpAcceptCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/TpDenyCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/TpaCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/TpaHereCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/TrustCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/UnclaimAllCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/UnclaimCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/UnjailCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/UntrustCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/WarpCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/WarpsCmd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/_CmdBase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/_CommandTemplate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/econ/EconAdd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/econ/EconBal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/econ/EconRemove.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/econ/EconSet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/item/ItemName.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/kit/KitAdd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/kit/KitClaim.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/kit/KitClear.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/kit/KitCooldown.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/kit/KitCost.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/kit/KitCreate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/kit/KitDelete.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/kit/KitFirstJoin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/kit/KitInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/kit/KitPermission.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/kit/KitRemove.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/permission/PermissionAdd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/permission/PermissionCheck.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/permission/PermissionClear.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/permission/PermissionList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/permission/PermissionRemove.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/RankAdd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/RankCmds.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/RankCmdsAdd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/RankCmdsClear.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/RankCmdsRemove.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/RankCost.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/RankCreate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/RankDelete.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/RankInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/RankList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/RankParent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/RankPermission.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/RankPermissionAdd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/RankPermissionRemove.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/RankPrefix.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/RankPriority.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/RankRemove.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/RankSuffix.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/RankTree.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/parent/RankParentAdd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/parent/RankParentRemove.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/tree/RankTreeAdd.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/tree/RankTreeRemove.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/commands/rank/tree/RankTreeTime.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/config/CommandConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/config/Configs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/config/DiscordConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/config/FeatureConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/Claim.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/ClaimBlock.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/CommandCooldown.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/CommandDelay.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/DefaultTitles.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/EconData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/JailData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/Kit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/PatreonList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/Permission.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/PlayerData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/PlayerDatabase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/PlayerHistory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/Price.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/Rank.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/ServerData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/TargetInventory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/TpRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/claimSettings/Claim.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/claimSettings/ClaimEntrySetting.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/claimSettings/EntryClaimSetting.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/claimSettings/ExampleClaimSetting.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/data/claimSettings/entries/EntryClaimSettingEntry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/discord/DiscordBot.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/discord/events/DiscordMessageListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/discord/init/SlashCommands.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/econ/averon/AveronShop.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/econ/averon/AveronShopManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/econ/chestshop/ChestShop.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/econ/chestshop/ChestShopManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/econ/chestshop/ChestShopType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/events/BlockEventHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/events/ChatEventHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/events/ChunkHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/events/CommandEventHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/events/EntityEventHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/events/LivingDropHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/events/NewCommandEventHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/events/OnPlayerJoinHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/events/OnPlayerLeaveHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/events/PlayerDeathHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/events/ServerLifecycleHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/events/actions/EntityInteractActions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/init/BlackLists.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/init/ClaimManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/init/ClaimSettingRegistry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/init/CommandRegistry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/init/CommandUpdater.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/init/PermRegistry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/init/Ranks.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/init/ShopRegistry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/init/SideProxy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/init/TimerInit.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/libs/Aliases.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/libs/JsonMethod.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/libs/Logger.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/libs/Methods.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/libs/ModInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/libs/PermissionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/libs/Permissions.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/libs/SignUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/libs/adapters/DiscordServerInfoAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/libs/adapters/GsonLocalDateTime.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/libs/adapters/InterfaceAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/libs/text/CustTextFormatting.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/libs/text/Errs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/libs/text/Msgs.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/java/com/github/elrol/elrolsutilities/libs/text/TextUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/resources/META-INF/mods.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/resources/assets/elrolsutilities/lang/en_us.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/resources/assets/elrolsutilities/lang/fr_fr.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/resources/assets/elrolsutilities/lang/nl_nl.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/resources/assets/elrolsutilities/lang/ru_ru.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/resources/pack.mcmeta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../1.19.2/src/main/resources/pack.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/ElrolAPIProxy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/IElrolAPI.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/IShopType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/claims/IClaim.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/claims/IClaimManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/claims/IClaimSetting.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/claims/IClaimSettingEntry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/claims/IClaimSettingRegistry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/data/IKit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/data/IPlayerData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/data/IPlayerDatabase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/data/IRank.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/data/ITpRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/data/Location.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/econ/AbstractShop.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/econ/IShopManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/econ/IShopRegistry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/enums/ClaimFlagKeys.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/perms/IPermission.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/api/java/com/github/elrol/elrolsutilities/api/perms/IPermissionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/ElrolApi.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/BackCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/BalCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/BombCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/BroadcastCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/BypassCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/ChestShopCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/ClaimCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/ClaimflagCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/ClearLagCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/DelHomeCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/DelWarpCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/EconCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/EndChestCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/FeedCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/FloodCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/FlyCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/GamemodeCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/GodCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/HealCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/HomeCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/HomesCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/InvSeeCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/InvSeeTestCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/JailCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/KitCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/KitEditCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/ModSuggestions.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/MotdCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/MsgCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/MsgToggleCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/MuteCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/NickNameCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/PayCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/PermissionCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/PriceCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/RankCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/RankupCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/ReloadCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/RepairCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/RespondCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/RtpCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/RtpFarCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/RtpNearCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/SellCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/SetHomeCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/SetSpawnCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/SetWarpCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/SmiteCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/SpawnCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/StaffChatCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/SudoCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/TpAcceptCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/TpDenyCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/TpaCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/TpaHereCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/TrustCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/UnclaimAllCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/UnclaimCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/UntrustCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/WarpCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/WarpsCmd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/_CmdBase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/_CommandTemplate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/econ/EconAdd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/econ/EconBal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/econ/EconRemove.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/econ/EconSet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/kit/KitAdd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/kit/KitClaim.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/kit/KitClear.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/kit/KitCooldown.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/kit/KitCost.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/kit/KitCreate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/kit/KitDelete.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/kit/KitFirstJoin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/kit/KitInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/kit/KitPermission.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/kit/KitRemove.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/permission/PermissionAdd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/permission/PermissionCheck.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/permission/PermissionClear.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/permission/PermissionList.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/permission/PermissionRemove.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/RankAdd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/RankCmds.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/RankCmdsAdd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/RankCmdsClear.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/RankCmdsRemove.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/RankCreate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/RankDelete.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/RankInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/RankList.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/RankParent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/RankPermission.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/RankPermissionAdd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/RankPermissionRemove.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/RankPrefix.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/RankPriority.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/RankRemove.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/RankSuffix.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/RankTree.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/parent/RankParentAdd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/parent/RankParentRemove.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/tree/RankTreeAdd.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/tree/RankTreeRemove.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/commands/rank/tree/RankTreeTime.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/config/CommandConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/config/Configs.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/config/DiscordConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/config/FeatureConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/Claim.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/ClaimBlock.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/CommandCooldown.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/CommandDelay.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/EconData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/JailData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/Kit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/PatreonList.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/Permission.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/PlayerData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/PlayerDatabase.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/PlayerHistory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/Price.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/Rank.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/ServerData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/TargetInventory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/TpRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/claimSettings/Claim.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/claimSettings/ClaimEntrySetting.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/claimSettings/EntryClaimSetting.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/claimSettings/ExampleClaimSetting.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/data/claimSettings/entries/EntryClaimSettingEntry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/discord/DiscordBot.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/discord/events/DiscordMessageListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/econ/averon/AveronShop.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/econ/averon/AveronShopManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/econ/chestshop/ChestShop.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/econ/chestshop/ChestShopManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/econ/chestshop/ChestShopType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/events/BlockEventHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/events/ChatEventHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/events/ChunkHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/events/CommandEventHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/events/EntityEventHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/events/LivingDropHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/events/NewCommandEventHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/events/OnPlayerJoinHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/events/OnPlayerLeaveHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/events/PlayerDeathHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/events/ServerLifecycleHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/events/actions/EntityInteractActions.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/init/BlackLists.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/init/ClaimManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/init/ClaimSettingRegistry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/init/CommandRegistry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/init/CommandUpdater.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/init/PermRegistry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/init/Ranks.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/init/SUPacketHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/init/ShopRegistry.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/init/SideProxy.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/init/TimerInit.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/libs/Aliases.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/libs/JsonMethod.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/libs/Logger.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/libs/Methods.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/libs/ModInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/libs/PermissionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/libs/Permissions.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/libs/SignUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/libs/adapters/ITpRequestAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/libs/adapters/InterfaceAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/libs/text/CmdUse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/libs/text/CustTextFormatting.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/libs/text/Errs.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/libs/text/Msgs.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/java/com/github/elrol/elrolsutilities/libs/text/TextUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/resources/META-INF/mods.toml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/resources/assets/elrolsutilities/lang/en_us.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/resources/assets/elrolsutilities/lang/fr_fr.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/resources/assets/elrolsutilities/lang/nl_nl.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/resources/assets/elrolsutilities/lang/ru_ru.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/resources/pack.mcmeta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src-old/main/resources/pack.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src/api/java/com/github/elrol/elrolsutilities/api/data/IPlayerDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/../1.16.5/src/api/java/com/github/elrol/elrolsutilities/api/data/IPlayerDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src/api/java/com/github/elrol/elrolsutilities/api/data/ITpRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../1.16.5/src/api/java/com/github/elrol/elrolsutilities/api/data/ITpRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src/api/java/com/github/elrol/elrolsutilities/api/econ/AbstractShop.java" beforeDir="false" afterPath="$PROJECT_DIR$/../1.16.5/src/api/java/com/github/elrol/elrolsutilities/api/econ/AbstractShop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src/api/java/com/github/elrol/elrolsutilities/api/econ/IShopManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../1.16.5/src/api/java/com/github/elrol/elrolsutilities/api/econ/IShopManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src/api/java/com/github/elrol/elrolsutilities/api/econ/IShopRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/../1.16.5/src/api/java/com/github/elrol/elrolsutilities/api/econ/IShopRegistry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/config/DiscordConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/config/DiscordConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/data/DefaultTitles.java" beforeDir="false" afterPath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/data/DefaultTitles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/discord/DiscordBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/discord/DiscordBot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/discord/events/DiscordMessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/discord/events/DiscordMessageListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/discord/init/SlashCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/discord/init/SlashCommands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/econ/averon/AveronShop.java" beforeDir="false" afterPath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/econ/averon/AveronShop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/econ/averon/AveronShopManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/econ/averon/AveronShopManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/econ/chestshop/ChestShop.java" beforeDir="false" afterPath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/econ/chestshop/ChestShop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/econ/chestshop/ChestShopManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/econ/chestshop/ChestShopManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/econ/chestshop/ChestShopType.java" beforeDir="false" afterPath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/econ/chestshop/ChestShopType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/events/ServerLifecycleHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/events/ServerLifecycleHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/libs/adapters/DiscordServerInfoAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/libs/adapters/DiscordServerInfoAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/libs/adapters/GsonLocalDateTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/libs/adapters/GsonLocalDateTime.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/java/com/github/elrol/elrolsutilities/api/data/IPlayerDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/java/com/github/elrol/elrolsutilities/api/data/IPlayerDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/java/com/github/elrol/elrolsutilities/api/data/ITpRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/java/com/github/elrol/elrolsutilities/api/data/ITpRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/java/com/github/elrol/elrolsutilities/api/econ/AbstractShop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/java/com/github/elrol/elrolsutilities/api/econ/AbstractShop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/java/com/github/elrol/elrolsutilities/api/econ/IShopManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/java/com/github/elrol/elrolsutilities/api/econ/IShopManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/java/com/github/elrol/elrolsutilities/api/econ/IShopRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/java/com/github/elrol/elrolsutilities/api/econ/IShopRegistry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/config/DiscordConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/config/DiscordConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/data/DefaultTitles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/data/DefaultTitles.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/discord/DiscordBot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/discord/DiscordBot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/discord/events/DiscordMessageListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/discord/events/DiscordMessageListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/discord/init/SlashCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/discord/init/SlashCommands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/econ/averon/AveronShop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/econ/averon/AveronShop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/econ/averon/AveronShopManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/econ/averon/AveronShopManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/econ/chestshop/ChestShop.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/econ/chestshop/ChestShop.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/econ/chestshop/ChestShopManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/econ/chestshop/ChestShopManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/econ/chestshop/ChestShopType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/econ/chestshop/ChestShopType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/events/ServerLifecycleHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/events/ServerLifecycleHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/libs/adapters/DiscordServerInfoAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/libs/adapters/DiscordServerInfoAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/libs/adapters/GsonLocalDateTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/libs/adapters/GsonLocalDateTime.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/changelog.txt" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="module" />
+    </option>
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/../1.16.5">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/../1.17.1">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/../1.19">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/../1.19.2">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/../1.17.1">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/../1.16.5">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/../1.19.2">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="1.19.2" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="1.19.2" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="1.19.2" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="1.19.2" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="forgegradle runs" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$/../1.16.5" source="master" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$/../1.16.5" source="1.16.5" />
+                <branch-info repo="$PROJECT_DIR$/../1.16.5" source="1.17.1" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Elrol &lt;elrol.eyno@gmail.com&gt;" />
+      </list>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/../1.16.5" value="1.17.1" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../1.19.2" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+    <option name="SIGN_OFF_COMMIT" value="true" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/data/CommandDelay.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/commands/SmiteCmd.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/commands/BackCmd.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/commands/UnclaimAllCmd.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/commands/UnclaimCmd.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/gradle.properties" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/libs/text/TextUtils.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectId" id="22EcC1BJKWCKhJ5B3fEwhcBxwzb" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../1.19/build.gradle" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.github.elrol.elrolsutilities.commands" />
+      <recent name="com.github.elrol.elrolsutilities.commands.item" />
+      <recent name="com.github.elrol.elrolsutilities.commands.rank" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.runServer [1.19.2]">
+    <configuration name="runClient [1.16.5]" type="Application" factoryName="Application" folderName="1.16.5" singleton="false">
+      <envs>
+        <env name="MOD_CLASSES" value="serverutilities%%$PROJECT_DIR$/../1.18.1\build\resources\main;serverutilities%%$PROJECT_DIR$/../1.18.1\build\classes\java\main;serverutilities%%$PROJECT_DIR$/../1.18.1\build\resources\api;serverutilities%%$PROJECT_DIR$/../1.18.1\build\classes\java\api" />
+        <env name="MCP_MAPPINGS" value="official_1.18.1" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="cpw.mods.bootstraplauncher.BootstrapLauncher" />
+      <module name="1.18.1.main" />
+      <option name="PROGRAM_PARAMETERS" value="--launchTarget forgeclientuserdev --version MOD_DEV --assetIndex 1.18 --assetsDir C:\Users\elrol\.gradle\caches\forge_gradle\assets --gameDir . --fml.forgeVersion 39.0.66 --fml.mcVersion 1.18.1 --fml.forgeGroup net.minecraftforge --fml.mcpVersion 20211210.034407" />
+      <option name="VM_PARAMETERS" value="-Dforge.logging.console.level=debug -Dforge.logging.markers=REGISTRIES -DlegacyClassPath.file=E:\Dev\MC\ServerUtilities\1.18.1\build\classpath\runClient_minecraftClasspath.txt -DignoreList=bootstraplauncher,securejarhandler,asm-commons,asm-util,asm-analysis,asm-tree,asm,client-extra,fmlcore,javafmllanguage,mclanguage,forge- -DnativesDirectory=E:\Dev\MC\ServerUtilities\1.18.1\build\natives -DmergeModules=jna-5.8.0.jar,jna-platform-58.0.jar,java-objc-bridge-1.0.0.jar -p C:\Users\elrol\.gradle\caches\modules-2\files-2.1\cpw.mods\bootstraplauncher\1.0.0\f55ddbb35612c6745cefc47d1a0d6dbfb25d3982\bootstraplauncher-1.0.0.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\cpw.mods\securejarhandler\1.0.1\cefd70d447a84ea4949fda0ee654f9a95f72d4da\securejarhandler-1.0.1.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-commons\9.2\f4d7f0fc9054386f2893b602454d48e07d4fbead\asm-commons-9.2.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-util\9.2\fbc178fc5ba3dab50fd7e8a5317b8b647c8e8946\asm-util-9.2.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-analysis\9.2\7487dd756daf96cab9986e44b9d7bcb796a61c10\asm-analysis-9.2.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-tree\9.2\d96c99a30f5e1a19b0e609dbb19a44d8518ac01e\asm-tree-9.2.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm\9.2\81a03f76019c67362299c40e0ba13405f5467bff\asm-9.2.jar --add-modules ALL-MODULE-PATH --add-opens java.base/java.util.jar=cpw.mods.securejarhandler --add-exports java.base/sun.security.util=cpw.mods.securejarhandler --add-exports jdk.naming.dns/com.sun.jndi.dns=java.naming -XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump &quot;-Dos.name=Windows 10&quot; -Dos.version=10.0" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="Gradle.BeforeRunTask" enabled="false" tasks=":prepareRunClient" externalProjectPath="$PROJECT_DIR$" />
+      </method>
+    </configuration>
+    <configuration name="runData [1.16.5]" type="Application" factoryName="Application" folderName="1.16.5" singleton="false">
+      <envs>
+        <env name="MOD_CLASSES" value="serverutilities%%$PROJECT_DIR$/../1.18.1\build\resources\main;serverutilities%%$PROJECT_DIR$/../1.18.1\build\classes\java\main;serverutilities%%$PROJECT_DIR$/../1.18.1\build\resources\api;serverutilities%%$PROJECT_DIR$/../1.18.1\build\classes\java\api" />
+        <env name="MCP_MAPPINGS" value="official_1.18.1" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="cpw.mods.bootstraplauncher.BootstrapLauncher" />
+      <module name="1.18.1.main" />
+      <option name="PROGRAM_PARAMETERS" value="--launchTarget forgedatauserdev --assetIndex 1.18 --assetsDir C:\Users\elrol\.gradle\caches\forge_gradle\assets --gameDir . --fml.forgeVersion 39.0.66 --fml.mcVersion 1.18.1 --fml.forgeGroup net.minecraftforge --fml.mcpVersion 20211210.034407 --mod serverutilities --all --output E:\Dev\MC\ServerUtilities\1.18.1\src\generated\resources --existing E:\Dev\MC\ServerUtilities\1.18.1\src\main\resources" />
+      <option name="VM_PARAMETERS" value="-Dforge.logging.console.level=debug -Dforge.logging.markers=REGISTRIES -DlegacyClassPath.file=E:\Dev\MC\ServerUtilities\1.18.1\build\classpath\runData_minecraftClasspath.txt -DignoreList=bootstraplauncher,securejarhandler,asm-commons,asm-util,asm-analysis,asm-tree,asm,client-extra,fmlcore,javafmllanguage,mclanguage,forge- -DmergeModules=jna-5.8.0.jar,jna-platform-58.0.jar,java-objc-bridge-1.0.0.jar -p C:\Users\elrol\.gradle\caches\modules-2\files-2.1\cpw.mods\bootstraplauncher\1.0.0\f55ddbb35612c6745cefc47d1a0d6dbfb25d3982\bootstraplauncher-1.0.0.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\cpw.mods\securejarhandler\1.0.1\cefd70d447a84ea4949fda0ee654f9a95f72d4da\securejarhandler-1.0.1.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-commons\9.2\f4d7f0fc9054386f2893b602454d48e07d4fbead\asm-commons-9.2.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-util\9.2\fbc178fc5ba3dab50fd7e8a5317b8b647c8e8946\asm-util-9.2.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-analysis\9.2\7487dd756daf96cab9986e44b9d7bcb796a61c10\asm-analysis-9.2.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-tree\9.2\d96c99a30f5e1a19b0e609dbb19a44d8518ac01e\asm-tree-9.2.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm\9.2\81a03f76019c67362299c40e0ba13405f5467bff\asm-9.2.jar --add-modules ALL-MODULE-PATH --add-opens java.base/java.util.jar=cpw.mods.securejarhandler --add-exports java.base/sun.security.util=cpw.mods.securejarhandler --add-exports jdk.naming.dns/com.sun.jndi.dns=java.naming" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="Gradle.BeforeRunTask" enabled="false" tasks=":prepareRunData" externalProjectPath="$PROJECT_DIR$" />
+      </method>
+    </configuration>
+    <configuration name="runServer [1.16.5]" type="Application" factoryName="Application" folderName="1.16.5" singleton="false">
+      <envs>
+        <env name="MOD_CLASSES" value="serverutilities%%$PROJECT_DIR$/../1.18.1\build\resources\main;serverutilities%%$PROJECT_DIR$/../1.18.1\build\classes\java\main;serverutilities%%$PROJECT_DIR$/../1.18.1\build\resources\api;serverutilities%%$PROJECT_DIR$/../1.18.1\build\classes\java\api" />
+        <env name="MCP_MAPPINGS" value="official_1.18.1" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="cpw.mods.bootstraplauncher.BootstrapLauncher" />
+      <module name="1.18.1.main" />
+      <option name="PROGRAM_PARAMETERS" value="--launchTarget forgeserveruserdev --gameDir . --fml.forgeVersion 39.0.66 --fml.mcVersion 1.18.1 --fml.forgeGroup net.minecraftforge --fml.mcpVersion 20211210.034407" />
+      <option name="VM_PARAMETERS" value="-Dforge.logging.console.level=debug -Dforge.logging.markers=REGISTRIES -DlegacyClassPath.file=E:\Dev\MC\ServerUtilities\1.18.1\build\classpath\runServer_minecraftClasspath.txt -DignoreList=bootstraplauncher,securejarhandler,asm-commons,asm-util,asm-analysis,asm-tree,asm,client-extra,fmlcore,javafmllanguage,mclanguage,forge- -DmergeModules=jna-5.8.0.jar,jna-platform-58.0.jar,java-objc-bridge-1.0.0.jar -p C:\Users\elrol\.gradle\caches\modules-2\files-2.1\cpw.mods\bootstraplauncher\1.0.0\f55ddbb35612c6745cefc47d1a0d6dbfb25d3982\bootstraplauncher-1.0.0.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\cpw.mods\securejarhandler\1.0.1\cefd70d447a84ea4949fda0ee654f9a95f72d4da\securejarhandler-1.0.1.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-commons\9.2\f4d7f0fc9054386f2893b602454d48e07d4fbead\asm-commons-9.2.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-util\9.2\fbc178fc5ba3dab50fd7e8a5317b8b647c8e8946\asm-util-9.2.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-analysis\9.2\7487dd756daf96cab9986e44b9d7bcb796a61c10\asm-analysis-9.2.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-tree\9.2\d96c99a30f5e1a19b0e609dbb19a44d8518ac01e\asm-tree-9.2.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm\9.2\81a03f76019c67362299c40e0ba13405f5467bff\asm-9.2.jar --add-modules ALL-MODULE-PATH --add-opens java.base/java.util.jar=cpw.mods.securejarhandler --add-exports java.base/sun.security.util=cpw.mods.securejarhandler --add-exports jdk.naming.dns/com.sun.jndi.dns=java.naming" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="Gradle.BeforeRunTask" enabled="false" tasks=":prepareRunServer" externalProjectPath="$PROJECT_DIR$" />
+      </method>
+    </configuration>
+    <configuration default="false" factoryName="Application" name="runServer" singleton="false" type="Application">
+      <option name="MAIN_CLASS_NAME" value="cpw.mods.bootstraplauncher.BootstrapLauncher"/>
+      <option name="VM_PARAMETERS" value="-Dforge.logging.console.level=debug -Dforge.logging.markers=REGISTRIES -DlegacyClassPath.file=E:\Dev\MC\ServerUtilities\1.19.2\build\classpath\runServer_minecraftClasspath.txt -DignoreList=bootstraplauncher,securejarhandler,asm-commons,asm-util,asm-analysis,asm-tree,asm,JarJarFileSystems,client-extra,fmlcore,javafmllanguage,lowcodelanguage,mclanguage,forge- -DmergeModules=jna-5.10.0.jar,jna-platform-5.10.0.jar -Dforge.enabledGameTestNamespaces=examplemod -Dforge.enableGameTest=true -Djava.net.preferIPv6Addresses=system -p C:\Users\elrol\.gradle\caches\modules-2\files-2.1\cpw.mods\bootstraplauncher\1.1.2\c546e00443d8432cda6baa1c860346980742628\bootstraplauncher-1.1.2.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\cpw.mods\securejarhandler\2.1.4\f47e3b9dd860a7b82154b8f90a650ffd0aaa5582\securejarhandler-2.1.4.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-commons\9.3\1f2a432d1212f5c352ae607d7b61dcae20c20af5\asm-commons-9.3.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-util\9.3\9595bc05510d0bd4b610188b77333fe4851a1975\asm-util-9.3.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-analysis\9.3\4b071f211b37c38e0e9f5998550197c8593f6ad8\asm-analysis-9.3.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-tree\9.3\78d2ecd61318b5a58cd04fb237636c0e86b77d97\asm-tree-9.3.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm\9.3\8e6300ef51c1d801a7ed62d07cd221aca3a90640\asm-9.3.jar;C:\Users\elrol\.gradle\caches\modules-2\files-2.1\net.minecraftforge\JarJarFileSystems\0.3.16\e52afbb2599dc7c6f779efea0496d32fc01152e3\JarJarFileSystems-0.3.16.jar --add-modules ALL-MODULE-PATH --add-opens java.base/java.util.jar=cpw.mods.securejarhandler --add-opens java.base/java.lang.invoke=cpw.mods.securejarhandler --add-exports java.base/sun.security.util=cpw.mods.securejarhandler --add-exports jdk.naming.dns/com.sun.jndi.dns=java.naming"/>
+      <option name="PROGRAM_PARAMETERS" value="--launchTarget forgeserveruserdev --gameDir . --fml.forgeVersion 43.1.1 --fml.mcVersion 1.19.2 --fml.forgeGroup net.minecraftforge --fml.mcpVersion 20220805.130853"/>
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$\run"/>
+      <module name="1.19.2.main"/>
+      <envs>
+        <env name="MOD_CLASSES" value="serverutilities%%$PROJECT_DIR$\build\resources\main;serverutilities%%$PROJECT_DIR$\build\classes\java\main;serverutilities%%$PROJECT_DIR$\build\resources\api;serverutilities%%$PROJECT_DIR$\build\classes\java\api"/>
+        <env name="MCP_MAPPINGS" value="official_1.19.2"/>
+      </envs>
+      <method v="2">
+        <option enabled="true" name="Make"/>
+        <option enabled="true" externalProjectPath="$PROJECT_DIR$" name="Gradle.BeforeRunTask" tasks=":prepareRunServer"/>
+      </method>
+    </configuration>
+    <configuration name="1.16.5 [testClasses]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/../1.16.5" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="testClasses" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="1.18.1 [testClasses]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="testClasses" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="1.19.2 [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/../1.19.2" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="1.19.2 [genIntellijRuns]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/../1.19.2" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="genIntellijRuns" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="1.19.2 [testClasses]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/../1.19.2" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="testClasses" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.runData [1.16.5]" />
+      <item itemvalue="Application.runClient [1.16.5]" />
+      <item itemvalue="Application.runServer [1.16.5]" />
+      <item itemvalue="Application.runData [1.18.2]" />
+      <item itemvalue="Application.runClient [1.18.2]" />
+      <item itemvalue="Application.runServer [1.18.2]" />
+      <item itemvalue="Application.runServer [1.19.2]" />
+      <item itemvalue="Gradle.1.16.5 [testClasses]" />
+      <item itemvalue="Gradle.1.19.2 [testClasses]" />
+      <item itemvalue="Gradle.1.19.2 [build]" />
+      <item itemvalue="Gradle.1.18.1 [testClasses]" />
+      <item itemvalue="Gradle.1.19.2 [genIntellijRuns]" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.1.19.2 [build]" />
+        <item itemvalue="Gradle.1.19.2 [genIntellijRuns]" />
+        <item itemvalue="Gradle.1.16.5 [testClasses]" />
+        <item itemvalue="Gradle.1.18.1 [testClasses]" />
+        <item itemvalue="Gradle.1.19.2 [testClasses]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8b3ee60c-2a6b-4e48-8d7d-66008b6d05ad" name="Default Changelist" comment="" />
+      <created>1639406056382</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1639406056382</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Updates">
+      <created>1649185949301</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1649185949301</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Updates">
+      <created>1652222246765</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1652222246765</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Updates">
+      <created>1652222606545</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1652222606545</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Re-Added libs package">
+      <created>1652222797709</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1652222797709</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Re-Added libs package">
+      <created>1659665100101</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1659665100102</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Fixed minor bugs&#10;Changed ChestShopCmd to output the right info.">
+      <created>1659727188152</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1659727188152</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Minor bug fixes">
+      <created>1659727516404</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1659727516404</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Fixed error in DiscordMessageListener">
+      <created>1659727891792</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1659727891792</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Updates" />
+    <MESSAGE value="Added the unjail command back in." />
+    <MESSAGE value="Fixed minor bugs&#10;Changed ChestShopCmd to output the right info." />
+    <MESSAGE value="Minor bug fixes" />
+    <MESSAGE value="Fixed error in DiscordMessageListener" />
+    <MESSAGE value="Initial update to 1.19.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial update to 1.19.2" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/github/elrol/elrolsutilities/events/NewCommandEventHandler.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/events/EntityEventHandler.java</url>
+          <line>42</line>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/events/EntityEventHandler.java</url>
+          <line>59</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/../1.16.5/src/main/java/com/github/elrol/elrolsutilities/events/EntityEventHandler.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="inf" language="JAVA" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>

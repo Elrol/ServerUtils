@@ -8,7 +8,10 @@ import net.minecraft.server.level.ServerPlayer;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class CommandCooldown implements Runnable {
 
@@ -51,7 +54,7 @@ public class CommandCooldown implements Runnable {
     public void run(){
         if(this.seconds < 1){
             Main.commandCooldowns.remove(player.getUUID()).remove(cmd);
-            TextUtils.msg(player, Msgs.cooldownEnded(cmd));
+            TextUtils.msg(player, Msgs.cooldownEnded.get(cmd));
             a.cancel(false);
         } else {
             this.seconds -= 5;

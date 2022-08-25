@@ -8,9 +8,9 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.server.level.ServerPlayer;
 
 public class EconSet {
@@ -31,10 +31,10 @@ public class EconSet {
             String cur = TextUtils.parseCurrency(amount, false);
 
             if(player.getName().equals(c.getSource().getDisplayName())) {
-                TextUtils.msg(c, Msgs.paid_self(cur));
+                TextUtils.msg(c, Msgs.paid_self.get(cur));
             } else {
-                TextUtils.msg(c, Msgs.paid_player(data.getDisplayName(), cur));
-                TextUtils.msg(player, Msgs.paid_by("The Server", cur));
+                TextUtils.msg(c, Msgs.paid_player.get(data.getDisplayName(), cur));
+                TextUtils.msg(player, Msgs.paid_by.get("The Server", cur));
             }
         } catch (CommandSyntaxException e) {
             e.printStackTrace();

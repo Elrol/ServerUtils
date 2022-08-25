@@ -13,10 +13,9 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -105,12 +104,12 @@ extends _CmdBase {
                 if (old > 0) {
                     if (min <= 0) {
                         Main.serverData.unmutePlayer(player);
-                        TextUtils.msg(source, Msgs.unmuted_player(Methods.getDisplayName(player)));
+                        TextUtils.msg(source, Msgs.unmuted_player.get(Methods.getDisplayName(player)));
                     } else {
-                        TextUtils.msg(source, Msgs.muted_player(Methods.getDisplayName(player), old + (old > 1 ? " minutes" : " minute"), min + (min > 1 ? " minutes" : " minute")));
+                        TextUtils.msg(source, Msgs.muted_player.get(Methods.getDisplayName(player), old + (old > 1 ? " minutes" : " minute"), min + (min > 1 ? " minutes" : " minute")));
                     }
                 } else {
-                    TextUtils.msg(source, Msgs.muted_player(Methods.getDisplayName(player), min + (min > 1 ? " minutes" : " minute")));
+                    TextUtils.msg(source, Msgs.muted_player.get(Methods.getDisplayName(player), min + (min > 1 ? " minutes" : " minute")));
                 }
                 Main.serverData.mutePlayer(player, min);
             });

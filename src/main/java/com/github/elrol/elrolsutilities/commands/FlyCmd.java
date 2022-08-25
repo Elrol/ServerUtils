@@ -11,10 +11,9 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -87,10 +86,10 @@ extends _CmdBase {
             players.forEach(player -> {
                 boolean flag = !player.getAbilities().mayfly;
                 if (source.getTextName().equalsIgnoreCase(player.getName().getString())) {
-                    TextUtils.msg(source, Msgs.fly_self(flag ? "enabled" : "disabled"));
+                    TextUtils.msg(source, Msgs.fly_self.get(flag ? "enabled" : "disabled"));
                 } else {
-                    TextUtils.msg(source, Msgs.fly_other(flag ? "enabled" : "disabled", Methods.getDisplayName(player)));
-                    TextUtils.msg(player, Msgs.fly(flag ? "enabled" : "disabled"));
+                    TextUtils.msg(source, Msgs.fly_other.get(flag ? "enabled" : "disabled", Methods.getDisplayName(player)));
+                    TextUtils.msg(player, Msgs.fly.get(flag ? "enabled" : "disabled"));
                 }
                 if (!flag) {
                     player.getAbilities().flying = false;

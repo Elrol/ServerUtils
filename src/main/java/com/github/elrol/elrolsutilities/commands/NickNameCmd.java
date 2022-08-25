@@ -11,10 +11,9 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -95,16 +94,16 @@ extends _CmdBase {
             if (this.nick.isEmpty()) {
                 data.setNickname("");
                 if (this.source == null) {
-                    TextUtils.msg(this.player, Msgs.nickname_cleared());
+                    TextUtils.msg(this.player, Msgs.nickname_cleared.get());
                 } else {
-                    TextUtils.msg(this.source, Msgs.nickname_cleared());
+                    TextUtils.msg(this.source, Msgs.nickname_cleared.get());
                 }
             } else {
                 data.setNickname(nick);
                 if (this.source == null) {
-                    TextUtils.msg(this.player, Msgs.nickname_set(TextUtils.formatString(this.nick)));
+                    TextUtils.msg(this.player, Msgs.nickname_set.get(TextUtils.formatString(this.nick)));
                 } else {
-                    TextUtils.msg(this.source, Msgs.nickname_set(TextUtils.formatString(this.nick)));
+                    TextUtils.msg(this.source, Msgs.nickname_set.get(TextUtils.formatString(this.nick)));
                 }
             }
         }

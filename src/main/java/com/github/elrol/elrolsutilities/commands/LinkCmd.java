@@ -2,7 +2,6 @@ package com.github.elrol.elrolsutilities.commands;
 
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.data.IPlayerData;
-import com.github.elrol.elrolsutilities.config.CommandConfig;
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
@@ -12,16 +11,11 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.sun.jdi.connect.Connector;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.ForgeConfigSpec;
-import org.w3c.dom.Text;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class LinkCmd extends _CmdBase {
@@ -80,7 +74,7 @@ public class LinkCmd extends _CmdBase {
         }
         String code = TextUtils.generateString();
         Main.serverData.minecraftVerifications.put(code, player.getUUID());
-        TextUtils.msg(player, Msgs.verification(code));
+        TextUtils.msg(player, Msgs.verification.get(code));
         return 1;
     }
 
@@ -102,7 +96,7 @@ public class LinkCmd extends _CmdBase {
             data.setDiscordID(id);
             data.save();
             String discordName = Main.bot.getDiscordName(id);
-            TextUtils.msg(player, Msgs.verified(discordName));
+            TextUtils.msg(player, Msgs.verified.get(discordName));
         }
     }
 

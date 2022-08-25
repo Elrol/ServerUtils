@@ -52,7 +52,7 @@ public class KitClaim {
         IPlayerData data = Main.database.get(player.getUUID());
         Long timeLeft = data.tillUseKit(kit);
         if (timeLeft > 0L) {
-            TextUtils.err(c, Msgs.kit_in_cd(kit.name, timeLeft + (timeLeft > 1L ? " minutes" : " minute")));
+            TextUtils.err(c, Msgs.kit_in_cd.get(kit.name, timeLeft + (timeLeft > 1L ? " minutes" : " minute")));
             return 0;
         }
         if(timeLeft < 0L) {
@@ -98,7 +98,7 @@ public class KitClaim {
             if (kit.cooldown > 0) {
                 data.getKitCooldowns().put(kit.name, timeNow);
             }
-            TextUtils.msg(player, Msgs.received_kit(kit.name));
+            TextUtils.msg(player, Msgs.received_kit.get(kit.name));
             Main.getLogger().info(data.getDisplayName() + " claimed Kit " + kit.name + (kit.getCost() > 0 ? " for " + TextUtils.parseCurrency(kit.getCost(), true) : ""));
         }
     }

@@ -14,7 +14,6 @@ import com.github.elrol.elrolsutilities.libs.ModInfo;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.authlib.GameProfile;
-import com.mojang.math.Vector3d;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
@@ -141,7 +140,7 @@ public class PlayerData implements IPlayerData {
                 } else {
                     nextRank = 0;
                     canRankUp = true;
-                    TextUtils.msg(player, (TextComponent) Msgs.rankup().withStyle(ChatFormatting.GREEN));
+                    TextUtils.msg(player, (TextComponent) Msgs.rankup.get().withStyle(ChatFormatting.GREEN));
                 }
             }
             save();
@@ -401,7 +400,7 @@ public class PlayerData implements IPlayerData {
             cell = -1;
             player.setGameMode(GameType.SURVIVAL);
             Methods.teleport(player, prevLoc, false);
-            TextUtils.msg(player, Msgs.unjailed());
+            TextUtils.msg(player, Msgs.unjailed.get());
         }
         save();
     }

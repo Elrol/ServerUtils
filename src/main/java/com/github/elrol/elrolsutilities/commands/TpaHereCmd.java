@@ -12,9 +12,9 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -72,8 +72,8 @@ extends _CmdBase {
 
         @Override
         public void run() {
-            TextUtils.msg(this.requester, Msgs.tpa_here_sent(Methods.getDisplayName(this.target)));
-            TextUtils.msg(this.target, Msgs.tpa_here_received(Methods.getDisplayName(this.requester)));
+            TextUtils.msg(this.requester, Msgs.tpa_here_sent.get(Methods.getDisplayName(this.target)));
+            TextUtils.msg(this.target, Msgs.tpa_here_received.get(Methods.getDisplayName(this.requester)));
             new TpRequest(this.requester, this.target, true);
         }
     }

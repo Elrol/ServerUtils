@@ -17,13 +17,9 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class TitlesCmd extends _CmdBase {
@@ -71,7 +67,7 @@ public class TitlesCmd extends _CmdBase {
         }
         data.addTitle(name, title);
         Main.permRegistry.add(basePerm + name, true);
-        TextUtils.msg(c, Msgs.titleCreated(name, TextUtils.formatString(title)));
+        TextUtils.msg(c, Msgs.titleCreated.get(name, TextUtils.formatString(title)));
         data.save();
         return 1;
     }
@@ -103,7 +99,7 @@ public class TitlesCmd extends _CmdBase {
             TextUtils.err(c, Errs.titleMissing(title));
             return 0;
         }
-        TextUtils.msg(c, Msgs.titleDeleted(title, TextUtils.formatString(data.getTitle(title))));
+        TextUtils.msg(c, Msgs.titleDeleted.get(title, TextUtils.formatString(data.getTitle(title))));
         data.deleteTitle(title);
         Main.permRegistry.remove(basePerm + title, true);
         data.save();
@@ -168,7 +164,7 @@ public class TitlesCmd extends _CmdBase {
             String tag = Main.serverData.getTitle(title);
             data.setTitle(tag);
             data.save();
-            TextUtils.msg(player, Msgs.setTitle(TextUtils.formatString(tag)));
+            TextUtils.msg(player, Msgs.setTitle.get(TextUtils.formatString(tag)));
         }
     }
 
@@ -189,7 +185,7 @@ public class TitlesCmd extends _CmdBase {
                 else titles.append("&8");
                 titles.append(name).append("&8: &7").append(title).append("\n");
             });
-            TextUtils.msg(player, Msgs.titles(TextUtils.formatString(titles.toString())));
+            TextUtils.msg(player, Msgs.titles.get(TextUtils.formatString(titles.toString())));
         }
     }
 
@@ -202,7 +198,7 @@ public class TitlesCmd extends _CmdBase {
             IPlayerData data = IElrolAPI.getInstance().getPlayerDatabase().get(player.getUUID());
             data.setTitle("");
             data.save();
-            TextUtils.msg(player, Msgs.unsetTitle());
+            TextUtils.msg(player, Msgs.unsetTitle.get());
         }
     }
 }

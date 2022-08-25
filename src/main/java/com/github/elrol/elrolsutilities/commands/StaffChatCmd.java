@@ -57,7 +57,7 @@ extends _CmdBase {
         }
         IPlayerData data = Main.database.get(player.getUUID());
         data.toggleStaffChat();
-        TextUtils.msg(player, Msgs.staff_chat(data.usingStaffChat() ? "Enabled" : "Disabled"));
+        TextUtils.msg(player, Msgs.staff_chat.get(data.usingStaffChat() ? "Enabled" : "Disabled"));
         return 1;
     }
 

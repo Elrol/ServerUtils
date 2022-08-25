@@ -37,7 +37,7 @@ public class KitInfo {
         List<ItemStack> itemList = kit.getKit();
         kit.save();
         Main.kitMap.put(name, kit);
-        TextUtils.msg(c, Msgs.kit_info(name));
+        TextUtils.msg(c, Msgs.kit_info.get(name));
         int offset = 3;
         String[] info = new String[itemList.size() + offset];
 

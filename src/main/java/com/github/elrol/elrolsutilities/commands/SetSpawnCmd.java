@@ -75,7 +75,7 @@ extends _CmdBase {
             Location loc = Methods.getPlayerLocation(this.player);
             Logger.debug(loc.toString());
             Main.serverData.setSpawn(loc);
-            TextUtils.msg(this.player, Msgs.set_spawn());
+            TextUtils.msg(this.player, Msgs.setSpawn.get());
         }
     }
 

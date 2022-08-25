@@ -70,7 +70,7 @@ public class BlockEventHandler {
             if(!shop.isAdmin())
                 data.getShops().remove(loc);
             Main.shopRegistry.removeShop(loc);
-            TextUtils.msg(player, Msgs.removed_shop(shop.tag()));
+            TextUtils.msg(player, Msgs.removed_shop.get(shop.tag()));
         } else {
             for (Direction dir : Direction.Plane.HORIZONTAL) {
                 BlockPos otherPos = loc.getBlockPos().relative(dir);
@@ -174,7 +174,7 @@ public class BlockEventHandler {
                     return;
                 }
 
-                if(shop.link(player, signLoc, loc)) TextUtils.msg(player, Msgs.sign_linked(shop.tag()));
+                if(shop.link(player, signLoc, loc)) TextUtils.msg(player, Msgs.sign_linked.get(shop.tag()));
 
                 locationStorage.remove(player.getUUID());
             } else {
@@ -184,14 +184,14 @@ public class BlockEventHandler {
                     if(reg.exists(loc)) {
                         Logger.debug("that is linked to a shop");
                         shop = reg.getShop(loc);
-                        TextUtils.msg(player, Msgs.selected_sign(shop.tag()));
+                        TextUtils.msg(player, Msgs.selected_sign.get(shop.tag()));
                         locationStorage.put(player.getUUID(), loc);
                     } else {
                         Logger.debug("that isn't linked to a shop");
                         shop = reg.parseSign(sign);
                         if(shop != null) {
                             Logger.debug("And stored the location");
-                            TextUtils.msg(player, Msgs.selected_sign(shop.tag()));
+                            TextUtils.msg(player, Msgs.selected_sign.get(shop.tag()));
                             locationStorage.put(player.getUUID(), loc);
                         }
                     }

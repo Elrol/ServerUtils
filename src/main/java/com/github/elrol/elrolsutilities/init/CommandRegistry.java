@@ -29,6 +29,7 @@ public class CommandRegistry {
     public static HomeCmd homeCmd = new HomeCmd(CommandConfig.home.delay, CommandConfig.home.cooldown, CommandConfig.home.aliases, CommandConfig.home.cost);
     public static HomesCmd homesCmd = new HomesCmd(CommandConfig.homes.delay, CommandConfig.homes.cooldown, CommandConfig.homes.aliases, CommandConfig.homes.cost);
     public static InvSeeCmd invSeeCmd = new InvSeeCmd(CommandConfig.invsee.delay, CommandConfig.invsee.cooldown, CommandConfig.invsee.aliases, CommandConfig.invsee.cost);
+    public static ItemCmd itemCmd = new ItemCmd(CommandConfig.item.delay, CommandConfig.item.cooldown, CommandConfig.item.aliases, CommandConfig.item.cost);
     public static JailCmd jailCmd = new JailCmd(CommandConfig.jail.delay, CommandConfig.jail.cooldown, CommandConfig.jail.aliases, CommandConfig.jail.cost);
     // public static InvSeeTestCmd invSeeTestCmd = new InvSeeTestCmd(CommandConfig.invsee.perm, CommandConfig.invsee.delay, CommandConfig.invsee.cooldown, CommandConfig.invsee.aliases, CommandConfig.invsee.cost);
     public static KitCmd kitCmd = new KitCmd(CommandConfig.kit.delay, CommandConfig.kit.cooldown, CommandConfig.kit.aliases, CommandConfig.kit.cost);
@@ -91,6 +92,7 @@ public class CommandRegistry {
         if (CommandConfig.home.enable.get()) homeCmd.register(dispatcher);
         if (CommandConfig.homes.enable.get()) homesCmd.register(dispatcher);
         if (CommandConfig.invsee.enable.get()) invSeeCmd.register(dispatcher);
+        if (CommandConfig.item.enable.get()) itemCmd.register(dispatcher);
         if (CommandConfig.jail.enable.get()) jailCmd.register(dispatcher);
         //invSeeTestCmd.register(dispatcher);
         if (CommandConfig.kit.enable.get()) kitCmd.register(dispatcher);

@@ -40,7 +40,7 @@ public class KitClear {
         }
         Kit kit = Main.kitMap.get(name);
         kit.clearKit();
-        TextUtils.msg(player, Msgs.kit_cleared(name));
+        TextUtils.msg(player, Msgs.kit_cleared.get(name));
         return 0;
     }
 }

@@ -11,9 +11,9 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.ForgeConfigSpec;
 
@@ -87,8 +87,8 @@ public class PayCmd extends _CmdBase {
             IPlayerData senderData = Main.database.get(sender.getUUID());
             IPlayerData targetData = Main.database.get(target.getUUID());
             if(senderData.charge(amount)) targetData.pay(amount);
-            TextUtils.msg(sender, Msgs.paid_player(targetData.getDisplayName(), TextUtils.parseCurrency(amount, true)));
-            TextUtils.msg(target, Msgs.paid_by(senderData.getDisplayName(), TextUtils.parseCurrency(amount, true)));
+            TextUtils.msg(sender, Msgs.paid_player.get(targetData.getDisplayName(), TextUtils.parseCurrency(amount, true)));
+            TextUtils.msg(target, Msgs.paid_by.get(senderData.getDisplayName(), TextUtils.parseCurrency(amount, true)));
         }
     }
 

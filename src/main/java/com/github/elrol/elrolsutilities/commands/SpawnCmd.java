@@ -93,7 +93,7 @@ public class SpawnCmd
         @Override
         public void run() {
             if(Methods.teleport(player, loc, newLoc))
-                TextUtils.msg(player, Msgs.spawn());
+                TextUtils.msg(player, Msgs.spawn.get());
         }
     }
 

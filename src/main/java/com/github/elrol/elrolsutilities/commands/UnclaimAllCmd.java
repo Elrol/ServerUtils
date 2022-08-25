@@ -10,7 +10,6 @@ import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -93,11 +92,11 @@ public class UnclaimAllCmd extends _CmdBase {
             try {
                 ServerPlayer p = source.getPlayerOrException();
                 if(p.getUUID().equals(player.getUUID())) {
-                    TextUtils.msg(source, Msgs.chunks_unclaimed());
+                    TextUtils.msg(source, Msgs.chunks_unclaimed.get());
                     return;
                 }
             } catch (CommandSyntaxException ignored) {}
-            TextUtils.msg(source, Msgs.chunks_unclaimed(data.getDisplayName() + "'s"));
+            TextUtils.msg(source, Msgs.chunks_unclaimed.get(data.getDisplayName() + "'s"));
         }
     }
 

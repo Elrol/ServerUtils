@@ -123,7 +123,7 @@ extends _CmdBase {
             }
             data.addRank(r);
             data.allowRankUp(false);
-            TextUtils.msg(this.player, Msgs.player_rank_added(data.getDisplayName(), rank));
+            TextUtils.msg(this.player, Msgs.player_rank_added.get(data.getDisplayName(), rank));
             Main.database.save(player.getUUID());
             data.update();
         }
