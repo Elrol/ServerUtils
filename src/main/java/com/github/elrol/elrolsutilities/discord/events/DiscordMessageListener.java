@@ -40,19 +40,19 @@ public class DiscordMessageListener extends ListenerAdapter {
         if(bot.isChatChannel(id)) {
             bot.chatChannels.forEach(c -> {
                 if(c.getIdLong() == id) return;
-                c.sendMessage(new MessageBuilder(TextUtils.stripFormatting(sender + content)).build()).queue();
+                c.sendMessage(new MessageBuilder(TextUtils.stripFormatting("[Discord] " + sender + ": " + content)).build()).queue();
             });
             Main.mcServer.getPlayerList().broadcastSystemMessage(text,false);
         } else if(bot.isInfoChannel(id)) {
             bot.infoChannels.forEach(c -> {
                 if(c.getIdLong() == id) return;
-                c.sendMessage(new MessageBuilder(TextUtils.stripFormatting(sender + content)).build()).queue();
+                c.sendMessage(new MessageBuilder(TextUtils.stripFormatting("[Discord] " + sender + ": " + content)).build()).queue();
             });
             Main.mcServer.getPlayerList().broadcastSystemMessage(text,false);
         } else if(bot.isStaffChannel(id)) {
             bot.staffChannels.forEach(c -> {
                 if(c.getIdLong() == id) return;
-                c.sendMessage(new MessageBuilder(TextUtils.stripFormatting(sender + content)).build()).queue();
+                c.sendMessage(new MessageBuilder(TextUtils.stripFormatting("[Discord] " + sender + ": " + content)).build()).queue();
             });
             TextUtils.sendToStaff(displayName, bot.botUUID, content);
         }

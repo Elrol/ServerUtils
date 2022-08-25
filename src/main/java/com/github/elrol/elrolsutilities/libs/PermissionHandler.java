@@ -21,8 +21,9 @@ import java.util.UUID;
 public class PermissionHandler implements IPermissionHandler {
 
     public boolean hasPermission(UUID uuid, String perm) {
-        ServerPlayer player = Methods.getPlayerFromUUID(uuid);
-        return hasPermission(player, perm);
+        IPlayerData data = Main.database.get(uuid);
+        if(data.hasPerm("*")) return true;
+        return data.hasPerm(perm);
     }
 
     public boolean hasPermission(ServerPlayer player, String perm) {
@@ -39,14 +40,7 @@ public class PermissionHandler implements IPermissionHandler {
 
             if(player instanceof FakePlayer) return true;
 
-            IPlayerData data = Main.database.get(player.getUUID());
-            if(data.hasPerm("*")) return true;
-            if(data.hasPerm(perm)) {
-                return true;
-            } else {
-                //Main.getLogger().debug(source.getDisplayName().getString() + " does not have the '" + perm + "' permission");
-                return false;
-            }
+            return hasPermission(player.getUUID(), perm);
         }
         catch (CommandSyntaxException e) {
             return true;

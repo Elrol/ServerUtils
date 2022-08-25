@@ -85,6 +85,11 @@ public class DiscordBot {
             bot = jda.build().awaitReady();
 
             if(guildInfo != null) {
+                chatChannels.clear();
+                infoChannels.clear();
+                staffChannels.clear();
+                consoleChannels.clear();
+
                 for(DiscordServerInfo info : guildInfo) {
                     if(info.guildID > 0L) {
                         Guild guild = bot.getGuildById(info.guildID);
