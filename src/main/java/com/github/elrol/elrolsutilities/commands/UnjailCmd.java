@@ -3,17 +3,12 @@ package com.github.elrol.elrolsutilities.commands;
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
-import com.github.elrol.elrolsutilities.data.JailData;
 import com.github.elrol.elrolsutilities.data.ServerData;
-import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
@@ -63,7 +58,7 @@ extends _CmdBase {
             return 0;
         }
         Main.serverData.createJail(name);
-        TextUtils.msg(c.getSource(), Msgs.jail_created(name));
+        TextUtils.msg(c.getSource(), Msgs.jail_created.get(name));
         return 1;
     }
 
@@ -72,7 +67,7 @@ extends _CmdBase {
             TextUtils.err(c, Errs.jail_missing());
         }
         Main.serverData.deleteJail(jail);
-        TextUtils.msg(c.getSource(), Msgs.jail_deleted(name));
+        TextUtils.msg(c.getSource(), Msgs.jail_deleted.get(name));
         return 1;
     }
 
@@ -98,8 +93,8 @@ extends _CmdBase {
         public void run() {
             IPlayerData data = Main.database.get(player.getUUID());
             Main.serverData.unjail(player);
-            TextUtils.msg(source, Msgs.unjailed_player(data.getDisplayName()));
-            TextUtils.msg(player, Msgs.unjailed());
+            TextUtils.msg(source, Msgs.unjailed_player.get(data.getDisplayName()));
+            TextUtils.msg(player, Msgs.unjailed.get());
         }
     }
 }

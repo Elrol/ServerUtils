@@ -32,7 +32,7 @@ public class PermissionCheck {
             return 0;
         }
         IPlayerData data = Main.database.get(uuid);
-        TextUtils.msg(c, Msgs.permission_other(data.getDisplayName()));
+        TextUtils.msg(c, Msgs.permissionOther.get(data.getDisplayName()));
         for (String p : data.getPerms()) {
             c.getSource().sendSuccess(new StringTextComponent(p), true);
         }

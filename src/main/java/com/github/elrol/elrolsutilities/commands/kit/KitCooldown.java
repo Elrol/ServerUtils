@@ -38,9 +38,9 @@ public class KitCooldown {
         }
         Kit kit = Main.kitMap.get(name);
         if (cooldown == 0) {
-            TextUtils.msg(c, Msgs.kit_cooldown_cleared(name));
+            TextUtils.msg(c, Msgs.kit_cooldown_cleared.get(name));
         } else {
-            TextUtils.msg(c, Msgs.kit_cooldown_set(cooldown, name));
+            TextUtils.msg(c, Msgs.kit_cooldown_set.get(String.valueOf(cooldown), name));
         }
         kit.cooldown = cooldown;
         kit.save();

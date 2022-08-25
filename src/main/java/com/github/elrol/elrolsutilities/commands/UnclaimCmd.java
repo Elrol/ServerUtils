@@ -77,7 +77,7 @@ public class UnclaimCmd extends _CmdBase {
 
         @Override
         public void run() {
-            TextUtils.msg(this.player, Msgs.chunk_unclaimed());
+            TextUtils.msg(this.player, Msgs.chunk_unclaimed.get());
             Main.serverData.unclaim(new ClaimBlock(player));
         }
     }

@@ -26,9 +26,9 @@ public class EconBal {
             String cur = TextUtils.parseCurrency(data.getBal(), false);
 
             if(player.getName().equals(c.getSource().getDisplayName())) {
-                TextUtils.msg(c, Msgs.bal_self(cur));
+                TextUtils.msg(c, Msgs.bal_self.get(cur));
             } else {
-                TextUtils.msg(c, Msgs.bal_other(data.getDisplayName(), cur));
+                TextUtils.msg(c, Msgs.bal_other.get(data.getDisplayName(), cur));
             }
         } catch (CommandSyntaxException e) {
             e.printStackTrace();

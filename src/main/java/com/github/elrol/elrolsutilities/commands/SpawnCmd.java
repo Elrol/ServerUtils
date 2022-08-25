@@ -15,9 +15,9 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.List;
@@ -93,7 +93,7 @@ public class SpawnCmd
         @Override
         public void run() {
             if(Methods.teleport(player, loc, newLoc))
-                TextUtils.msg(player, Msgs.spawn());
+                TextUtils.msg(player, Msgs.spawn.get());
         }
     }
 

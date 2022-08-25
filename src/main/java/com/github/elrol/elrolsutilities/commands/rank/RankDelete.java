@@ -30,7 +30,7 @@ public class RankDelete {
             return 0;
         }
         Ranks.remove(Ranks.rankMap.get(name));
-        TextUtils.msg(c, Msgs.rank_removed(name));
+        TextUtils.msg(c, Msgs.rank_removed.get(name));
         Main.serverData.updateAllPlayersWithRank(name);
         return 1;
     }

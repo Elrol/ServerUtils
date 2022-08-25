@@ -98,6 +98,7 @@ repositories {}
 dependencies {
     minecraft 'net.minecraftforge:forge:' + modMinecraftVersion + '-' + modForgeVersion
     shadow("net.dv8tion:JDA:5.0.0-alpha.1")
+    implementation("net.dv8tion:JDA:5.0.0-alpha.1")
     //runtimeOnly fg.deobf("blank:spark:1.0.0")
 }
 

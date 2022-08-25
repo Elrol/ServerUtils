@@ -77,7 +77,7 @@ public class BackCmd extends _CmdBase {
         public void run() {
             Logger.debug("Running Back Runnables");
             if(Methods.teleport(player, loc, newLoc))
-            TextUtils.msg(this.player, Msgs.welcome_back());
+            TextUtils.msg(this.player, Msgs.welcomeBack.get());
         }
     }
 

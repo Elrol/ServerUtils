@@ -66,5 +66,6 @@ public class Aliases {
     public static final List<String> invsee = Collections.singletonList("invsee");
     public static final List<String> chestshop = Collections.singletonList("chestshop");
     public static final List<String> staffchat = Arrays.asList("staffchat", "sc");
+    public static final List<String> item = Collections.singletonList("item");
 }
 

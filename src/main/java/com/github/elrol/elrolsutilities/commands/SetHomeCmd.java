@@ -89,7 +89,7 @@ extends _CmdBase {
         @Override
         public void run() {
             this.data.addHome(this.home, Methods.getPlayerLocation(this.player));
-            TextUtils.msg(this.player, Msgs.set_home(this.home));
+            TextUtils.msg(this.player, Msgs.setHome.get(this.home));
         }
     }
 

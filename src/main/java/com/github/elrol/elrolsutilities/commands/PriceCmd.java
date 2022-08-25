@@ -94,7 +94,7 @@ extends _CmdBase {
                 ResourceLocation item = mainHand.getItem().getRegistryName();
                 if(item != null) {
                     Price price = Main.econData.setPrice(item, buy, sell);
-                    TextUtils.msg(player, Msgs.price_change(mainHand.getDisplayName().getString(), TextUtils.parseCurrency(price.buy, true), TextUtils.parseCurrency(price.sell, true)));
+                    TextUtils.msg(player, Msgs.price_change.get(mainHand.getDisplayName().getString(), TextUtils.parseCurrency(price.buy, true), TextUtils.parseCurrency(price.sell, true)));
                 }
             }
         }

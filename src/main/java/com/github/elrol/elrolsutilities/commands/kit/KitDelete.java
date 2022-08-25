@@ -28,7 +28,7 @@ public class KitDelete {
             return 0;
         }
         Main.kitMap.remove(name);
-        TextUtils.msg(c, Msgs.kit_deleted(name));
+        TextUtils.msg(c, Msgs.kit_deleted.get(name));
         return 1;
     }
 }

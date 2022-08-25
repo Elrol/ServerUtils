@@ -52,7 +52,7 @@ public class PermissionRemove {
         data.removePerm(perm);
         Main.database.save(uuid);
         data.update();
-        TextUtils.msg(c, Msgs.removed_perm(perm, data.getDisplayName()));
+        TextUtils.msg(c, Msgs.removed_perm.get(perm, data.getDisplayName()));
         return 1;
     }
 }

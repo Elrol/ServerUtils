@@ -65,7 +65,7 @@ public class OnPlayerJoinHandler {
                 Main.kitMap.values().forEach(kit -> {
                     if(!kit.isDefault()) return;
                     kit.give(player);
-                    TextUtils.msg(player, Msgs.received_kit(kit.name));
+                    TextUtils.msg(player, Msgs.received_kit.get(kit.name));
                 });
                 data.gotFirstKit(true);
             }

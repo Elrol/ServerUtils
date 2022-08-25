@@ -29,7 +29,7 @@ public class RankCmdsClear {
         if (Ranks.rankMap.containsKey(rankName)) {
             Rank rank = Ranks.rankMap.get(rankName);
             rank.clearCmds();
-            TextUtils.msg(c, Msgs.rank_cmd_cleared(rank.getName()));
+            TextUtils.msg(c, Msgs.rank_cmd_cleared.get(rank.getName()));
             return 1;
         }
         TextUtils.err(c, Errs.rank_doesnt_exist(rankName));

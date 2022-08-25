@@ -34,7 +34,7 @@ public class PermissionClear {
         data.clearPerms();
         Main.database.save(uuid);
         data.update();
-        TextUtils.msg(c, Msgs.cleared_perms(data.getDisplayName()));
+        TextUtils.msg(c, Msgs.clearedPerms.get(data.getDisplayName()));
         return 1;
     }
 }

@@ -54,7 +54,7 @@ public class CommandCooldown implements Runnable {
     public void run(){
         if(this.seconds < 1){
             Main.commandCooldowns.remove(player.getUUID()).remove(cmd);
-            TextUtils.msg(player, Msgs.cooldownEnded(cmd));
+            TextUtils.msg(player, Msgs.cooldownEnded.get(cmd));
             a.cancel(false);
         } else {
             this.seconds -= 5;

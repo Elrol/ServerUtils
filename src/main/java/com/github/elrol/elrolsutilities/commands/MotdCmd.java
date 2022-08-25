@@ -43,7 +43,7 @@ public class MotdCmd extends _CmdBase {
 
     protected int execute(CommandContext<CommandSource> c, String motd) {
         Main.serverData.setMOTD(motd);
-        TextUtils.msg(c.getSource(), Msgs.setMOTD());
+        TextUtils.msg(c.getSource(), Msgs.setMOTD.get());
         return 1;
     }
 

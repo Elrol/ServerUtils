@@ -41,7 +41,7 @@ public class RankParentRemove {
         }
         Rank rank = Ranks.rankMap.get(name);
         rank.removeParent(parent);
-        TextUtils.msg(c, Msgs.parentRankRemove(name, parent));
+        TextUtils.msg(c, Msgs.parentRankRemove.get(name, parent));
         return 1;
     }
 }

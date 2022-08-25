@@ -92,8 +92,8 @@ extends _CmdBase {
             playerData.trust(target.getUUID());
 
             IPlayerData targetData = Main.database.get(target.getUUID());
-            TextUtils.msg(player, Msgs.trusted_player(targetData.getDisplayName()));
-            TextUtils.msg(target, Msgs.trusted_by_player(playerData.getDisplayName()));
+            TextUtils.msg(player, Msgs.trusted_player.get(targetData.getDisplayName()));
+            TextUtils.msg(target, Msgs.trusted_by_player.get(playerData.getDisplayName()));
         }
     }
 

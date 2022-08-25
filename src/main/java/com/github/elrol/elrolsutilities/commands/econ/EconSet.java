@@ -31,10 +31,10 @@ public class EconSet {
             String cur = TextUtils.parseCurrency(amount, false);
 
             if(player.getName().equals(c.getSource().getDisplayName())) {
-                TextUtils.msg(c, Msgs.paid_self(cur));
+                TextUtils.msg(c, Msgs.paid_self.get(cur));
             } else {
-                TextUtils.msg(c, Msgs.paid_player(data.getDisplayName(), cur));
-                TextUtils.msg(player, Msgs.paid_by("The Server", cur));
+                TextUtils.msg(c, Msgs.paid_player.get(data.getDisplayName(), cur));
+                TextUtils.msg(player, Msgs.paid_by.get("The Server", cur));
             }
         } catch (CommandSyntaxException e) {
             e.printStackTrace();

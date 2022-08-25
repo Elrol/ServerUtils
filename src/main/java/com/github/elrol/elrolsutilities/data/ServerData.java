@@ -9,8 +9,8 @@ import com.github.elrol.elrolsutilities.libs.Methods;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PlayerList;
 
 import java.io.File;
@@ -220,7 +220,7 @@ public class ServerData implements Serializable {
     public void unmutePlayer(ServerPlayerEntity player) {
         if (this.muteMap.containsKey(player.getUUID())) {
             this.muteMap.remove(player.getUUID());
-            TextUtils.msg(player, Msgs.unmuted());
+            TextUtils.msg(player, Msgs.unmuted.get());
             this.save();
         }
     }
@@ -255,7 +255,7 @@ public class ServerData implements Serializable {
                 return;
             }
             if (time <= 0) {
-                TextUtils.msg(player, Msgs.unmuted());
+                TextUtils.msg(player, Msgs.unmuted.get());
                 unmuteList.add(uuid);
             } else {
                 muteMap.replace(uuid, time);

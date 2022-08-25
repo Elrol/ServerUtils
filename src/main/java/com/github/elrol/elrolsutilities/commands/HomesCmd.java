@@ -17,8 +17,8 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.List;
@@ -110,7 +110,7 @@ extends _CmdBase {
                 String coords = " &8[&7" + pos.getX() + "," + pos.getY() + "," + pos.getZ() + "&8]";
                 homes.append(name).append(coords).append("\n");
             });
-            TextUtils.msg(this.player, Msgs.valid_homes(homes.toString()));
+            TextUtils.msg(this.player, Msgs.validHomes.get(homes.toString()));
         }
     }
 

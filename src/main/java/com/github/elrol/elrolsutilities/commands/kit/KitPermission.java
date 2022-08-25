@@ -34,7 +34,7 @@ public class KitPermission {
             return 0;
         }
         Kit kit = Main.kitMap.get(name);
-        TextUtils.msg(c, Msgs.kit_perms(name, kit.getPerm().get()));
+        TextUtils.msg(c, Msgs.kit_perms.get(name, kit.getPerm().get()));
         return 1;
     }
 }

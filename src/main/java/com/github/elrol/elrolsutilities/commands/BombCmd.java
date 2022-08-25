@@ -97,8 +97,8 @@ public class BombCmd extends _CmdBase {
             if (source.getTextName().equalsIgnoreCase(player.getName().getString())) {
                 TextUtils.err(player, Errs.bombed_self());
             } else {
-                TextUtils.msg(source, Msgs.bombed(Methods.getDisplayName(player)));
-                TextUtils.msg(player, Msgs.boom());
+                TextUtils.msg(source, Msgs.bombed.get(Methods.getDisplayName(player)));
+                TextUtils.msg(player, Msgs.boom.get());
             }
         }
     }

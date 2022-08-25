@@ -86,10 +86,10 @@ extends _CmdBase {
             players.forEach(player -> {
                 boolean flag = !player.abilities.mayfly;
                 if (source.getTextName().equalsIgnoreCase(player.getName().getString())) {
-                    TextUtils.msg(source, Msgs.fly_self(flag ? "enabled" : "disabled"));
+                    TextUtils.msg(source, Msgs.fly_self.get(flag ? "enabled" : "disabled"));
                 } else {
-                    TextUtils.msg(source, Msgs.fly_other(flag ? "enabled" : "disabled", Methods.getDisplayName(player)));
-                    TextUtils.msg(player, Msgs.fly(flag ? "enabled" : "disabled"));
+                    TextUtils.msg(source, Msgs.fly_other.get(flag ? "enabled" : "disabled", Methods.getDisplayName(player)));
+                    TextUtils.msg(player, Msgs.fly.get(flag ? "enabled" : "disabled"));
                 }
                 if (!flag) {
                     player.abilities.flying = false;

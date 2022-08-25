@@ -30,10 +30,10 @@ public class EconRemove {
             String cur = TextUtils.parseCurrency(amount, false);
 
             if(player.getName().equals(c.getSource().getDisplayName())) {
-                TextUtils.msg(c, Msgs.charged_self(cur));
+                TextUtils.msg(c, Msgs.charged_self.get(cur));
             } else {
-                TextUtils.msg(c, Msgs.charged_player(data.getDisplayName(), cur));
-                TextUtils.msg(player, Msgs.charged_by("The Server", cur));
+                TextUtils.msg(c, Msgs.charged_player.get(data.getDisplayName(), cur));
+                TextUtils.msg(player, Msgs.charged_by.get("The Server", cur));
             }
         } catch (CommandSyntaxException e) {
             e.printStackTrace();

@@ -44,7 +44,7 @@ public class ReloadCmd extends _CmdBase {
         }
         if(player == null){
             Methods.reload();
-            TextUtils.msg(c.getSource(), Msgs.reloaded());
+            TextUtils.msg(c.getSource(), Msgs.reloaded.get());
         } else {
             IPlayerData data = Main.database.get(player.getUUID());
             if (FeatureConfig.enable_economy.get() && this.cost > 0) {
@@ -69,7 +69,7 @@ public class ReloadCmd extends _CmdBase {
         @Override
         public void run() {
             Methods.reload();
-            TextUtils.msg(source, Msgs.reloaded());
+            TextUtils.msg(source, Msgs.reloaded.get());
         }
     }
 

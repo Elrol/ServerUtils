@@ -85,10 +85,10 @@ extends _CmdBase {
         public void run() {
             players.forEach(player -> {
                 if (this.source.getTextName().equalsIgnoreCase(player.getName().getString())) {
-                    TextUtils.msg(source, Msgs.healed_self());
+                    TextUtils.msg(source, Msgs.healed_self.get());
                 } else {
-                    TextUtils.msg(source, Msgs.healed_other(Methods.getDisplayName(player)));
-                    TextUtils.msg(player, Msgs.healed());
+                    TextUtils.msg(source, Msgs.healed_other.get(Methods.getDisplayName(player)));
+                    TextUtils.msg(player, Msgs.healed.get());
                 }
                 player.setHealth(player.getMaxHealth());
             });

@@ -32,7 +32,7 @@ public class RankTreeTime {
         }
         Rank rank = Ranks.rankMap.get(rankName);
         rank.setRank_up(time);
-        TextUtils.msg(c, Msgs.rankTimeSet(rankName, time));
+        TextUtils.msg(c, Msgs.rankTimeSet.get(rankName, String.valueOf(time)));
         return 1;
     }
 }

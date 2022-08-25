@@ -63,25 +63,25 @@ public class ChunkHandler {
             if (oldOwner != null) {
                 if (!newOwner.equals(oldOwner)) {
                     if(newOwner.equals(player.getUUID())) {
-                        TextUtils.msg(player, Msgs.enter_exit_claim(Methods.getDisplayName(oldOwner) + "'s", "your own"));
+                        TextUtils.msg(player, Msgs.enter_exit_claim.get(Methods.getDisplayName(oldOwner) + "'s", "your own"));
                     } else if(oldOwner.equals(player.getUUID())){
-                        TextUtils.msg(player, Msgs.enter_exit_claim("your own", Methods.getDisplayName(newOwner) + "'s"));
+                        TextUtils.msg(player, Msgs.enter_exit_claim.get("your own", Methods.getDisplayName(newOwner) + "'s"));
                     } else {
-                        TextUtils.msg(player, Msgs.enter_exit_claim(Methods.getDisplayName(oldOwner) + "'s", Methods.getDisplayName(newOwner) + "'s"));
+                        TextUtils.msg(player, Msgs.enter_exit_claim.get(Methods.getDisplayName(oldOwner) + "'s", Methods.getDisplayName(newOwner) + "'s"));
                     }
                 }
             } else {
                 if(newOwner.equals(player.getUUID()))
-                    TextUtils.msg(player, Msgs.enter_claim("your own"));
+                    TextUtils.msg(player, Msgs.enter_claim.get("your own"));
                 else
-                    TextUtils.msg(player, Msgs.enter_claim(Methods.getDisplayName(newOwner)));
+                    TextUtils.msg(player, Msgs.enter_claim.get(Methods.getDisplayName(newOwner)));
             }
         } else {
             if (oldOwner != null) {
                 if(oldOwner.equals(player.getUUID()))
-                    TextUtils.msg(player, Msgs.exit_claim("your own"));
+                    TextUtils.msg(player, Msgs.exit_claim.get("your own"));
                 else
-                    TextUtils.msg(player, Msgs.exit_claim(Methods.getDisplayName(oldOwner)));
+                    TextUtils.msg(player, Msgs.exit_claim.get(Methods.getDisplayName(oldOwner)));
             }
         }
     }

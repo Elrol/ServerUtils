@@ -44,8 +44,8 @@ public class TpRequest implements Runnable, Serializable, com.github.elrol.elrol
     public void accept() {
         final ServerPlayerEntity r = Methods.getPlayerFromUUID(this.requester);
         final ServerPlayerEntity t = Methods.getPlayerFromUUID(this.target);
-        TextUtils.msg(t, Msgs.accepted_tp(Methods.getDisplayName(r)));
-        TextUtils.msg(r, Msgs.accepted_your_tp(Methods.getDisplayName(t)));
+        TextUtils.msg(t, Msgs.acceptedTp.get(Methods.getDisplayName(r)));
+        TextUtils.msg(r, Msgs.acceptedYourTp.get(Methods.getDisplayName(t)));
         if (this.tpHere) {
             CommandDelay.init(t, CommandConfig.tpa_tp_time.get(), () -> Methods.teleport(t, Methods.getPlayerLocation(r)), true);
         } else {

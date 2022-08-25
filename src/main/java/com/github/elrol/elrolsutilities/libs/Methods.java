@@ -272,7 +272,7 @@ public class Methods {
                 randLoc = new Location(player.level.dimension(), tpPos.offset(0, 1,0), 0.0f, 0.0f);
                 Logger.log(player.level.getBlockState(tpPos).getBlock().toString());
                 Methods.teleport(player, randLoc);
-                TextUtils.msg(player, Msgs.rtp(randLoc.getBlockPos().toString()));
+                TextUtils.msg(player, Msgs.rtp.get(randLoc.getBlockPos().toString()));
             }
             Logger.log("Log8");
             return;
@@ -378,7 +378,7 @@ public class Methods {
         Main.getLogger().info("Wiped entities: " + hc + ", " + pc + ", " + ic);
         Main.mcServer.getPlayerList().getPlayers().forEach(player -> {
             System.out.println(player);
-            TextUtils.msg(player, Msgs.entity_wipe(hc.get(), pc.get(), ic.get()));
+            TextUtils.msg(player, Msgs.entity_wipe.get(String.valueOf(hc.get()), String.valueOf(pc.get()), String.valueOf(ic.get())));
         });
     }
 

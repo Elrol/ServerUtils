@@ -32,7 +32,7 @@ public class RankPrefix {
             Rank rank = Ranks.rankMap.get(rankName);
             prefix = StringArgumentType.getString(c, "prefix");
             rank.setPrefix(prefix);
-            TextUtils.msg(c, Msgs.rank_prefix(rank.getName(), TextUtils.formatString(prefix)));
+            TextUtils.msg(c, Msgs.rank_prefix.get(rank.getName(), TextUtils.formatString(prefix)));
             return 1;
         }
         TextUtils.err(c, Errs.rank_doesnt_exist(rankName));

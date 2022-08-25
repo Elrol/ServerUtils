@@ -30,7 +30,7 @@ public class KitFirstJoin {
         }
         Kit kit = Main.kitMap.get(name);
         kit.setDefault(true);
-        TextUtils.msg(c, Msgs.setFirstJoinKit(kit.name));
+        TextUtils.msg(c, Msgs.setFirstJoinKit.get(kit.name));
         return 1;
     }
 }

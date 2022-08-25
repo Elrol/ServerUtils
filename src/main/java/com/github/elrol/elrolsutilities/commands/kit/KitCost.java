@@ -34,7 +34,7 @@ public class KitCost {
         }
         Kit kit = Main.kitMap.get(name);
         kit.setCost(cost);
-        TextUtils.msg(c, Msgs.set_cost(kit.name, cost));
+        TextUtils.msg(c, Msgs.set_cost.get(kit.name, String.valueOf(cost)));
         return 1;
     }
 }

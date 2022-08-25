@@ -92,11 +92,11 @@ public class UnclaimAllCmd extends _CmdBase {
             try {
                 ServerPlayerEntity p = source.getPlayerOrException();
                 if(p.getUUID().equals(player.getUUID())) {
-                    TextUtils.msg(source, Msgs.chunks_unclaimed());
+                    TextUtils.msg(source, Msgs.chunks_unclaimed.get());
                     return;
                 }
             } catch (CommandSyntaxException ignored) {}
-            TextUtils.msg(source, Msgs.chunks_unclaimed(data.getDisplayName() + "'s"));
+            TextUtils.msg(source, Msgs.chunks_unclaimed_other.get(data.getDisplayName()));
         }
     }
 

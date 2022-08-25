@@ -8,9 +8,9 @@ import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.ModInfo;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 
 import java.util.ArrayList;
@@ -131,7 +131,7 @@ public class Kit implements IKit {
                 player.spawnAtLocation(stack, 1.0f);
             }
         }
-        if(flag) TextUtils.err(player, Msgs.dropped_kit(name));
+        if(flag) TextUtils.err(player, Msgs.dropped_kit.get(name));
     }
 
     public void setDefault(boolean flag){ isDefault = flag; save(); }

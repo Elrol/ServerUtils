@@ -13,9 +13,9 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.List;
@@ -92,7 +92,7 @@ extends _CmdBase {
                         ++count;
                     }
                 }
-                TextUtils.msg(this.player, Msgs.all_item_repaired("" + count));
+                TextUtils.msg(this.player, Msgs.all_item_repaired.get("" + count));
             } else {
                 ItemStack stack = this.player.getMainHandItem();
                 ResourceLocation resource = stack.getItem().getRegistryName();
@@ -103,7 +103,7 @@ extends _CmdBase {
                         return;
                     }
                     stack.setDamageValue(0);
-                    TextUtils.msg(this.player, Msgs.item_repaired(stack.getDisplayName().getString()));
+                    TextUtils.msg(this.player, Msgs.item_repaired.get(stack.getDisplayName().getString()));
                 }
             }
         }

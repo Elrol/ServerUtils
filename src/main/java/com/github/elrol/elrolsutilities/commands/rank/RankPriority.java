@@ -33,7 +33,7 @@ public class RankPriority {
             Rank rank = Ranks.rankMap.get(rankName);
             weight = IntegerArgumentType.getInteger(c, "priority");
             rank.setWeight(weight);
-            TextUtils.msg(c, Msgs.rank_weight(rank.getName(), "" + weight));
+            TextUtils.msg(c, Msgs.rank_weight.get(rank.getName(), "" + weight));
             return 1;
         }
         TextUtils.err(c, Errs.rank_doesnt_exist(rankName));

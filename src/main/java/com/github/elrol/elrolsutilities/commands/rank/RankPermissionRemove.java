@@ -33,7 +33,7 @@ public class RankPermissionRemove {
             perm = s;
         }
         if (rank.removePerm(perm)) {
-            TextUtils.msg(c, Msgs.rank_perm_removed(perm, rank.getName()));
+            TextUtils.msg(c, Msgs.rank_perm_removed.get(perm, rank.getName()));
             //Main.serverData.updateAllPlayersWithRank(rank.getName());
             return 1;
         }

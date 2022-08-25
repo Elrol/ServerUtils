@@ -46,7 +46,7 @@ public class KitRemove {
             return 0;
         }
         if (kit.removeItem(stack)) {
-            TextUtils.msg(c, Msgs.kit_item_removed(stack.getDisplayName().getString(), name));
+            TextUtils.msg(c, Msgs.kit_item_removed.get(stack.getDisplayName().getString(), name));
             return 1;
         }
         TextUtils.err(player, Errs.kit_missing_item(name, stack.getDisplayName().getString()));

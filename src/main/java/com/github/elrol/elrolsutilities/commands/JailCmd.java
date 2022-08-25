@@ -98,7 +98,7 @@ extends _CmdBase {
             return 0;
         }
         Main.serverData.createJail(name);
-        TextUtils.msg(c.getSource(), Msgs.jail_created(name));
+        TextUtils.msg(c.getSource(), Msgs.jail_created.get(name));
         return 1;
     }
 
@@ -107,7 +107,7 @@ extends _CmdBase {
             TextUtils.err(c, Errs.jail_missing());
         }
         Main.serverData.deleteJail(jail);
-        TextUtils.msg(c.getSource(), Msgs.jail_deleted(name));
+        TextUtils.msg(c.getSource(), Msgs.jail_deleted.get(name));
         return 1;
     }
 
@@ -120,7 +120,7 @@ extends _CmdBase {
             return 0;
         }
         Main.serverData.addJailCell(name, Methods.getPlayerLocation(player));
-        TextUtils.msg(c.getSource(), Msgs.cell_added(String.valueOf(Main.serverData.getJail(name).cells.size()), name));
+        TextUtils.msg(c.getSource(), Msgs.cell_added.get(String.valueOf(Main.serverData.getJail(name).cells.size()), name));
         return 1;
     }
 
@@ -131,7 +131,7 @@ extends _CmdBase {
             return 0;
         }
         Main.serverData.removeJailCell(name, cell);
-        TextUtils.msg(c.getSource(), Msgs.cell_removed(name, String.valueOf(cell)));
+        TextUtils.msg(c.getSource(), Msgs.cell_removed.get(name, String.valueOf(cell)));
         return 1;
     }
 
@@ -167,7 +167,7 @@ extends _CmdBase {
         public void run() {
             IPlayerData data = Main.database.get(player.getUUID());
             Main.serverData.jail(player, jail, cell, min);
-            TextUtils.msg(source, Msgs.jailed(data.getDisplayName(), jail, String.valueOf(cell)));
+            TextUtils.msg(source, Msgs.jailed.get(data.getDisplayName(), jail, String.valueOf(cell)));
         }
     }
 }

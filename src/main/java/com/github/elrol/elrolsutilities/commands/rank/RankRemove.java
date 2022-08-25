@@ -40,7 +40,7 @@ public class RankRemove {
             TextUtils.err(c, Errs.player_missing_rank(data.getDisplayName(), rank.getName()));
             return 0;
         }
-        TextUtils.msg(c, Msgs.player_rank_removed(data.getDisplayName(), rank.getName()));
+        TextUtils.msg(c, Msgs.player_rank_removed.get(data.getDisplayName(), rank.getName()));
         data.removeRank(rank.getName());
         Main.database.save(uuid);
         data.update();

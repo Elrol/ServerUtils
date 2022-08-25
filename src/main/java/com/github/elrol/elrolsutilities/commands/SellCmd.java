@@ -104,7 +104,7 @@ public class SellCmd extends _CmdBase {
                 }
             }
             senderData.pay(payout);
-            TextUtils.msg(sender, Msgs.items_sold(output, TextUtils.parseCurrency(payout, true)));
+            TextUtils.msg(sender, Msgs.items_sold.get(output, TextUtils.parseCurrency(payout, true)));
         }
     }
 

@@ -79,7 +79,7 @@ public class ClaimCmd extends _CmdBase {
 
         @Override
         public void run() {
-            TextUtils.msg(this.player, Msgs.chunk_claimed());
+            TextUtils.msg(this.player, Msgs.chunk_claimed.get());
             Main.serverData.claim(new ClaimBlock(player), player.getUUID());
             Main.serverData.save();
         }

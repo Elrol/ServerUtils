@@ -97,7 +97,7 @@ extends _CmdBase {
         @Override
         public void run() {
             if (Methods.teleport(player, loc, newLoc))
-                TextUtils.msg(this.player, Msgs.welcome_home(this.home));
+                TextUtils.msg(this.player, Msgs.welcomeHome.get(this.home));
         }
     }
 }

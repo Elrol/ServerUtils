@@ -14,10 +14,10 @@ import com.github.elrol.elrolsutilities.libs.ModInfo;
 import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.GameType;
 import net.minecraftforge.fml.ModList;
@@ -140,7 +140,7 @@ public class PlayerData implements IPlayerData {
                 } else {
                     nextRank = 0;
                     canRankUp = true;
-                    TextUtils.msg(player, (StringTextComponent) Msgs.rankup().withStyle(TextFormatting.GREEN));
+                    TextUtils.msg(player, (StringTextComponent) Msgs.rankup.get().withStyle(TextFormatting.GREEN));
                 }
             }
             save();
@@ -398,7 +398,7 @@ public class PlayerData implements IPlayerData {
             cell = -1;
             player.setGameMode(GameType.SURVIVAL);
             Methods.teleport(player, prevLoc, false);
-            TextUtils.msg(player, Msgs.unjailed());
+            TextUtils.msg(player, Msgs.unjailed.get());
         }
         save();
     }

@@ -83,7 +83,7 @@ extends _CmdBase {
                 }
                 warps = warps + ", " + string;
             }
-            TextUtils.msg(this.source, Msgs.valid_warps(warps));
+            TextUtils.msg(this.source, Msgs.validWarps.get(warps));
         }
     }
 

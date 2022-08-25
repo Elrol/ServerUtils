@@ -83,7 +83,7 @@ extends _CmdBase {
         @Override
         public void run() {
             IPlayerData data = Main.database.get(this.player.getUUID());
-            TextUtils.msg(this.player, Msgs.rank_check(data.getStringRanks()));
+            TextUtils.msg(this.player, Msgs.rank_check.get(data.getStringRanks()));
         }
     }
 

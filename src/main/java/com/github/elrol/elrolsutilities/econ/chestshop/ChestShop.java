@@ -198,7 +198,7 @@ public class ChestShop extends AbstractShop {
             Methods.takeFromChest(itemHandler, items);
             seller = shopOwner.getDisplayName();
             shopOwner.pay(cost);
-            TextUtils.msg(Methods.getPlayerFromUUID(getOwner()), Msgs.paid_by(customer.getDisplayName(), TextUtils.parseCurrency(cost, false)));
+            TextUtils.msg(Methods.getPlayerFromUUID(getOwner()), Msgs.paid_by.get(customer.getDisplayName(), TextUtils.parseCurrency(cost, false)));
         }
         for(ItemStack si : items) {
             ItemStack shopItem = si.copy();
@@ -214,7 +214,7 @@ public class ChestShop extends AbstractShop {
             }
         }
         customer.charge(cost);
-        TextUtils.msg(player, Msgs.paid_player(seller, TextUtils.parseCurrency(cost, false)));
+        TextUtils.msg(player, Msgs.paid_player.get(seller, TextUtils.parseCurrency(cost, false)));
         return true;
     }
 
@@ -248,7 +248,7 @@ public class ChestShop extends AbstractShop {
                 Methods.addItemsToChest(itemHandler, items, false);
                 seller = ownerData.getDisplayName();
                 ownerData.charge(cost);
-                TextUtils.msg(Methods.getPlayerFromUUID(getOwner()), Msgs.paid_player(sellerData.getDisplayName(), TextUtils.parseCurrency(cost, false)));
+                TextUtils.msg(Methods.getPlayerFromUUID(getOwner()), Msgs.paid_player.get(sellerData.getDisplayName(), TextUtils.parseCurrency(cost, false)));
             } else {
                 TextUtils.err(player, Errs.sign_full());
                 return false;
@@ -257,7 +257,7 @@ public class ChestShop extends AbstractShop {
         items.forEach(item -> removeFromPlayer(item.copy(), player.inventory));
 
         sellerData.pay(cost);
-        TextUtils.msg(player, Msgs.paid_by(seller, TextUtils.parseCurrency(cost, false)));
+        TextUtils.msg(player, Msgs.paid_by.get(seller, TextUtils.parseCurrency(cost, false)));
         return true;
     }
 

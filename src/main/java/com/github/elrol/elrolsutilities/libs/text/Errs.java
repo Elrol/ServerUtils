@@ -614,5 +614,32 @@ public class Errs {
             return new TranslationTextComponent("serverutils.command.err.not-jailed", a);
         return new StringTextComponent(a + " is not currently in jail.");
     }
+
+    public static Err heldItemMissing = new Err("serverutils.command.err.item-missing", "You aren't holding an item.");
+    public static Err noModelData = new Err("serverutils.command.err.model-not-set", "%s has no CustomModelData");
+
+    public static class Err {
+
+        final String id;
+        final String text;
+
+        public Err(String id, String text) {
+            this.id = id;
+            this.text = text;
+        }
+
+        public TextComponent get(String... args) {
+            for (int i = 0; i < args.length; i++) {
+                args[i] = TextFormatting.DARK_RED + args[i] + TextFormatting.RESET;
+            }
+            if(FeatureConfig.translation_enable.get())
+                return new TranslationTextComponent(id, (Object[]) args);
+            String output = text;
+            for (int i = 0; i < args.length; i++) {
+                output = output.replaceFirst("%s", args[i]);
+            }
+            return new StringTextComponent(output);
+        }
+    }
 }
 

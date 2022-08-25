@@ -46,7 +46,7 @@ public class KitAdd {
             return 0;
         }
         if (kit.addItem(stack)) {
-            TextUtils.msg(c, Msgs.kit_item_added(stack.getDisplayName().getString(), name));
+            TextUtils.msg(c, Msgs.kit_item_added.get(stack.getDisplayName().getString(), name));
             return 1;
         }
         TextUtils.err(player, Errs.kit_full(name));

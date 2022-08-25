@@ -72,8 +72,8 @@ extends _CmdBase {
 
         @Override
         public void run() {
-            TextUtils.msg(this.requester, Msgs.tpa_sent(Methods.getDisplayName(this.target)));
-            TextUtils.msg(this.target, Msgs.tpa_received(Methods.getDisplayName(this.requester)));
+            TextUtils.msg(this.requester, Msgs.tpa_sent.get(Methods.getDisplayName(this.target)));
+            TextUtils.msg(this.target, Msgs.tpa_received.get(Methods.getDisplayName(this.requester)));
             new TpRequest(this.requester, this.target, false);
         }
     }

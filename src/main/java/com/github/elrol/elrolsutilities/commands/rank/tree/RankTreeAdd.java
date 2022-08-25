@@ -35,7 +35,7 @@ public class RankTreeAdd {
         }
         Rank rank = Ranks.rankMap.get(rankName);
         rank.addNextRank(nextName);
-        TextUtils.msg(c, Msgs.rankAddedToTree(nextName, rankName));
+        TextUtils.msg(c, Msgs.rankAddedToTree.get(nextName, rankName));
         return 1;
     }
 }

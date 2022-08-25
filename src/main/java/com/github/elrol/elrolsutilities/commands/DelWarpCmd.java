@@ -77,7 +77,7 @@ extends _CmdBase {
         @Override
         public void run() {
             Main.serverData.delWarp(this.name);
-            TextUtils.msg(this.source, Msgs.delwarp(this.name));
+            TextUtils.msg(this.source, Msgs.delWarp.get(this.name));
         }
     }
 

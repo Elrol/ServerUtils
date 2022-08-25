@@ -31,7 +31,7 @@ public class RankCost {
         }
         if (Ranks.rankMap.containsKey(rankName)) {
             Rank rank = Ranks.rankMap.get(rankName);
-            TextUtils.msg(c, Msgs.rank_cost(rank.getName(), rank.getRankUpCost()));
+            TextUtils.msg(c, Msgs.rank_cost.get(rank.getName(), TextUtils.parseCurrency(rank.getRankUpCost(),true)));
             return 1;
         }
         TextUtils.err(c, Errs.rank_doesnt_exist(rankName));
@@ -48,7 +48,7 @@ public class RankCost {
             Rank rank = Ranks.rankMap.get(rankName);
             float cost = FloatArgumentType.getFloat(c, "cost");
             rank.setRankUpCost(cost);
-            TextUtils.msg(c, Msgs.rank_prefix(rank.getName(), TextUtils.parseCurrency(cost, false)));
+            TextUtils.msg(c, Msgs.rank_prefix.get(rank.getName(), TextUtils.parseCurrency(cost, false)));
             return 1;
         }
         TextUtils.err(c, Errs.rank_doesnt_exist(rankName));

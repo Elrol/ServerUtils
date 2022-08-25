@@ -74,7 +74,7 @@ public class LinkCmd extends _CmdBase {
         }
         String code = TextUtils.generateString();
         Main.serverData.minecraftVerifications.put(code, player.getUUID());
-        TextUtils.msg(player, Msgs.verification(code));
+        TextUtils.msg(player, Msgs.verification.get(code));
         return 1;
     }
 
@@ -96,7 +96,7 @@ public class LinkCmd extends _CmdBase {
             data.setDiscordID(id);
             data.save();
             String discordName = Main.bot.getDiscordName(id);
-            TextUtils.msg(player, Msgs.verified(discordName));
+            TextUtils.msg(player, Msgs.verified.get(discordName));
         }
     }
 

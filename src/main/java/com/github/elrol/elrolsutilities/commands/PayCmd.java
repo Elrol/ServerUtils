@@ -87,8 +87,8 @@ public class PayCmd extends _CmdBase {
             IPlayerData senderData = Main.database.get(sender.getUUID());
             IPlayerData targetData = Main.database.get(target.getUUID());
             if(senderData.charge(amount)) targetData.pay(amount);
-            TextUtils.msg(sender, Msgs.paid_player(targetData.getDisplayName(), TextUtils.parseCurrency(amount, true)));
-            TextUtils.msg(target, Msgs.paid_by(senderData.getDisplayName(), TextUtils.parseCurrency(amount, true)));
+            TextUtils.msg(sender, Msgs.paid_player.get(targetData.getDisplayName(), TextUtils.parseCurrency(amount, true)));
+            TextUtils.msg(target, Msgs.paid_by.get(senderData.getDisplayName(), TextUtils.parseCurrency(amount, true)));
         }
     }
 

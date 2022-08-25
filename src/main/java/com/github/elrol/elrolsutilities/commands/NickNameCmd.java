@@ -94,16 +94,16 @@ extends _CmdBase {
             if (this.nick.isEmpty()) {
                 data.setNickname("");
                 if (this.source == null) {
-                    TextUtils.msg(this.player, Msgs.nickname_cleared());
+                    TextUtils.msg(this.player, Msgs.nickname_cleared.get());
                 } else {
-                    TextUtils.msg(this.source, Msgs.nickname_cleared());
+                    TextUtils.msg(this.source, Msgs.nickname_cleared.get());
                 }
             } else {
                 data.setNickname(nick);
                 if (this.source == null) {
-                    TextUtils.msg(this.player, Msgs.nickname_set(TextUtils.formatString(this.nick)));
+                    TextUtils.msg(this.player, Msgs.nickname_set.get(TextUtils.formatString(this.nick)));
                 } else {
-                    TextUtils.msg(this.source, Msgs.nickname_set(TextUtils.formatString(this.nick)));
+                    TextUtils.msg(this.source, Msgs.nickname_set.get(TextUtils.formatString(this.nick)));
                 }
             }
         }
