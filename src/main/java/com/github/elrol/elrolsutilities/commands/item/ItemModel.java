@@ -70,7 +70,7 @@ public class ItemModel {
         }
         CompoundTag tag = stack.getOrCreateTag();
         tag.remove("CustomModelData");
-        player.sendSystemMessage(Component.literal("Removed " + stack.getHoverName().getString()).append("'s CustomModelData"));
+        TextUtils.msg(player, Msgs.clearItemModel.get(stack.getHoverName().getString()));
         return 1;
     }
 
@@ -91,12 +91,8 @@ public class ItemModel {
             return 0;
         }
         CompoundTag tag = stack.getOrCreateTag();
-        if(tag != null) {
-            tag.putInt("CustomModelData", id);
-            player.sendSystemMessage(Component.literal("Set " + stack.getHoverName().getString()).append("'s CustomModelData to: ").append(String.valueOf(id)));
-        } else {
-            Logger.err("Tag was empty");
-        }
+        tag.putInt("CustomModelData", id);
+        TextUtils.msg(player, Msgs.setItemModel.get(stack.getHoverName().getString(), String.valueOf(id)));
         return 1;
     }
 }

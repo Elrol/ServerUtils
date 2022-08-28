@@ -130,9 +130,10 @@ public class CommandRegistry {
         if (CommandConfig.unclaimAll.enable.get()) unclaimAllCmd.register(dispatcher);
         if (CommandConfig.unjail.enable.get()) unjailCmd.register(dispatcher);
         if (CommandConfig.untrust.enable.get()) untrustCmd.register(dispatcher);
-        if (CommandConfig.vote.enable.get()) voteCmd.register(dispatcher);
         if (CommandConfig.warps.enable.get()) warpsCmd.register(dispatcher);
         if (CommandConfig.warp.enable.get()) warpCmd.register(dispatcher);
+
+        if (FeatureConfig.votingEnabled.get() && CommandConfig.vote.enable.get()) voteCmd.register(dispatcher);
 
         if (FeatureConfig.enable_economy.get()) {
             if (CommandConfig.bal.enable.get()) balCmd.register(dispatcher);

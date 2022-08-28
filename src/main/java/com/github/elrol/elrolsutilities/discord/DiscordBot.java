@@ -155,10 +155,7 @@ public class DiscordBot {
     }
 
     public void sendChatMessage(ServerPlayer player, String message) {
-        if(enabled && isOnline()) {
-            Message msg = new MessageBuilder(TextUtils.stripFormatting(getName(player) + message)).build();
-            chatChannels.forEach(c -> c.sendMessage(msg).queue());
-        }
+        sendChatMessage(getName(player) + message);
     }
 
     public void sendStaffMessage(ServerPlayer player, String message) {

@@ -44,7 +44,7 @@ public class Main {
     public static EconData econData;
     public static IShopRegistry shopRegistry = new ShopRegistry();
     public static PermRegistry permRegistry = new PermRegistry();
-    public static Blacklists blackLists = Blacklists.load();
+    public static Blacklists blacklists = Blacklists.load();
     public static DefaultTitles defaultTitles = new DefaultTitles();
     public static DiscordBot bot = DiscordBot.load();
     public static Votifier vote = new Votifier();

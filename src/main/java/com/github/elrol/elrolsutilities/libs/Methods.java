@@ -374,7 +374,7 @@ public class Methods {
     public static void reload(){
         Main.permRegistry.load();
         Ranks.load();
-        Main.blackLists.reload();
+        Main.blacklists.reload();
         Main.database.loadAll();
         Main.serverData.updateAllPlayers();
         Configs.reload();
@@ -432,12 +432,12 @@ public class Methods {
                     ItemStack stack = item.getItem();
                     ResourceLocation itemName = ForgeRegistries.ITEMS.getKey(stack.getItem());
                     assert itemName != null;
-                    if(Main.blackLists.clearlag_item_blacklist.contains(itemName.toString()))
+                    if(Main.blacklists.clearlag_item_blacklist.contains(itemName.toString()))
                         continue;
                 } else {
                     ResourceLocation entityName = ForgeRegistries.ENTITY_TYPES.getKey(entity.getType());
                     assert entityName != null;
-                    if(Main.blackLists.clearlag_entity_blacklist.contains(entityName.toString()))
+                    if(Main.blacklists.clearlag_entity_blacklist.contains(entityName.toString()))
                         continue;
                 }
                 listToFill.add(entity);

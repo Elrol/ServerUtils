@@ -2,6 +2,7 @@ package com.github.elrol.elrolsutilities.commands.item;
 
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.text.Errs;
+import com.github.elrol.elrolsutilities.libs.text.Msgs;
 import com.github.elrol.elrolsutilities.libs.text.TextUtils;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
@@ -40,12 +41,8 @@ public class ItemName {
             return 0;
         }
         CompoundTag tag = stack.getOrCreateTag();
-        if(tag != null) {
-            stack.setHoverName(Component.literal(TextUtils.formatString(name)));
-            player.sendSystemMessage(Component.literal("Item's display name is: ").append(stack.getDisplayName()));
-        } else {
-            Logger.err("Tag was empty");
-        }
+        stack.setHoverName(Component.literal(TextUtils.formatString(name)));
+        TextUtils.msg(player, Msgs.setItemName.get(stack.getDisplayName().getString()));
         return 1;
     }
 }

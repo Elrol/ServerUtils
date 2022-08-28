@@ -155,6 +155,9 @@ public class Msgs {
     public static Msg itemLoreSet = new Msg("serverutils.server.msg.item_lore_set", "Set line %s of %s's lore to %s.");
 
     public static Msg copiedItem = new Msg("serverutils.server.msg.copied_item", "Copied %s to clipboard.");
+    public static Msg setItemModel = new Msg("serverutils.server.msg.set_model", "Set %s's CustomModelData to: %s");
+    public static Msg clearItemModel = new Msg("serverutils.server.msg.cleared_model", "Cleared %s's CustomModelData");
+    public static Msg setItemName = new Msg("serverutils.server.msg.set_item_name", "Set items name to %s");
     public static Msg voteLinks = new Msg("serverutils.server.msg.vote-links", "Vote Links:");
     public static Msg redeemVotes = new Msg("serverutils.server.msg.redeem-votes", "You have %s vote rewards remaining. Use /vote redeem to collect.");
     public static Msg roleAdded = new Msg("serverutils.server.msg.role-added", "You have added the %s role from the %s server to the %s rank.");

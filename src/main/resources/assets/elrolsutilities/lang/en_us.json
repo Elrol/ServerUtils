@@ -243,5 +243,8 @@
 	"serverutils.command.err.role-missing":			"The Discord role couldn't be found. Check the ids and try again.",
 	"serverutils.command.err.no-vote-rewards-left": "You do not have any vote rewards. Use /vote to earn some.",
 	"serverutils.server.err.no-perms-for-warp": 	"You do not have access to the %s warp",
-	"serverutils.server.msg.role-added": 			"You have added the %s role from the %s server to the %s rank."
+	"serverutils.server.msg.role-added": 			"You have added the %s role from the %s server to the %s rank.",
+	"serverutils.server.msg.set_model": 			"Set %s's CustomModelData to: %s",
+	"serverutils.server.msg.cleared_model": 		"Cleared %s's CustomModelData",
+	"serverutils.server.msg.set_item_name": 		"Set items name to %s"
 }
