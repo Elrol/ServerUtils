@@ -29,7 +29,7 @@ public class PermRegistry {
     public void load(){
         PermRegistry reg = JsonMethod.load(ModInfo.Constants.configdir, fileName, PermRegistry.class);
         if (reg != null) {
-            commandPerms = new TreeMap<String, String>(reg.commandPerms);
+            commandPerms = new TreeMap<>(reg.commandPerms);
             commandPerms.values().forEach(perm -> {
                 if(!validPerms.contains(perm)) validPerms.add(perm);
             });

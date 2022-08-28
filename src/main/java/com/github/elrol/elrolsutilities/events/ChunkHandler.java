@@ -4,6 +4,7 @@ import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.IElrolAPI;
 import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.api.data.Location;
+import com.github.elrol.elrolsutilities.api.enums.ClaimFlagKeys;
 import com.github.elrol.elrolsutilities.data.ClaimBlock;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.Methods;
@@ -49,14 +50,16 @@ public class ChunkHandler {
             } else {
                 if(!newOwner.equals(player.getUUID())) {
                     if(!newData.isTrusted(player.getUUID()) && !IElrolAPI.getInstance().getPermissionHandler().hasPermission(player.getUUID(), "*")) {
-                        tempList.add(player.getUUID());
-                        TextUtils.err(player, Errs.no_entry(Methods.getDisplayName(newOwner)));
-                        double x = player.blockPosition().getX() + (2 * (oldPos.getPos().x - newPos.getPos().x));
-                        double z = player.blockPosition().getZ() + (2 * (oldPos.getPos().z - newPos.getPos().z));
-                        BlockPos prevLoc = new BlockPos(x, player.blockPosition().getY(), z);
-                        Methods.teleport(player, new Location(dim, prevLoc, player.yHeadRot, player.yHeadRotO));
+                        if(!newData.getClaimFlags().get(ClaimFlagKeys.allow_entry)) {
+                            tempList.add(player.getUUID());
+                            TextUtils.err(player, Errs.no_entry(Methods.getDisplayName(newOwner)));
+                            double x = player.blockPosition().getX() + (2 * (oldPos.getPos().x - newPos.getPos().x));
+                            double z = player.blockPosition().getZ() + (2 * (oldPos.getPos().z - newPos.getPos().z));
+                            BlockPos prevLoc = new BlockPos(x, player.blockPosition().getY(), z);
+                            Methods.teleport(player, new Location(dim, prevLoc, player.yHeadRot, player.yHeadRotO));
 
-                        return;
+                            return;
+                        }
                     }
                 }
             }

@@ -7,6 +7,7 @@ import java.util.List;
 public class Aliases {
     public static final List<String> back = Arrays.asList("back", "return");
     public static final List<String> bomb = Arrays.asList("bomb", "boom");
+    public static final List<String> broadcast = Collections.singletonList("broadcast");
     public static final List<String> bypass = Collections.singletonList("bypass");
     public static final List<String> delhome = Collections.singletonList("delhome");
     public static final List<String> delwarp = Collections.singletonList("delwarp");
@@ -67,5 +68,6 @@ public class Aliases {
     public static final List<String> chestshop = Collections.singletonList("chestshop");
     public static final List<String> staffchat = Arrays.asList("staffchat", "sc");
     public static final List<String> item = Collections.singletonList("item");
+    public static final List<String> vote = Arrays.asList("vote", "votes");
 }
 

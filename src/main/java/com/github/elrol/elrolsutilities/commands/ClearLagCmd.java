@@ -106,7 +106,6 @@ public class ClearLagCmd extends _CmdBase {
 
         @Override
         public void run() {
-            System.out.println("Test");
             Methods.clearlag(hostile, passive, items);
         }
     }

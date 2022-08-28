@@ -49,6 +49,16 @@ public class ModSuggestions {
     }
 
     public static CompletableFuture<Suggestions> suggestWarps(CommandContext<CommandSource> context, SuggestionsBuilder builder) {
+        try {
+            List<String> warps = new ArrayList<>();
+            IPlayerData data = Main.database.get(context.getSource().getPlayerOrException().getUUID());
+            Main.serverData.getWarpNames().forEach(warp -> {
+                if(data.hasPermOrOp("serverutils.warp." + warp)) warps.add(warp);
+            });
+            return ISuggestionProvider.suggest(warps,builder);
+        } catch (CommandSyntaxException e) {
+            e.printStackTrace();
+        }
         return ISuggestionProvider.suggest(Main.serverData.getWarpNames(), builder);
     }
 

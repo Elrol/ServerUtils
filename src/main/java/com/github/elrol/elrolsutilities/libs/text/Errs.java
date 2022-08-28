@@ -617,6 +617,9 @@ public class Errs {
 
     public static Err heldItemMissing = new Err("serverutils.command.err.item-missing", "You aren't holding an item.");
     public static Err noModelData = new Err("serverutils.command.err.model-not-set", "%s has no CustomModelData");
+    public static Err no_perms_for_warp = new Err("serverutils.command.err.no-perms-for-warp", "You do not have access to the %s warp");
+    public static Err role_missing = new Err("serverutils.command.err.role-missing","The Discord role couldn't be found. Check the ids and try again.");
+    public static Err no_vote_rewards_left = new Err("serverutils.command.err.no-vote-rewards-left", "You do not have any vote rewards. Use /vote to earn some.");
 
     public static class Err {
 

@@ -62,6 +62,11 @@ extends _CmdBase {
         }
         IPlayerData data = Main.database.get(player.getUUID());
 
+        if(!data.hasPermOrOp("serverutils.warp." + warp)) {
+            TextUtils.err(player, Errs.no_perms_for_warp.get(warp));
+            return 0;
+        }
+
         if (FeatureConfig.enable_economy.get() && this.cost > 0) {
             if (!data.charge(this.cost)) {
                 TextUtils.err(player, Errs.not_enough_funds(this.cost, data.getBal()));

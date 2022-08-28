@@ -12,13 +12,13 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import java.io.Serializable;
 import java.util.UUID;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class TpRequest implements Runnable, Serializable, com.github.elrol.elrolsutilities.api.data.ITpRequest {
     private static final long serialVersionUID = 4294708795194730636L;
-    private static final ScheduledExecutorService s = Executors.newSingleThreadScheduledExecutor();
+    private static final ScheduledThreadPoolExecutor s = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(1);
 
     private final UUID requester;
     private final UUID target;
@@ -80,7 +80,7 @@ public class TpRequest implements Runnable, Serializable, com.github.elrol.elrol
         data.setTpRequest(null);
     }
 
-    public static void shutdown(){
+    public static synchronized void shutdown(){
         s.shutdown();
     }
 }

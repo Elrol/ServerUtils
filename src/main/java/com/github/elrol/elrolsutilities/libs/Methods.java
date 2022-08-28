@@ -4,6 +4,7 @@ import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.api.data.Location;
 import com.github.elrol.elrolsutilities.config.Configs;
+import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandCooldown;
 import com.github.elrol.elrolsutilities.events.ChunkHandler;
 import com.github.elrol.elrolsutilities.init.Ranks;
@@ -16,6 +17,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.command.CommandSource;
+import net.minecraft.command.Commands;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -27,6 +29,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ClassInheritanceMultiMap;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
@@ -38,6 +41,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.server.TicketType;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -47,6 +51,12 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Methods {
+
+    public static void runCommand(String cmd){
+        Commands manager = Main.mcServer.getCommands();
+        CommandSource source = Main.mcServer.createCommandSourceStack();
+        manager.performCommand(source,cmd);
+    }
 
     public static String getTime() {
         return formatTime(LocalDateTime.now());
@@ -298,6 +308,16 @@ public class Methods {
         return !state.canOcclude();
     }
 
+    public static UUID getUUIDFromProfileName(String name) {
+        GameProfile profile = Main.mcServer.getProfileCache().get(name);
+        if(profile == null) return null;
+        return profile.getId();
+    }
+
+    public static ServerPlayerEntity getPlayerFromName(String name) {
+        return Main.mcServer.getPlayerList().getPlayerByName(name);
+    }
+
     public static ServerPlayerEntity getPlayerFromUUID(UUID uuid) {
         return Main.mcServer.getPlayerList().getPlayer(uuid);
     }
@@ -357,29 +377,29 @@ public class Methods {
     public static void reload(){
         Main.permRegistry.load();
         Ranks.load();
-        Main.blackLists.load();
+        Main.blacklists.reload();
         Main.database.loadAll();
         Main.serverData.updateAllPlayers();
         Configs.reload();
-
+        Main.bot.shutdown();
         Main.bot.init();
+        if(FeatureConfig.votingEnabled.get())
+            Main.vote.reload();
     }
 
     public static void clearlag(boolean hostile, boolean passive, boolean items){
-        AtomicInteger hc = new AtomicInteger((hostile ? 0 : -1));
-        AtomicInteger pc = new AtomicInteger((passive ? 0 : -1));
-        AtomicInteger ic = new AtomicInteger((items ? 0 : -1));
+        AtomicInteger hc = new AtomicInteger(0);
+        AtomicInteger pc = new AtomicInteger(0);
+        AtomicInteger ic = new AtomicInteger(0);
         Main.mcServer.getAllLevels().forEach(serverWorld -> {
             BlockPos v = clearlag(serverWorld, hostile, passive, items);
             hc.getAndAdd(v.getX());
             pc.getAndAdd(v.getY());
             ic.getAndAdd(v.getZ());
         });
-        Main.getLogger().info("Wiped entities: " + hc + ", " + pc + ", " + ic);
-        Main.mcServer.getPlayerList().getPlayers().forEach(player -> {
-            System.out.println(player);
-            TextUtils.msg(player, Msgs.entity_wipe.get(String.valueOf(hc.get()), String.valueOf(pc.get()), String.valueOf(ic.get())));
-        });
+        Logger.log("Wiped entities: " + hc + ", " + pc + ", " + ic);
+        Main.mcServer.getPlayerList().getPlayers().forEach(
+                p -> TextUtils.msg(p, Msgs.entity_wipe.get(String.valueOf(hc.get()), String.valueOf(pc.get()), String.valueOf(ic.get()))));
     }
 
     public static BlockPos clearlag(World world, boolean hostile, boolean passive, boolean items){
@@ -407,8 +427,23 @@ public class Methods {
                 if(entity instanceof PlayerEntity) return;
                 if(entity instanceof TameableEntity && ((TameableEntity)entity).isTame()) return;
                 if(entity instanceof VillagerEntity) return;
-                if(!(entityClass.equals(MonsterEntity.class)) && entity instanceof MonsterEntity ) return;
-                if(!entity.hasCustomName()) listToFill.add(entity);
+                if(entityClass.equals(MonsterEntity.class) && !(entity instanceof MonsterEntity)) return;
+                if(!entity.hasCustomName()) {
+                    if(entity instanceof ItemEntity) {
+                        ItemEntity item = (ItemEntity) entity;
+                        ItemStack stack = item.getItem();
+                        ResourceLocation itemName = ForgeRegistries.ITEMS.getKey(stack.getItem());
+                        assert itemName != null;
+                        if(Main.blacklists.clearlag_item_blacklist.contains(itemName.toString()))
+                            return;
+                    } else {
+                        ResourceLocation entityName = ForgeRegistries.ENTITIES.getKey(entity.getType());
+                        assert entityName != null;
+                        if(Main.blacklists.clearlag_entity_blacklist.contains(entityName.toString()))
+                            return;
+                    }
+                    listToFill.add(entity);
+                }
             });
         }
         return listToFill.size() - s;

@@ -30,6 +30,7 @@ extends _CmdBase {
             if(name.isEmpty()) name = a;
                 dispatcher.register(Commands.literal(a)
                         .then(Commands.argument("name", StringArgumentType.string())
+                                .suggests(ModSuggestions::suggestWarps)
                                 .executes(this::execute)));
         }
     }

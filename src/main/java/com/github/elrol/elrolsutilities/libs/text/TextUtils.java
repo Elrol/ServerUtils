@@ -45,6 +45,15 @@ public class TextUtils {
         });
     }
 
+    public static void sendToChat(String message){
+        sendToChat(new StringTextComponent(formatString(message)));
+    }
+
+    public static void sendToChat(TextComponent message){
+        Main.mcServer.getPlayerList().broadcastMessage(message,ChatType.CHAT, UUID.randomUUID());
+        Main.bot.sendChatMessage(message.getString());
+    }
+
     public static void sendToStaff(String name, UUID uuid, String message) {
         ServerPlayerEntity player = Methods.getPlayerFromUUID(uuid);
 
@@ -245,7 +254,7 @@ public class TextUtils {
         new StringTextComponent(string);
         StringBuilder text = new StringBuilder();
         Map<Character, TextFormatting> colors = getColors();
-        if(string.isEmpty() || !string.contains("&")) return string;
+        if(!string.contains("&")) return string;
         String[] splitString = string.split("&");
         for (int i = 0; i < splitString.length; ++i) {
             if (i == 0) {

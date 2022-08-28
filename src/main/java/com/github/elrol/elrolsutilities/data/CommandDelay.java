@@ -13,13 +13,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
 
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class CommandDelay
 implements Runnable {
-    private static final ScheduledExecutorService s = Executors.newSingleThreadScheduledExecutor();
+    private static final ScheduledThreadPoolExecutor s = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(1);
 
     private final ServerPlayerEntity player;
     private final Runnable runnable;

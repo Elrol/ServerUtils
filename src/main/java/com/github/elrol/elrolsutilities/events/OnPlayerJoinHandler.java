@@ -69,6 +69,9 @@ public class OnPlayerJoinHandler {
                 });
                 data.gotFirstKit(true);
             }
+            if(data.getVoteRewardCount() > 0) {
+                TextUtils.msg(player, Msgs.redeemVotes.get(String.valueOf(data.getVoteRewardCount())));
+            }
             data.setLastOnline(Main.mcServer.getNextTickTime());
             boolean creative = player.gameMode.isCreative();
             player.abilities.mayfly = creative || data.canFly();

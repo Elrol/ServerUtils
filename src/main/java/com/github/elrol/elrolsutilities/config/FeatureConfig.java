@@ -65,6 +65,8 @@ public class FeatureConfig {
     public static ForgeConfigSpec.ConfigValue<String> sc_jail_tag;
     public static ForgeConfigSpec.ConfigValue<String> sc_jail_format;
 
+    public static ForgeConfigSpec.BooleanValue votingEnabled;
+
     public static void init(ForgeConfigSpec.Builder server){
         server.comment("The tag used by the mod, leave empty for no tag.");
         tag = server.define("tag", "&8[&9S&aU&8]");
@@ -95,7 +97,9 @@ public class FeatureConfig {
                 currency_symbol = server.define("symbol", "$");
             server.pop();
         server.pop();
-
+        server.push("Voting");
+            votingEnabled = server.define("enable voting", false);
+        server.pop();
         server.push("Auto Clearlag");
             auto_clearlag_enabled = server.define("enabled", false);
             clearlag_frequency = server.defineInRange("frequency", 5, 0, Integer.MAX_VALUE);

@@ -11,6 +11,7 @@ public class CommandRegistry {
     public static BackCmd backCmd = new BackCmd(CommandConfig.back.delay, CommandConfig.back.cooldown, CommandConfig.back.aliases, CommandConfig.back.cost);
     public static BalCmd balCmd = new BalCmd(CommandConfig.bal.delay, CommandConfig.bal.cooldown, CommandConfig.bal.aliases, CommandConfig.bal.cost);
     public static BombCmd bombCmd = new BombCmd(CommandConfig.bomb.delay, CommandConfig.bomb.cooldown, CommandConfig.bomb.aliases, CommandConfig.bomb.cost);
+    public static BroadcastCmd broadcastCmd = new BroadcastCmd(CommandConfig.broadcast.delay, CommandConfig.broadcast.cooldown, CommandConfig.broadcast.aliases, CommandConfig.broadcast.cost);
     public static BypassCmd bypassCmd = new BypassCmd(CommandConfig.bypass.delay, CommandConfig.bypass.cooldown, CommandConfig.bypass.aliases, CommandConfig.bypass.cost);
     public static ChestShopCmd chestShopCmd = new ChestShopCmd(CommandConfig.chestshop.delay, CommandConfig.chestshop.cooldown, CommandConfig.chestshop.aliases, CommandConfig.chestshop.cost);
     public static ClaimCmd claimCmd = new ClaimCmd(CommandConfig.claim.delay, CommandConfig.claim.cooldown, CommandConfig.claim.aliases, CommandConfig.claim.cost);
@@ -68,6 +69,7 @@ public class CommandRegistry {
     public static UnclaimAllCmd unclaimAllCmd = new UnclaimAllCmd(CommandConfig.unclaimAll.delay, CommandConfig.unclaimAll.cooldown, CommandConfig.unclaimAll.aliases, CommandConfig.unclaimAll.cost);
     public static UnjailCmd unjailCmd = new UnjailCmd(CommandConfig.unjail.delay, CommandConfig.unjail.cooldown, CommandConfig.unjail.aliases, CommandConfig.unjail.cost);
     public static UntrustCmd untrustCmd = new UntrustCmd(CommandConfig.untrust.delay, CommandConfig.untrust.cooldown, CommandConfig.untrust.aliases, CommandConfig.untrust.cost);
+    public static VoteCmd voteCmd = new VoteCmd(CommandConfig.vote.delay, CommandConfig.vote.cooldown, CommandConfig.vote.aliases, CommandConfig.vote.cost);
     public static WarpCmd warpCmd = new WarpCmd(CommandConfig.warp.delay, CommandConfig.warp.cooldown, CommandConfig.warp.aliases, CommandConfig.warp.cost);
     public static WarpsCmd warpsCmd = new WarpsCmd(CommandConfig.warps.delay, CommandConfig.warps.cooldown, CommandConfig.warps.aliases, CommandConfig.warps.cost);
 
@@ -75,6 +77,7 @@ public class CommandRegistry {
         Logger.log("Registering Commands");
         if (CommandConfig.back.enable.get()) backCmd.register(dispatcher);
         if (CommandConfig.bomb.enable.get()) bombCmd.register(dispatcher);
+        if (CommandConfig.broadcast.enable.get()) broadcastCmd.register(dispatcher);
         if (CommandConfig.bypass.enable.get()) bypassCmd.register(dispatcher);
         if (CommandConfig.chestshop.enable.get()) chestShopCmd.register(dispatcher);
         if (CommandConfig.claim.enable.get()) claimCmd.register(dispatcher);
@@ -129,6 +132,8 @@ public class CommandRegistry {
         if (CommandConfig.untrust.enable.get()) untrustCmd.register(dispatcher);
         if (CommandConfig.warps.enable.get()) warpsCmd.register(dispatcher);
         if (CommandConfig.warp.enable.get()) warpCmd.register(dispatcher);
+
+        if (FeatureConfig.votingEnabled.get() && CommandConfig.vote.enable.get()) voteCmd.register(dispatcher);
 
         if (FeatureConfig.enable_economy.get()) {
             if (CommandConfig.bal.enable.get()) balCmd.register(dispatcher);

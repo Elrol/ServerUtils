@@ -84,7 +84,7 @@ extends _CmdBase {
                     if (!stack.isEmpty() || !stack.isDamageableItem()) continue;
                     id = stack.getItem().getRegistryName();
                     if (id != null) {
-                        if (Main.blackLists.blacklist.contains(id.toString())) {
+                        if (Main.blacklists.repair_blacklist.contains(id.toString())) {
                             TextUtils.err(this.player, Errs.repair_blacklist(id.toString()));
                             continue;
                         }
@@ -98,7 +98,7 @@ extends _CmdBase {
                 ResourceLocation resource = stack.getItem().getRegistryName();
                 if(resource != null) {
                     String id = resource.toString();
-                    if (Main.blackLists.blacklist.contains(id)) {
+                    if (Main.blacklists.repair_blacklist.contains(id)) {
                         TextUtils.err(this.player, Errs.repair_blacklist(id));
                         return;
                     }

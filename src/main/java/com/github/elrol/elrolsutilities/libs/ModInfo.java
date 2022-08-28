@@ -28,6 +28,7 @@ public class ModInfo {
     }
 
     public static String getTag(){
+        if(getRawTag() == null) return "";
         return TextUtils.formatString(getRawTag() + "&r ");
     }
 
