@@ -13,13 +13,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class CommandDelay
 implements Runnable {
-    private static final ScheduledExecutorService s = Executors.newSingleThreadScheduledExecutor();
+    private static final ScheduledThreadPoolExecutor s = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(1);
 
     private final ServerPlayer player;
     private final Runnable runnable;

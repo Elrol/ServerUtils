@@ -61,6 +61,7 @@ public class PlayerData implements IPlayerData {
     public boolean disableMsg;
     public boolean firstKit;
     private double balance = 0;
+    private int voteRewardCount = 0;
 
     private long jailed = 0;
     public String jail = "";
@@ -405,6 +406,10 @@ public class PlayerData implements IPlayerData {
         save();
     }
 
+    public boolean hasPermOrOp(String perm) {
+        return getPerms().contains("*") || hasPerm(perm);
+    }
+
     public boolean hasPerm(String perm) {
         List<String> perms = getPerms();
         for(String p : perms) {
@@ -451,6 +456,7 @@ public class PlayerData implements IPlayerData {
         checkPerms();
         if(!rank.getCmds().isEmpty()) rank.runCmds(uuid);
         Main.mcServer.getPlayerList().sendPlayerPermissionLevel(Methods.getPlayerFromUUID(uuid));
+        Main.bot.updateRoles(uuid);
     }
 
     public void setRank(IRank rank){
@@ -557,6 +563,7 @@ public class PlayerData implements IPlayerData {
     public long getDiscordID() { return discordID; }
     public void setDiscordID(long id) {
         discordID = id;
+        Main.bot.updateRoles(uuid);
         IElrolAPI.getInstance().getPlayerDatabase().link(uuid, id);
     }
 
@@ -601,6 +608,9 @@ public class PlayerData implements IPlayerData {
     public void gotFirstKit(boolean flag)                       { firstKit = flag; }
     public void setLastOnline(long time)                        { lastOnline = time; }
     public void setPrevLoc(Location loc)                        { prevLoc = loc; }
+    public int getVoteRewardCount()                             { return voteRewardCount; }
+    public void addVoteReward()                                 { voteRewardCount++; save(); }
+    public void clearVoteReward()                               { voteRewardCount = 0; save(); }
 
     public void save()                                          { Main.database.save(this); }
 }

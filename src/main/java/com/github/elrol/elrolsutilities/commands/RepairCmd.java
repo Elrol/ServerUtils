@@ -83,7 +83,7 @@ extends _CmdBase {
                     if (!stack.isEmpty() || !stack.isDamageableItem()) continue;
                     id = stack.getItem().getDescriptionId();
                     if (!id.isEmpty()) {
-                        if (Main.blackLists.blacklist.contains(id)) {
+                        if (Main.blackLists.repair_blacklist.contains(id)) {
                             TextUtils.err(this.player, Errs.repair_blacklist(id));
                             continue;
                         }
@@ -97,7 +97,7 @@ extends _CmdBase {
                 String resource = stack.getItem().getDescriptionId();
                 if(!resource.isEmpty()) {
                     String id = resource.toString();
-                    if (Main.blackLists.blacklist.contains(id)) {
+                    if (Main.blackLists.repair_blacklist.contains(id)) {
                         TextUtils.err(this.player, Errs.repair_blacklist(id));
                         return;
                     }

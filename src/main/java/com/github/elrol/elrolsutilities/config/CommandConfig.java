@@ -10,6 +10,7 @@ public class CommandConfig {
     public static CommandInfo back = new CommandInfo();
     public static CommandInfo bal = new CommandInfo();
     public static CommandInfo bomb = new CommandInfo();
+    public static CommandInfo broadcast = new CommandInfo();
     public static CommandInfo bypass = new CommandInfo();
     public static CommandInfo chestshop = new CommandInfo();
     public static CommandInfo claim = new CommandInfo();
@@ -68,6 +69,7 @@ public class CommandConfig {
     public static CommandInfo unclaimAll = new CommandInfo();
     public static CommandInfo unjail = new CommandInfo();
     public static CommandInfo untrust = new CommandInfo();
+    public static CommandInfo vote = new CommandInfo();
     public static CommandInfo warp = new CommandInfo();
     public static CommandInfo warps = new CommandInfo();
 
@@ -126,6 +128,13 @@ public class CommandConfig {
             bomb.cooldown = server.defineInRange("cooldown", 0, 0, Integer.MAX_VALUE);
             bomb.aliases = server.defineList("aliases", Aliases.bomb, o -> o instanceof String);
             bomb.cost = server.defineInRange("cost", 0, 0, Integer.MAX_VALUE);
+        server.pop();
+        server.push("Broadcast");
+            broadcast.enable = server.define("enable", true);
+            broadcast.delay = server.defineInRange("delay", 0, 0, Integer.MAX_VALUE);
+            broadcast.cooldown = server.defineInRange("cooldown", 0, 0, Integer.MAX_VALUE);
+            broadcast.aliases = server.defineList("aliases", Aliases.broadcast, o -> o instanceof String);
+            broadcast.cost = server.defineInRange("cost", 0, 0, Integer.MAX_VALUE);
         server.pop();
         server.push("Bypass");
             bypass.enable = server.define("enable", true);
@@ -550,6 +559,13 @@ public class CommandConfig {
             untrust.cooldown = server.defineInRange("cooldown", 0, 0, Integer.MAX_VALUE);
             untrust.aliases = server.defineList("aliases", Aliases.untrust, o -> o instanceof String);
             untrust.cost = server.defineInRange("cost", 0, 0, Integer.MAX_VALUE);
+        server.pop();
+        server.push("Vote");
+            vote.enable = server.define("enable", true);
+            vote.delay = server.defineInRange("delay", 0, 0, Integer.MAX_VALUE);
+            vote.cooldown = server.defineInRange("cooldown", 0, 0, Integer.MAX_VALUE);
+            vote.aliases = server.defineList("aliases", Aliases.vote, o -> o instanceof String);
+            vote.cost = server.defineInRange("cost", 0, 0, Integer.MAX_VALUE);
         server.pop();
         server.push("Warp");
             warp.enable = server.define("enable", true);

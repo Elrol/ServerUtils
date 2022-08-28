@@ -41,6 +41,7 @@ public interface IPlayerData {
     void                clearPerms();
     void                checkPerms();
     boolean             hasPerm(String perm);
+    boolean             hasPermOrOp(String perm);
 
     List<String>        getRanks();
     String              getStringRanks();
@@ -125,5 +126,7 @@ public interface IPlayerData {
     void                setTitle(String title);
 
     void                tickJail();
-
+    int                 getVoteRewardCount();
+    void                addVoteReward();
+    void                clearVoteReward();
 }

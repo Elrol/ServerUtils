@@ -1,7 +1,6 @@
 package com.github.elrol.elrolsutilities.libs.text;
 
 import com.github.elrol.elrolsutilities.config.FeatureConfig;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 
 public class Msgs {
@@ -106,8 +105,8 @@ public class Msgs {
     public static Msg claim_flag_check = new Msg("serverutils.server.msg.claim-flag-check","The %s flag is set to %s.");
     public static Msg set_claim_flag = new Msg("serverutils.server.msg.set-claim-flag","%s has been set to %s.");
     public static Msg claim_flags = new Msg("serverutils.server.msg.claim-flags","Valid claim flags: %s.");
-    public static Msg entity_wipe = new Msg("serverutils.server.msg.entity_wipe", "Cleared %s hostile mobs, %s passive mobsnd %s items");
-    public static Msg wipe_warn = new Msg("serverutils.server.msg.wipe_warn","Clearing all %s entities in 1 min");
+    public static Msg entity_wipe = new Msg("serverutils.server.msg.entity_wipe", "Cleared %s hostile mobs, %s passive mobs, and %s items");
+    public static Msg wipe_warn = new Msg("serverutils.server.msg.wipe_warn","Clearing all %s, %s, and %s entities in 1 min");
     public static Msg chunk_unclaimed = new Msg("serverutils.server.msg.unclaim","This chunk has been unclaimed.");
     public static Msg set_cost = new Msg("serverutils.server.msg.kit-setcost","Kit %s's cost has been set to %s");
     public static Msg paid_player = new Msg("serverutils.server.msg.paid-player","You have paid %s %s.");
@@ -152,10 +151,13 @@ public class Msgs {
     public static Msg itemModelInfo = new Msg("serverutils.server.msg.item_model_info", "%s has a CustomModelData of: %s");
     public static Msg itemLoreAdd = new Msg("serverutils.server.msg.item_lore_add", "Added %s to %s's lore.");
     public static Msg itemLoreClear = new Msg("serverutils.server.msg.item_lore_clear", "Cleared %s's lore.");
-    public static Msg itemLoreRemove = new Msg("serverutils.server.msg.item_lore_clear", "Removed line %s from %s's lore.");
-    public static Msg itemLoreSet = new Msg("serverutils.server.msg.item_lore_clear", "Set line %s of %s's lore to %s.");
+    public static Msg itemLoreRemove = new Msg("serverutils.server.msg.item_lore_remove", "Removed line %s from %s's lore.");
+    public static Msg itemLoreSet = new Msg("serverutils.server.msg.item_lore_set", "Set line %s of %s's lore to %s.");
 
     public static Msg copiedItem = new Msg("serverutils.server.msg.copied_item", "Copied %s to clipboard.");
+    public static Msg voteLinks = new Msg("serverutils.server.msg.vote-links", "Vote Links:");
+    public static Msg redeemVotes = new Msg("serverutils.server.msg.redeem-votes", "You have %s vote rewards remaining. Use /vote redeem to collect.");
+    public static Msg roleAdded = new Msg("serverutils.server.msg.role-added", "You have added the %s role from the %s server to the %s rank.");
 
     public static class Msg {
 
@@ -169,15 +171,15 @@ public class Msgs {
 
         public Component get(String... args) {
             for (int i = 0; i < args.length; i++) {
-                args[i] = ChatFormatting.GREEN + args[i] + ChatFormatting.RESET;
+                args[i] = "&a" + args[i] + "&r";
             }
             if(FeatureConfig.translation_enable.get())
                 return Component.translatable(id, (Object[]) args);
             String output = text;
-            for (int i = 0; i < args.length; i++) {
-                output = output.replaceFirst("%s", args[i]);
+            for (String arg : args) {
+                output = output.replaceFirst("%s", arg);
             }
-            return Component.literal(output);
+            return Component.literal(TextUtils.format(output));
         }
     }
 }

@@ -23,16 +23,13 @@ public class WarpsCmd
 extends _CmdBase {
     public WarpsCmd(ForgeConfigSpec.IntValue delay, ForgeConfigSpec.IntValue cooldown, ForgeConfigSpec.ConfigValue<List<? extends String>> aliases, ForgeConfigSpec.IntValue cost) {
         super(delay, cooldown, aliases, cost);
-        Logger.log("Warps Command Initiated");
     }
 
     @Override
     public void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        Logger.log("Warps Command Registering");
         for (String a : aliases) {
             if(name.isEmpty()) name = a;
             dispatcher.register(Commands.literal(a).executes(this::execute));
-            Logger.log("Warps Command Registered");
         }
     }
 

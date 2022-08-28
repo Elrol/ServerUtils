@@ -44,6 +44,7 @@ extends _CmdBase {
                         .then(RankList.register())
                         .then(RankCmds.register())
                         .then(RankCost.register())
+                        .then(RankDiscord.register())
                         .then(RankParent.register()));
         }
     }

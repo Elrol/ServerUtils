@@ -1,6 +1,7 @@
 package com.github.elrol.elrolsutilities.api.data;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public interface IRank {
@@ -33,4 +34,6 @@ public interface IRank {
     String          getCmd(int index);
     void            runCmds(UUID uuid);
     List<String>    getCmds();
+    void            addDiscordID(long serverID, long roleID);
+    Map<Long,Long>  getDiscordIDs();
 }

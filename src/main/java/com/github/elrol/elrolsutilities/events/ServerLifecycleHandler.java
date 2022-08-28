@@ -2,6 +2,7 @@ package com.github.elrol.elrolsutilities.events;
 
 import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.data.IPlayerData;
+import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandDelay;
 import com.github.elrol.elrolsutilities.data.PlayerDatabase;
 import com.github.elrol.elrolsutilities.data.ServerData;
@@ -52,6 +53,10 @@ public class ServerLifecycleHandler {
         TimerInit.init();
         Main.bot.init();
         Main.bot.sendInfoMessage("Server is starting");
+        if(FeatureConfig.votingEnabled.get()) {
+            if(!Main.vote.bind())
+                Logger.err("Voting was enabled, but failed to start.");
+        }
     }
 
     @SubscribeEvent
@@ -85,6 +90,7 @@ public class ServerLifecycleHandler {
         CommandDelay.shutdown();
         TpRequest.shutdown();
         Main.bot.shutdown();
+        Main.vote.halt();
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)

@@ -19,6 +19,7 @@ import net.minecraft.server.level.ServerPlayer;
 import javax.security.auth.login.LoginException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class DiscordBot {
@@ -33,6 +34,7 @@ public class DiscordBot {
     private boolean nicks = true;
     private boolean titles = true;
     private boolean tags = true;
+    private transient boolean flag = false;
 
     public List<DiscordServerInfo> guildInfo = new ArrayList<>();
 
@@ -124,7 +126,7 @@ public class DiscordBot {
         save();
     }
 
-    public void shutdown() {
+    public synchronized void shutdown() {
         if(bot != null)
             bot.shutdown();
     }
@@ -143,6 +145,13 @@ public class DiscordBot {
         if(nicks) name += data.getDisplayName();
         name += ": ";
         return name;
+    }
+
+    public void sendChatMessage(String message) {
+        if(enabled && isOnline()) {
+            Message msg = new MessageBuilder(TextUtils.stripFormatting(message)).build();
+            chatChannels.forEach(c -> c.sendMessage(msg).queue());
+        }
     }
 
     public void sendChatMessage(ServerPlayer player, String message) {
@@ -188,8 +197,12 @@ public class DiscordBot {
     public void update() {
         int players = Main.mcServer.getPlayerList().getPlayerCount();
         Logger.log("Current players: " + players);
-        if(players > 0) {
+        if(flag) {
             bot.getPresence().setActivity(Activity.playing(" currently: " + players));
+            flag = false;
+        } else {
+            bot.getPresence().setActivity(Activity.playing(serverName.isEmpty() ? "Server Utils" : serverName));
+            flag = true;
         }
     }
 
@@ -225,6 +238,43 @@ public class DiscordBot {
             if(channel.getIdLong() == id) return true;
         }
         return false;
+    }
+
+    public Role getRole(long serverID, long roleID) {
+        if(bot != null) {
+            Guild guild = bot.getGuildById(serverID);
+            if(guild == null) return null;
+            return guild.getRoleById(roleID);
+        }
+        return null;
+    }
+
+    public void giveRole(UUID uuid, long serverID, long roleID) {
+        if(!enabled) return;
+        long id = Main.database.get(uuid).getDiscordID();
+
+        Guild guild = bot.getGuildById(serverID);
+        if(guild == null) return;
+        Role role = getRole(serverID,roleID);
+        if(role != null) {
+            guild.addRoleToMember(id, role).queue();
+            Logger.log("Added the " + role.getName() + " role to the member in the " + guild.getName() + " server");
+        }
+    }
+
+    public void updateRoles(UUID uuid) {
+        if(!enabled) return;
+        if(!isOnline()) return;
+        IPlayerData data = Main.database.get(uuid);
+        Map<Long,Long> map = data.getDomRank().getDiscordIDs();
+        if(map.isEmpty()) return;
+
+        bot.getGuilds().forEach(guild -> {
+            Member member = guild.getMemberById(data.getDiscordID());
+            if(member == null) return;
+            long gID = guild.getIdLong();
+            giveRole(uuid,gID,map.get(gID));
+        });
     }
 
     public static DiscordBot load() {

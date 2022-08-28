@@ -6,9 +6,10 @@ import com.github.elrol.elrolsutilities.config.Configs;
 import com.github.elrol.elrolsutilities.data.*;
 import com.github.elrol.elrolsutilities.discord.DiscordBot;
 import com.github.elrol.elrolsutilities.events.*;
-import com.github.elrol.elrolsutilities.init.BlackLists;
+import com.github.elrol.elrolsutilities.init.Blacklists;
 import com.github.elrol.elrolsutilities.init.PermRegistry;
 import com.github.elrol.elrolsutilities.init.ShopRegistry;
+import com.github.elrol.elrolsutilities.init.Votifier;
 import com.github.elrol.elrolsutilities.libs.JsonMethod;
 import com.github.elrol.elrolsutilities.libs.Logger;
 import com.github.elrol.elrolsutilities.libs.ModInfo;
@@ -43,9 +44,10 @@ public class Main {
     public static EconData econData;
     public static IShopRegistry shopRegistry = new ShopRegistry();
     public static PermRegistry permRegistry = new PermRegistry();
-    public static BlackLists blackLists = new BlackLists();
+    public static Blacklists blackLists = Blacklists.load();
     public static DefaultTitles defaultTitles = new DefaultTitles();
     public static DiscordBot bot = DiscordBot.load();
+    public static Votifier vote = new Votifier();
     public static MinecraftServer mcServer;
     public static boolean isCheatMode;
     public static Map<UUID, ScheduledFuture<?>> requests;
@@ -74,7 +76,6 @@ public class Main {
 
         econData.load();
         permRegistry.load();
-        blackLists.load();
         defaultTitles.load();
 
         if(bot == null) bot = new DiscordBot();

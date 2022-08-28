@@ -5,13 +5,8 @@ import com.github.elrol.elrolsutilities.api.data.IRank;
 import com.github.elrol.elrolsutilities.init.Ranks;
 import com.github.elrol.elrolsutilities.libs.Methods;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.Commands;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class Rank implements IRank {
     private String name;
@@ -25,6 +20,8 @@ public class Rank implements IRank {
     private int rank_up;
     private List<String> next_ranks;
     private float rank_up_cost;
+
+    private Map<Long,Long> discordIds = new HashMap<>();
 
     public Rank(String name) {
         this.name = name;
@@ -197,18 +194,27 @@ public class Rank implements IRank {
     }
 
     public void runCmds(UUID uuid) {
-        Commands manager = Main.mcServer.getCommands();
-        CommandSourceStack source = Main.mcServer.createCommandSourceStack();
         Optional<GameProfile> profile = Methods.getPlayerCachedProfile(uuid);
         profile.ifPresent(p -> {
             for(String cmd : cmds) {
-                manager.performPrefixedCommand(source, cmd.replace("{player}", p.getName()));
+                Methods.runCommand(cmd.replace("{player}", p.getName()));
             }
         });
     }
 
     public List<String> getCmds() {
         return cmds;
+    }
+
+    public void addDiscordID(long serverID, long roleID) {
+        if(discordIds == null) discordIds = new HashMap<>();
+        discordIds.put(serverID, roleID);
+    }
+
+    @Override
+    public Map<Long, Long> getDiscordIDs() {
+        if(discordIds == null) discordIds = new HashMap<>();
+        return discordIds;
     }
 
     public String toString(){

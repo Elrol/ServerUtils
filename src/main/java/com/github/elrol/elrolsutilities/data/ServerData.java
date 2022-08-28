@@ -168,6 +168,7 @@ public class ServerData implements Serializable {
         if (this.warpMap.containsKey(warp = warp.toLowerCase())) {
             this.warpMap.replace(warp, loc);
         } else {
+            Main.permRegistry.add("serverutils.warp." + warp, true);
             this.warpMap.put(warp, loc);
         }
         this.save();
@@ -176,6 +177,7 @@ public class ServerData implements Serializable {
     public void delWarp(String warp) {
         if (this.warpMap.containsKey(warp = warp.toLowerCase())) {
             this.warpMap.remove(warp);
+            Main.permRegistry.remove("serverutils.warp." + warp, true);
             this.save();
         }
     }

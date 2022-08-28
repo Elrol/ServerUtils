@@ -10,11 +10,11 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -44,11 +44,11 @@ public class ItemCopy {
         }
         CompoundTag tag = stack.getOrCreateTag();
 
-        ResourceKey<Item> item = stack.getItem().builtInRegistryHolder().key();
-        StringSelection select = new StringSelection(item.location().toString() + tag);
+        ResourceLocation item = ForgeRegistries.ITEMS.getKey(stack.getItem());
+        StringSelection select = new StringSelection(item + tag.toString());
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(select, null);
-        TextUtils.msg(player, Msgs.copiedItem.get(stack.getDisplayName().getString()));
+        TextUtils.msg(player, Msgs.copiedItem.get(stack.getHoverName().toString()));
         return 1;
     }
 }

@@ -234,6 +234,14 @@
 	"serverutils.server.msg.item_model_info": 		"%s has a CustomModelData of: %s",
 	"serverutils.server.msg.item_lore_add": 		"Added %s to %s's lore.",
 	"serverutils.server.msg.item_lore_clear": 		"Cleared %s's lore.",
-	"serverutils.server.msg.item_lore_clear": 		"Removed line %s from %s's lore.",
-	"serverutils.server.msg.item_lore_clear": 		"Set line %s of %s's lore to %s."
+	"serverutils.server.msg.item_lore_remove": 		"Removed line %s from %s's lore.",
+	"serverutils.server.msg.item_lore_set": 		"Set line %s of %s's lore to %s.",
+	"serverutils.server.msg.copied_item": 			"Copied %s to clipboard.",
+	"serverutils.server.msg.vote-links": 			"Vote Links:",
+	"serverutils.server.msg.redeem-votes": 			"You have %s vote rewards remaining. Use /vote redeem to collect.",
+	"serverutils.command.err.item-missing": 		"You aren't holding an item.",
+	"serverutils.command.err.role-missing":			"The Discord role couldn't be found. Check the ids and try again.",
+	"serverutils.command.err.no-vote-rewards-left": "You do not have any vote rewards. Use /vote to earn some.",
+	"serverutils.server.err.no-perms-for-warp": 	"You do not have access to the %s warp",
+	"serverutils.server.msg.role-added": 			"You have added the %s role from the %s server to the %s rank."
 }

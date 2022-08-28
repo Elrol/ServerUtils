@@ -4,6 +4,7 @@ import com.github.elrol.elrolsutilities.Main;
 import com.github.elrol.elrolsutilities.api.data.IPlayerData;
 import com.github.elrol.elrolsutilities.api.data.Location;
 import com.github.elrol.elrolsutilities.config.Configs;
+import com.github.elrol.elrolsutilities.config.FeatureConfig;
 import com.github.elrol.elrolsutilities.data.CommandCooldown;
 import com.github.elrol.elrolsutilities.events.ChunkHandler;
 import com.github.elrol.elrolsutilities.init.Ranks;
@@ -14,7 +15,9 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.TicketType;
@@ -37,6 +40,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -46,6 +50,12 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Methods {
+
+    public static void runCommand(String cmd){
+        Commands manager = Main.mcServer.getCommands();
+        CommandSourceStack source = Main.mcServer.createCommandSourceStack();
+        manager.performPrefixedCommand(source,cmd);
+    }
 
     public static String getTime() {
         return formatTime(LocalDateTime.now());
@@ -296,6 +306,15 @@ public class Methods {
         return !state.canOcclude();
     }
 
+    public static UUID getUUIDFromProfileName(String name) {
+        Optional<GameProfile> profile = Main.mcServer.getProfileCache().get(name);
+        return profile.map(GameProfile::getId).orElse(null);
+    }
+
+    public static ServerPlayer getPlayerFromName(String name) {
+        return Main.mcServer.getPlayerList().getPlayerByName(name);
+    }
+
     public static ServerPlayer getPlayerFromUUID(UUID uuid) {
         return Main.mcServer.getPlayerList().getPlayer(uuid);
     }
@@ -355,29 +374,29 @@ public class Methods {
     public static void reload(){
         Main.permRegistry.load();
         Ranks.load();
-        Main.blackLists.load();
+        Main.blackLists.reload();
         Main.database.loadAll();
         Main.serverData.updateAllPlayers();
         Configs.reload();
-
+        Main.bot.shutdown();
         Main.bot.init();
+        if(FeatureConfig.votingEnabled.get())
+            Main.vote.reload();
     }
 
     public static void clearlag(boolean hostile, boolean passive, boolean items){
-        AtomicInteger hc = new AtomicInteger((hostile ? 0 : -1));
-        AtomicInteger pc = new AtomicInteger((passive ? 0 : -1));
-        AtomicInteger ic = new AtomicInteger((items ? 0 : -1));
+        AtomicInteger hc = new AtomicInteger(0);
+        AtomicInteger pc = new AtomicInteger(0);
+        AtomicInteger ic = new AtomicInteger(0);
         Main.mcServer.getAllLevels().forEach(serverLevel -> {
             BlockPos v = clearlag(serverLevel, hostile, passive, items);
             hc.getAndAdd(v.getX());
             pc.getAndAdd(v.getY());
             ic.getAndAdd(v.getZ());
         });
-        Main.getLogger().info("Wiped entities: " + hc + ", " + pc + ", " + ic);
-        Main.mcServer.getPlayerList().getPlayers().forEach(player -> {
-            System.out.println(player);
-            TextUtils.msg(player, Msgs.entity_wipe.get(String.valueOf(hc.get()), String.valueOf(pc.get()), String.valueOf(ic.get())));
-        });
+        Logger.log("Wiped entities: " + hc + ", " + pc + ", " + ic);
+        Main.mcServer.getPlayerList().getPlayers().forEach(
+                p -> TextUtils.msg(p, Msgs.entity_wipe.get(String.valueOf(hc.get()), String.valueOf(pc.get()), String.valueOf(ic.get()))));
     }
 
     public static BlockPos clearlag(Level world, boolean hostile, boolean passive, boolean items){
@@ -407,8 +426,22 @@ public class Methods {
             if(entity instanceof ServerPlayer) continue;
             if(entity instanceof TamableAnimal && ((TamableAnimal)entity).isTame()) continue;
             if(entity instanceof Villager) continue;
-            if(!(entityClass.equals(Monster.class)) && entity instanceof Monster ) continue;
-            if(!entity.hasCustomName()) listToFill.add(entity);
+            if(entityClass.equals(Monster.class) && !(entity instanceof Monster)) continue;
+            if(!entity.hasCustomName()) {
+                if(entity instanceof ItemEntity item) {
+                    ItemStack stack = item.getItem();
+                    ResourceLocation itemName = ForgeRegistries.ITEMS.getKey(stack.getItem());
+                    assert itemName != null;
+                    if(Main.blackLists.clearlag_item_blacklist.contains(itemName.toString()))
+                        continue;
+                } else {
+                    ResourceLocation entityName = ForgeRegistries.ENTITY_TYPES.getKey(entity.getType());
+                    assert entityName != null;
+                    if(Main.blackLists.clearlag_entity_blacklist.contains(entityName.toString()))
+                        continue;
+                }
+                listToFill.add(entity);
+            }
         }
         return listToFill.size() - s;
     }

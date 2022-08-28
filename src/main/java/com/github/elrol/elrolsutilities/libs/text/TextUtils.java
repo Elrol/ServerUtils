@@ -47,6 +47,15 @@ public class TextUtils {
         });
     }
 
+    public static void sendToChat(String message){
+        sendToChat(Component.literal(formatString(message)));
+    }
+
+    public static void sendToChat(Component message){
+        Main.mcServer.getPlayerList().broadcastSystemMessage(message,false);
+        Main.bot.sendChatMessage(message.getString());
+    }
+
     public static void sendToStaff(CommandSourceStack source, Component message) {
         sendToStaff(source, message.getString());
     }
@@ -245,10 +254,9 @@ public class TextUtils {
     public static String formatString(String string) {
         if(string == null) return "";
         string = string.replace("\\n", "\n");
-        Component.literal(string);
         StringBuilder text = new StringBuilder();
         Map<Character, ChatFormatting> colors = getColors();
-        if(string.isEmpty() || !string.contains("&")) return string;
+        if(!string.contains("&")) return string;
         String[] splitString = string.split("&");
         for (int i = 0; i < splitString.length; ++i) {
             if (i == 0) {
