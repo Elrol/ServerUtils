@@ -1,4 +1,4 @@
-package com.github.elrol.elrolsutilities.api.claims;
+package dev.elrol.serverutilities.api.claims;
 
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;

@@ -1,6 +1,6 @@
-package com.github.elrol.elrolsutilities.api.data;
+package dev.elrol.serverutilities.api.data;
 
-import com.github.elrol.elrolsutilities.api.enums.ClaimFlagKeys;
+import dev.elrol.serverutilities.api.enums.ClaimFlagKeys;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.time.LocalDateTime;
@@ -17,7 +17,7 @@ public interface IPlayerData {
 
     int                 getMinPlayed();
     String              getTimePlayed();
-    Long                tillUseKit(IKit kit);
+    Long                tillUseKit(dev.elrol.serverutilities.api.data.IKit kit);
 
     void                jail(String jail, int cell, int min);
     void                unjail();
@@ -45,11 +45,11 @@ public interface IPlayerData {
 
     List<String>        getRanks();
     String              getStringRanks();
-    List<IRank>         getRankList();
-    void                addRank(IRank rank);
-    void                setRank(IRank rank);
+    List<dev.elrol.serverutilities.api.data.IRank>         getRankList();
+    void                addRank(dev.elrol.serverutilities.api.data.IRank rank);
+    void                setRank(dev.elrol.serverutilities.api.data.IRank rank);
     void                removeRank(String rank);
-    IRank               getDomRank();
+    dev.elrol.serverutilities.api.data.IRank getDomRank();
 
     boolean             isTrusted(UUID uuid);
     void                trust(UUID uuid);
@@ -93,8 +93,8 @@ public interface IPlayerData {
     int                 getMaxShops();
     void                setFlag(ClaimFlagKeys key, Boolean flag);
     boolean             getFlag(ClaimFlagKeys key);
-    ITpRequest          getTpRequest();
-    void                setTpRequest(ITpRequest tpRequest);
+    dev.elrol.serverutilities.api.data.ITpRequest getTpRequest();
+    void                setTpRequest(dev.elrol.serverutilities.api.data.ITpRequest tpRequest);
     void                setMsgDisabled(boolean flag);
     void                setNickname(String name);
     String              getNickname();

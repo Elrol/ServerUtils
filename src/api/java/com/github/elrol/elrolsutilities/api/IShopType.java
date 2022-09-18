@@ -1,4 +1,4 @@
-package com.github.elrol.elrolsutilities.api;
+package dev.elrol.serverutilities.api;
 
 public interface IShopType {
 }

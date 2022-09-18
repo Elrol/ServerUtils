@@ -1,10 +1,10 @@
-package com.github.elrol.elrolsutilities.api;
+package dev.elrol.serverutilities.api;
 
 class ElrolAPIProxy {
 
     private static final ElrolAPIProxy proxy = new ElrolAPIProxy();
 
-    private IElrolAPI apiInstance;
+    private dev.elrol.serverutilities.api.IElrolAPI apiInstance;
 
     private ElrolAPIProxy() {}
 
@@ -12,11 +12,11 @@ class ElrolAPIProxy {
         return proxy;
     }
 
-    public IElrolAPI getApi() {
+    public dev.elrol.serverutilities.api.IElrolAPI getApi() {
         return apiInstance;
     }
 
-    public void setApi(final IElrolAPI api) {
+    public void setApi(final dev.elrol.serverutilities.api.IElrolAPI api) {
         apiInstance = api;
     }
 

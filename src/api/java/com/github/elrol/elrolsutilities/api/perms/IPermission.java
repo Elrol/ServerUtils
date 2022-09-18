@@ -1,4 +1,4 @@
-package com.github.elrol.elrolsutilities.api.perms;
+package dev.elrol.serverutilities.api.perms;
 
 public interface IPermission {
     String get();

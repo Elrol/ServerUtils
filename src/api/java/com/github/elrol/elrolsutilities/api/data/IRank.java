@@ -1,4 +1,4 @@
-package com.github.elrol.elrolsutilities.api.data;
+package dev.elrol.serverutilities.api.data;
 
 import java.util.List;
 import java.util.Map;

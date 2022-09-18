@@ -1,7 +1,7 @@
-package com.github.elrol.elrolsutilities.api.econ;
+package dev.elrol.serverutilities.api.econ;
 
-import com.github.elrol.elrolsutilities.api.IElrolAPI;
-import com.github.elrol.elrolsutilities.api.data.Location;
+import dev.elrol.serverutilities.api.IElrolAPI;
+import dev.elrol.serverutilities.api.data.Location;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 
@@ -15,17 +15,17 @@ public interface IShopManager {
     String getFileName();
     String getTag();
 
-    void registerShop(Location loc, AbstractShop shop);
+    void registerShop(Location loc, dev.elrol.serverutilities.api.econ.AbstractShop shop);
 
-    Map<Location, AbstractShop> getPlayerShops(UUID uuid);
+    Map<Location, dev.elrol.serverutilities.api.econ.AbstractShop> getPlayerShops(UUID uuid);
 
     boolean isShop(Location location);
 
-    AbstractShop getShop(Location loc);
+    dev.elrol.serverutilities.api.econ.AbstractShop getShop(Location loc);
 
     void removeShop(Location loc);
 
-    AbstractShop parseShop(SignBlockEntity sign, Component[] messages);
+    dev.elrol.serverutilities.api.econ.AbstractShop parseShop(SignBlockEntity sign, Component[] messages);
 
     void save();
 

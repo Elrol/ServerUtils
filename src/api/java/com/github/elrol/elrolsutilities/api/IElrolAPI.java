@@ -1,21 +1,23 @@
-package com.github.elrol.elrolsutilities.api;
+package dev.elrol.serverutilities.api;
 
-import com.github.elrol.elrolsutilities.api.claims.IClaimManager;
-import com.github.elrol.elrolsutilities.api.claims.IClaimSettingRegistry;
-import com.github.elrol.elrolsutilities.api.data.IPlayerDatabase;
-import com.github.elrol.elrolsutilities.api.econ.IShopRegistry;
-import com.github.elrol.elrolsutilities.api.perms.IPermissionHandler;
+import dev.elrol.serverutilities.api.claims.IClaimManager;
+import dev.elrol.serverutilities.api.claims.IClaimSettingRegistry;
+import dev.elrol.serverutilities.api.data.IPlayerDatabase;
+import dev.elrol.serverutilities.api.econ.IShopRegistry;
+import dev.elrol.serverutilities.api.init.ICommandRegistry;
+import dev.elrol.serverutilities.api.init.ITextUtils;
+import dev.elrol.serverutilities.api.perms.IPermissionHandler;
 
 import java.io.File;
 
 public interface IElrolAPI {
 
     static IElrolAPI getInstance() {
-        return ElrolAPIProxy.getProxy().getApi();
+        return dev.elrol.serverutilities.api.ElrolAPIProxy.getProxy().getApi();
     }
 
     static void setInstance(IElrolAPI api) {
-        ElrolAPIProxy.getProxy().setApi(api);
+        dev.elrol.serverutilities.api.ElrolAPIProxy.getProxy().setApi(api);
     }
 
     IPermissionHandler getPermissionHandler();
@@ -28,5 +30,13 @@ public interface IElrolAPI {
 
     IPlayerDatabase getPlayerDatabase();
 
+    ICommandRegistry getCommandRegistry();
+
+    boolean enableTranslations();
+
+    ITextUtils getTextUtils();
+
     File getDataDir();
+
+    File getConfigDir();
 }

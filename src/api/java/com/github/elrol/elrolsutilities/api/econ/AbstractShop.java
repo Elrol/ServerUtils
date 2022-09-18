@@ -1,10 +1,10 @@
-package com.github.elrol.elrolsutilities.api.econ;
+package dev.elrol.serverutilities.api.econ;
 
-import com.github.elrol.elrolsutilities.api.IElrolAPI;
-import com.github.elrol.elrolsutilities.api.data.IPlayerData;
-import com.github.elrol.elrolsutilities.api.data.IPlayerDatabase;
-import com.github.elrol.elrolsutilities.api.data.Location;
 import com.google.gson.JsonObject;
+import dev.elrol.serverutilities.api.IElrolAPI;
+import dev.elrol.serverutilities.api.data.IPlayerData;
+import dev.elrol.serverutilities.api.data.IPlayerDatabase;
+import dev.elrol.serverutilities.api.data.Location;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

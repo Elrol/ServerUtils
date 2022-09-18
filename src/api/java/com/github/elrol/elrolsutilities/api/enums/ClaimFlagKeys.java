@@ -1,4 +1,4 @@
-package com.github.elrol.elrolsutilities.api.enums;
+package dev.elrol.serverutilities.api.enums;
 
 
 import java.util.ArrayList;

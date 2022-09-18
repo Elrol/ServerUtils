@@ -1,4 +1,4 @@
-package com.github.elrol.elrolsutilities.api.data;
+package dev.elrol.serverutilities.api.data;
 
 
 import net.minecraft.core.BlockPos;
