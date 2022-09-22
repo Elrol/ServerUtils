@@ -38,7 +38,7 @@ public class Main {
     public static File dir;
 
     public static ServerData serverData;
-    public static PlayerDatabase database;
+    public static PlayerDatabase database = new PlayerDatabase();
     public static PlayerHistory history;
     public static PatreonList patreonList;
     public static EconData econData;
@@ -82,6 +82,7 @@ public class Main {
         econData.load();
         permRegistry.load();
         defaultTitles.load();
+        database.load();
 
         if(bot == null) bot = new DiscordBot();
 

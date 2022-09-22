@@ -11,7 +11,6 @@ import dev.elrol.serverutilities.data.ClaimBlock;
 import dev.elrol.serverutilities.libs.Logger;
 import dev.elrol.serverutilities.libs.text.Errs;
 import dev.elrol.serverutilities.libs.text.Msgs;
-import dev.elrol.serverutilities.libs.text.TextUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -50,7 +49,7 @@ public class BlockEventHandler {
         IPlayerData data = Main.database.get(player.getUUID());
         if(Main.serverData.isClaimed(claim)) {
             UUID uuid = Main.serverData.getOwner(claim);
-            if (!(player.getUUID().equals(uuid) || !data.isTrusted(player.getUUID()))) {
+            if (!(player.getUUID().equals(uuid) || data.isTrusted(player.getUUID()))) {
                 Main.textUtils.err(player, Errs.chunk_claimed(data.getDisplayName()));
                 event.setCanceled(true);
                 return;
@@ -116,7 +115,7 @@ public class BlockEventHandler {
         ResourceLocation dim = event.getEntity().level.dimension().location();
         ClaimBlock claim = new ClaimBlock(dim, event.getPos());
 
-        if(Main.serverData.isClaimed(claim) && !Main.serverData.getOwner(claim).equals(event.getEntity().getUUID())) {
+        if(Main.serverData.isClaimed(claim)) {
             UUID uuid = Main.serverData.getOwner(claim);
             if (player.getUUID().equals(uuid) || Main.database.get(uuid).isTrusted(player.getUUID())) return;
             Main.textUtils.err(player, Errs.chunk_claimed(Main.database.get(uuid).getDisplayName()));

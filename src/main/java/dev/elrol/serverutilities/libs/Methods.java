@@ -1,5 +1,7 @@
 package dev.elrol.serverutilities.libs;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.elrol.serverutilities.Main;
 import dev.elrol.serverutilities.api.data.IPlayerData;
 import dev.elrol.serverutilities.api.data.Location;
@@ -10,9 +12,6 @@ import dev.elrol.serverutilities.events.ChunkHandler;
 import dev.elrol.serverutilities.init.Ranks;
 import dev.elrol.serverutilities.libs.text.Errs;
 import dev.elrol.serverutilities.libs.text.Msgs;
-import dev.elrol.serverutilities.libs.text.TextUtils;
-import com.mojang.authlib.GameProfile;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -377,7 +376,7 @@ public class Methods {
         Main.permRegistry.load();
         Ranks.load();
         Main.blacklists.reload();
-        Main.database.loadAll();
+        Main.database.load();
         Main.serverData.updateAllPlayers();
         Configs.reload();
         Main.bot.shutdown();

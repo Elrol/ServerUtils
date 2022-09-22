@@ -15,10 +15,6 @@ public class PlayerDatabase implements IPlayerDatabase {
     Map<UUID, IPlayerData> database = new HashMap<>();
     Map<Long, UUID> discordMap = new HashMap<>();
 
-    public PlayerDatabase() {
-        loadAll();
-    }
-
     @Override
     public boolean isPresent(UUID uuid) {
         return this.database.containsKey(uuid);
@@ -79,7 +75,7 @@ public class PlayerDatabase implements IPlayerDatabase {
         }
     }
 
-    public void loadAll() {
+    public void load() {
         File file = new File(Main.dir, "/playerdata");
         File[] files = file.listFiles();
         if(files == null) return;
