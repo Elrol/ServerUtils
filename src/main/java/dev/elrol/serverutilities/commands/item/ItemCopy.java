@@ -1,13 +1,12 @@
 package dev.elrol.serverutilities.commands.item;
 
+import com.mojang.brigadier.builder.ArgumentBuilder;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.elrol.serverutilities.Main;
 import dev.elrol.serverutilities.libs.Logger;
 import dev.elrol.serverutilities.libs.text.Errs;
 import dev.elrol.serverutilities.libs.text.Msgs;
-import dev.elrol.serverutilities.libs.text.TextUtils;
-import com.mojang.brigadier.builder.ArgumentBuilder;
-import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.nbt.CompoundTag;
@@ -54,7 +53,9 @@ public class ItemCopy {
             StringSelection select = new StringSelection(output);
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(select, null);
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            Logger.log("Item Data: " + output);
+        }
         Main.textUtils.msg(player, Msgs.copiedItem.get(stack.getHoverName().getString()));
         return 1;
     }

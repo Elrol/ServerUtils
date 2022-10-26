@@ -12,7 +12,9 @@ import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.GameType;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -50,6 +52,16 @@ public class EntityEventHandler {
         }
         if (cancel) {
             event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public void onDimensionChange(PlayerEvent.PlayerChangedDimensionEvent event) {
+        if(event.getEntity() instanceof ServerPlayer player) {
+            GameType type = Main.dimModes.getMode(event.getTo().location());
+            if(type != null) {
+                player.setGameMode(type);
+            }
         }
     }
 

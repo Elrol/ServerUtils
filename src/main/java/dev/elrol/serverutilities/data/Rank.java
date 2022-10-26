@@ -1,10 +1,11 @@
 package dev.elrol.serverutilities.data;
 
+import com.mojang.authlib.GameProfile;
 import dev.elrol.serverutilities.Main;
+import dev.elrol.serverutilities.api.data.IPlayerData;
 import dev.elrol.serverutilities.api.data.IRank;
 import dev.elrol.serverutilities.init.Ranks;
 import dev.elrol.serverutilities.libs.Methods;
-import com.mojang.authlib.GameProfile;
 
 import java.util.*;
 
@@ -85,6 +86,11 @@ public class Rank implements IRank {
             return false;
         }
         this.perms.add(perm);
+        Main.mcServer.getPlayerList().getPlayers().forEach(player -> {
+            IPlayerData data = Main.database.get(player.getUUID());
+            if(!data.getRankList().contains(this)) return;
+            data.checkPerms();
+        });
         Ranks.save(this);
         return true;
     }

@@ -1,19 +1,18 @@
 package dev.elrol.serverutilities.commands;
 
-import dev.elrol.serverutilities.Main;
-import dev.elrol.serverutilities.api.data.IPlayerData;
-import dev.elrol.serverutilities.data.CommandDelay;
-import dev.elrol.serverutilities.data.JailData;
-import dev.elrol.serverutilities.data.ServerData;
-import dev.elrol.serverutilities.libs.Methods;
-import dev.elrol.serverutilities.libs.text.Errs;
-import dev.elrol.serverutilities.libs.text.Msgs;
-import dev.elrol.serverutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import dev.elrol.serverutilities.Main;
+import dev.elrol.serverutilities.api.data.IPlayerData;
+import dev.elrol.serverutilities.api.data.Location;
+import dev.elrol.serverutilities.data.CommandDelay;
+import dev.elrol.serverutilities.data.JailData;
+import dev.elrol.serverutilities.data.ServerData;
+import dev.elrol.serverutilities.libs.text.Errs;
+import dev.elrol.serverutilities.libs.text.Msgs;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -119,7 +118,7 @@ extends _CmdBase {
             Main.textUtils.err(c.getSource(), Errs.not_player());
             return 0;
         }
-        Main.serverData.addJailCell(name, Methods.getPlayerLocation(player));
+        Main.serverData.addJailCell(name, new Location(player));
         Main.textUtils.msg(c.getSource(), Msgs.cell_added.get(String.valueOf(Main.serverData.getJail(name).cells.size()), name));
         return 1;
     }

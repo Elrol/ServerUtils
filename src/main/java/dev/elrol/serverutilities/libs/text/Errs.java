@@ -614,10 +614,15 @@ public class Errs {
         return Component.literal(a + " is not currently in jail.");
     }
 
+    //added errs
     public static Err heldItemMissing = new Err("serverutils.command.err.item-missing", "You aren't holding an item.");
     public static Err no_perms_for_warp = new Err("serverutils.command.err.no-perms-for-warp", "You do not have access to the %s warp");
     public static Err role_missing = new Err("serverutils.command.err.role-missing","The Discord role couldn't be found. Check the ids and try again.");
     public static Err no_vote_rewards_left = new Err("serverutils.command.err.no-vote-rewards-left", "You do not have any vote rewards. Use /vote to earn some.");
+    public static Err not_enough_claims = new Err("serverutils.command.err.not-enough-claims", "You need to have %s more claim blocks to claim this area.");
+    public static Err cant_use_cmd_here = new Err("serverutils.command.err.cant-use-cmd-here", "That command is not allowed in this dimension");
+
+    //new errs
 
     public static class Err {
 

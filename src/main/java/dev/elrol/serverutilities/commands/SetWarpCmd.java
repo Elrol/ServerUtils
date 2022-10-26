@@ -1,18 +1,18 @@
 package dev.elrol.serverutilities.commands;
 
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.elrol.serverutilities.Main;
 import dev.elrol.serverutilities.api.data.IPlayerData;
+import dev.elrol.serverutilities.api.data.Location;
 import dev.elrol.serverutilities.config.FeatureConfig;
 import dev.elrol.serverutilities.data.CommandDelay;
 import dev.elrol.serverutilities.libs.Logger;
 import dev.elrol.serverutilities.libs.Methods;
 import dev.elrol.serverutilities.libs.text.Errs;
 import dev.elrol.serverutilities.libs.text.Msgs;
-import dev.elrol.serverutilities.libs.text.TextUtils;
-import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.StringArgumentType;
-import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerPlayer;
@@ -77,7 +77,7 @@ extends _CmdBase {
 
         @Override
         public void run() {
-            Main.serverData.addWarp(this.warp, Methods.getPlayerLocation(this.player));
+            Main.serverData.addWarp(this.warp, new Location(this.player));
             Main.textUtils.msg(this.player, Msgs.setWarp.get(this.warp));
         }
     }

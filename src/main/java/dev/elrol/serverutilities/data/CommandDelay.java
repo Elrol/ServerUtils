@@ -1,12 +1,11 @@
 package dev.elrol.serverutilities.data;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.elrol.serverutilities.Main;
 import dev.elrol.serverutilities.commands._CmdBase;
 import dev.elrol.serverutilities.libs.Logger;
 import dev.elrol.serverutilities.libs.Methods;
 import dev.elrol.serverutilities.libs.text.Errs;
-import dev.elrol.serverutilities.libs.text.TextUtils;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -92,8 +91,8 @@ implements Runnable {
         init(cmd, sender, runnable, trackLoc);
     }
 
-    public static void init(_CmdBase cmd, ServerPlayer sender, Runnable runnable, boolean trackLoc){
-        if (Methods.hasCooldown(sender, cmd.name)) {
+    public static void init(String cmdName, int cmdDelay, int cmdCooldown, ServerPlayer sender, Runnable runnable, boolean trackLoc) {
+        if (Methods.hasCooldown(sender, cmdName)) {
             return;
         }
         if (Main.commandDelays.containsKey(sender.getUUID())) {
@@ -105,26 +104,31 @@ implements Runnable {
             Main.commandDelays.remove(sender.getUUID());
         }
 
-        Logger.debug("Delay: " + cmd.delay + ", Cooldown: " + cmd.cooldown);
-        if(cmd.cooldown > 0) {
+        Logger.debug("Delay: " + cmdDelay + ", Cooldown: " + cmdCooldown);
+        if(cmdCooldown > 0) {
             Logger.debug("Cooldown is greater then 0 ");
-            if(cmd.delay > 0){
+            if(cmdDelay > 0){
                 Logger.debug("Delay is greater then 0");
-                Main.commandDelays.put(sender.getUUID(), new CommandDelay(sender, cmd.name, cmd.delay, cmd.cooldown, runnable, trackLoc));
+                Main.commandDelays.put(sender.getUUID(), new CommandDelay(sender, cmdName, cmdDelay, cmdCooldown, runnable, trackLoc));
             } else {
                 Logger.debug("Delay is 0");
-                Main.commandDelays.put(sender.getUUID(), new CommandDelay(sender, cmd.name, 0, cmd.cooldown, runnable, trackLoc));
+                Main.commandDelays.put(sender.getUUID(), new CommandDelay(sender, cmdName, 0, cmdCooldown, runnable, trackLoc));
             }
         } else {
             Logger.debug("Cooldown is 0");
-            if(cmd.delay > 0){
+            if(cmdDelay > 0){
                 Logger.debug("Delay is greater then 0");
-                Main.commandDelays.put(sender.getUUID(), new CommandDelay(sender, cmd.name, cmd.delay, 0, runnable, trackLoc));
+                Main.commandDelays.put(sender.getUUID(), new CommandDelay(sender, cmdName, cmdDelay, 0, runnable, trackLoc));
             } else {
                 Logger.debug("Delay is 0");
-                Main.commandDelays.put(sender.getUUID(), new CommandDelay(sender, cmd.name, 0, 0, runnable, trackLoc));
+                Main.commandDelays.put(sender.getUUID(), new CommandDelay(sender, cmdName, 0, 0, runnable, trackLoc));
             }
         }
+
+    }
+
+    public static void init(_CmdBase cmd, ServerPlayer sender, Runnable runnable, boolean trackLoc){
+        init(cmd.name, cmd.delay,cmd.cooldown, sender, runnable, trackLoc);
     }
 
     public void cancel() {

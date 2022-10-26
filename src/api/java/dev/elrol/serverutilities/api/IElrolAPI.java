@@ -13,11 +13,11 @@ import java.io.File;
 public interface IElrolAPI {
 
     static IElrolAPI getInstance() {
-        return dev.elrol.serverutilities.api.ElrolAPIProxy.getProxy().getApi();
+        return ElrolAPIProxy.getProxy().getApi();
     }
 
     static void setInstance(IElrolAPI api) {
-        dev.elrol.serverutilities.api.ElrolAPIProxy.getProxy().setApi(api);
+        ElrolAPIProxy.getProxy().setApi(api);
     }
 
     IPermissionHandler getPermissionHandler();

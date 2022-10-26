@@ -17,7 +17,7 @@ public interface IPlayerData {
 
     int                 getMinPlayed();
     String              getTimePlayed();
-    Long                tillUseKit(dev.elrol.serverutilities.api.data.IKit kit);
+    Long                tillUseKit(IKit kit);
 
     void                jail(String jail, int cell, int min);
     void                unjail();
@@ -45,11 +45,11 @@ public interface IPlayerData {
 
     List<String>        getRanks();
     String              getStringRanks();
-    List<dev.elrol.serverutilities.api.data.IRank>         getRankList();
-    void                addRank(dev.elrol.serverutilities.api.data.IRank rank);
-    void                setRank(dev.elrol.serverutilities.api.data.IRank rank);
+    List<IRank>         getRankList();
+    void                addRank(IRank rank);
+    void                setRank(IRank rank);
     void                removeRank(String rank);
-    dev.elrol.serverutilities.api.data.IRank getDomRank();
+    IRank               getDomRank();
 
     boolean             isTrusted(UUID uuid);
     void                trust(UUID uuid);
@@ -93,8 +93,8 @@ public interface IPlayerData {
     int                 getMaxShops();
     void                setFlag(ClaimFlagKeys key, Boolean flag);
     boolean             getFlag(ClaimFlagKeys key);
-    dev.elrol.serverutilities.api.data.ITpRequest getTpRequest();
-    void                setTpRequest(dev.elrol.serverutilities.api.data.ITpRequest tpRequest);
+    ITpRequest          getTpRequest();
+    void                setTpRequest(ITpRequest tpRequest);
     void                setMsgDisabled(boolean flag);
     void                setNickname(String name);
     String              getNickname();

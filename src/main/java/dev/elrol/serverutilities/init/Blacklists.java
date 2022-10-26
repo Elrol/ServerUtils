@@ -1,13 +1,13 @@
 package dev.elrol.serverutilities.init;
 
+import com.google.gson.JsonSyntaxException;
+import dev.elrol.serverutilities.Main;
 import dev.elrol.serverutilities.libs.JsonMethod;
 import dev.elrol.serverutilities.libs.Logger;
-import com.google.gson.JsonSyntaxException;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Blacklists {
     private final transient static File bldir = new File(FMLPaths.CONFIGDIR.get().toFile(), "/serverutils/blacklists");
@@ -16,9 +16,15 @@ public class Blacklists {
     public List<String> repair_blacklist = new ArrayList<>();
     public List<String> clearlag_item_blacklist = new ArrayList<>();
     public List<String> clearlag_entity_blacklist = new ArrayList<>();
+    public Map<String, List<String>> dimension_command_blacklist = new HashMap<>();
 
     public Blacklists() {
         clearlag_item_blacklist.add("minecraft:iron_pickaxe");
+
+        List<String> cmds = Collections.singletonList("test command");
+        Main.mcServer.levelKeys().forEach(key->{
+            dimension_command_blacklist.put(key.location().toString(), cmds);
+        });
     }
 
     public void save() {
@@ -32,9 +38,10 @@ public class Blacklists {
         try {
             Blacklists bl = JsonMethod.load(bldir, dir, Blacklists.class);
             if(bl != null) {
-                this.clearlag_entity_blacklist = bl.clearlag_entity_blacklist;
-                this.clearlag_item_blacklist = bl.clearlag_item_blacklist;
-                this.repair_blacklist = bl.repair_blacklist;
+                clearlag_entity_blacklist = bl.clearlag_entity_blacklist;
+                clearlag_item_blacklist = bl.clearlag_item_blacklist;
+                repair_blacklist = bl.repair_blacklist;
+                dimension_command_blacklist = bl.dimension_command_blacklist;
             }
         } catch (JsonSyntaxException e) {
             e.printStackTrace();

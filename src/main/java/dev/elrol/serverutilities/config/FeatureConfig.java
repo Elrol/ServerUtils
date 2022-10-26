@@ -173,7 +173,7 @@ public class FeatureConfig {
             server.comment("This is the max distance (in blocks) that the jailed player can travel before being teleported back to the jail.");
             jailMaxDistance = server.defineInRange("max distance", 10, 0, Integer.MAX_VALUE);
 
-            server.comment("");
+            server.comment("Sets how jailed players are damaged. 0 will leave it normal, 1 will make the damage they take be 0, 2 will prevent them from taking any damage");
             jailProtection = server.defineInRange("player protection", 1, 0, 2);
         server.pop();
         Logger.log("Config has been initialized");

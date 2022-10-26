@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface IClaimManager {
 
-    dev.elrol.serverutilities.api.claims.IClaim getOrCreate(UUID uuid);
+    IClaim getOrCreate(UUID uuid);
     void claim(UUID uuid, BlockPos pos);
     void claim(ServerPlayer player);
 

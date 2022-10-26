@@ -7,53 +7,55 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
 import java.util.Objects;
 
 public class Location {
     public ResourceLocation world;
-    private BlockPos pos;
-    private float yaw = 0f;
-    private float pitch = 0f;
+    private final Vec3 position;
+    private float yaw;
+    private float pitch;
+
+    public Location(ServerPlayer player) {
+        this(player.getLevel().dimension().location(), player.position(), player.getYRot(), player.getXRot());
+    }
 
     public Location(BlockEntity entity){
-        this.world = entity.getLevel().dimension().location();
-        this.pos = entity.getBlockPos();
+        this(entity.getLevel().dimension().location(), entity.getBlockPos());
     }
 
     public Location(ResourceLocation dim, BlockPos pos) {
-        this.world = dim;
-        this.pos = pos;
+        this(dim, pos, 0.0f,0.0f);
     }
 
     public Location(Location loc) {
         this.world = loc.world;
-        this.pos = loc.pos;
+        this.position = loc.position;
         this.pitch = loc.pitch;
         this.yaw = loc.yaw;
     }
 
     public Location(Level world, BlockPos pos, float yaw, float pitch) {
-        this.world = world.dimension().location();
-        this.pos = pos;
-        this.pitch = pitch;
-        this.yaw = yaw;
+        this(world.dimension().location(), pos, yaw, pitch);
     }
 
     public Location(ResourceKey<Level> world, BlockPos pos, float yaw, float pitch) {
-        this.world = world.location();
-        this.pos = pos;
-        this.pitch = pitch;
-        this.yaw = yaw;
+        this(world.location(), pos, yaw, pitch);
     }
 
     public Location(ResourceLocation world, BlockPos pos, float yaw, float pitch) {
+        this(world, new Vec3(pos.getX(), pos.getY(), pos.getZ()), yaw, pitch);
+    }
+
+    public Location(ResourceLocation world, Vec3 position, float yaw, float pitch) {
         this.world = world;
-        this.pos = pos;
+        this.position = position;
         this.pitch = pitch;
         this.yaw = yaw;
     }
@@ -68,7 +70,7 @@ public class Location {
     }
 
     public BlockPos getBlockPos() {
-        return this.pos;
+        return new BlockPos(position);
     }
 
     public float getYaw() {
@@ -93,7 +95,7 @@ public class Location {
 
     public String toString() {
         // minecraft:overworld@[0,63,0](0.0,0.0)
-        return world.toString() + "@[" + pos.getX() + "," + pos.getY() + "," + pos.getZ() + "](" + yaw + "," + pitch + ")";
+        return world.toString() + "@[" + position.x() + "," + position.y() + "," + position.z() + "](" + yaw + "," + pitch + ")";
     }
 
     public static Location fromString(String loc) {
@@ -104,13 +106,13 @@ public class Location {
         String[] posLoc = loc2[0].split(",");
         String[] rotLoc = loc2[1].replace(")", "").split(",");
 
-        int x = Integer.parseInt(posLoc[0]);
-        int y = Integer.parseInt(posLoc[1]);
-        int z = Integer.parseInt(posLoc[2]);
+        double x = Double.parseDouble(posLoc[0]);
+        double y = Double.parseDouble(posLoc[1]);
+        double z = Double.parseDouble(posLoc[2]);
 
         return new Location(
             new ResourceLocation(rsloc[0], rsloc[1]),
-            new BlockPos(x,y,z),
+            new Vec3(x,y,z),
             Float.parseFloat(rotLoc[0]),
             Float.parseFloat(rotLoc[1])
         );
@@ -120,26 +122,31 @@ public class Location {
     public void setpitch(float pitch) { this.pitch = pitch; }
 
     public Location modX(int x) {
-        this.pos = new BlockPos(this.pos.getX() + x, this.pos.getY(), this.pos.getZ());
-        return this;
+        return new Location(world, position.add(x, 0, 0), yaw, pitch);
     }
 
     public Location modY(int y) {
-        this.pos = new BlockPos(this.pos.getX(), this.pos.getY() + y, this.pos.getZ());
-        return this;
+        return new Location(world, position.add(0, y, 0), yaw, pitch);
     }
 
     public Location modZ(int z) {
-        this.pos = new BlockPos(this.pos.getX(), this.pos.getY(), this.pos.getZ() + z);
-        return this;
+        return new Location(world, position.add(0, 0, z), yaw, pitch);
     }
 
     public BlockEntity getBlockEntity() {
-        return getLevelObj().getBlockEntity(pos);
+        return getLevelObj().getBlockEntity(getBlockPos());
     }
 
     public BlockState getBlockState() {
-        return getLevelObj().getBlockState(pos);
+        return getLevelObj().getBlockState(getBlockPos());
+    }
+
+    public boolean isSamePosition(Location loc) {
+        Vec3 locPos = loc.position;
+        boolean flag1 = locPos.x -0.5 < position.x && locPos.x +0.5 > position.x;
+        boolean flag2 = locPos.y -0.5 < position.y && locPos.y +0.5 > position.y;
+        boolean flag3 = locPos.z -0.5 < position.z && locPos.z +0.5 > position.z;
+        return flag1 && flag2 && flag3;
     }
 
     @Override
@@ -147,14 +154,14 @@ public class Location {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Location location = (Location) o;
-        return Float.compare(location.yaw, yaw) == 0 &&
-                Float.compare(location.pitch, pitch) == 0 &&
+        return Double.compare(location.yaw, yaw) == 0 &&
+                Double.compare(location.pitch, pitch) == 0 &&
                 world.equals(location.world) &&
-                pos.equals(location.pos);
+                position.equals(location.position);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(world, pos, yaw, pitch);
+        return Objects.hash(world, position, yaw, pitch);
     }
 }

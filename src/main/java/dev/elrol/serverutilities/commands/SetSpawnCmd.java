@@ -1,5 +1,8 @@
 package dev.elrol.serverutilities.commands;
 
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.elrol.serverutilities.Main;
 import dev.elrol.serverutilities.api.data.IPlayerData;
 import dev.elrol.serverutilities.api.data.Location;
@@ -9,10 +12,6 @@ import dev.elrol.serverutilities.libs.Logger;
 import dev.elrol.serverutilities.libs.Methods;
 import dev.elrol.serverutilities.libs.text.Errs;
 import dev.elrol.serverutilities.libs.text.Msgs;
-import dev.elrol.serverutilities.libs.text.TextUtils;
-import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerPlayer;
@@ -71,7 +70,7 @@ extends _CmdBase {
 
         @Override
         public void run() {
-            Location loc = Methods.getPlayerLocation(this.player);
+            Location loc = new Location(this.player);
             Logger.debug(loc.toString());
             Main.serverData.setSpawn(loc);
             Main.textUtils.msg(this.player, Msgs.setSpawn.get());

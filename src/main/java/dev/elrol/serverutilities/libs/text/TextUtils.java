@@ -1,5 +1,7 @@
 package dev.elrol.serverutilities.libs.text;
 
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.elrol.serverutilities.Main;
 import dev.elrol.serverutilities.api.IElrolAPI;
 import dev.elrol.serverutilities.api.data.IPlayerData;
@@ -8,17 +10,42 @@ import dev.elrol.serverutilities.config.FeatureConfig;
 import dev.elrol.serverutilities.libs.Logger;
 import dev.elrol.serverutilities.libs.Methods;
 import dev.elrol.serverutilities.libs.ModInfo;
-import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.*;
 
 public class TextUtils implements ITextUtils {
+
+    @Override
+    public Component formatComponent(String input) {
+        if(!input.contains("&")) return Component.literal(input);
+        String[] split = input.split("&");
+        MutableComponent output = Component.empty();
+        List<ChatFormatting> formats = new ArrayList<>();
+        for(String s : split) {
+            if(s.isEmpty()) continue;
+            char code = s.charAt(0);
+            ChatFormatting format = ChatFormatting.getByCode(code);
+            if(format != null) formats.add(format);
+
+            if(s.length() > 1) {
+                Style style = Style.EMPTY;
+                MutableComponent text = Component.literal(s.substring(1));
+                for (ChatFormatting f : formats) {
+                    style = style.applyFormat(f);
+                }
+                text.setStyle(style);
+                output.append(text);
+                formats.clear();
+            }
+        }
+        return output;
+    }
 
     @Override
     public String ticksToTime(long ticks) {

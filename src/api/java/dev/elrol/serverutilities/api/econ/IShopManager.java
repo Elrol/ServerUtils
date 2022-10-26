@@ -15,17 +15,17 @@ public interface IShopManager {
     String getFileName();
     String getTag();
 
-    void registerShop(Location loc, dev.elrol.serverutilities.api.econ.AbstractShop shop);
+    void registerShop(Location loc, AbstractShop shop);
 
-    Map<Location, dev.elrol.serverutilities.api.econ.AbstractShop> getPlayerShops(UUID uuid);
+    Map<Location, AbstractShop> getPlayerShops(UUID uuid);
 
     boolean isShop(Location location);
 
-    dev.elrol.serverutilities.api.econ.AbstractShop getShop(Location loc);
+    AbstractShop getShop(Location loc);
 
     void removeShop(Location loc);
 
-    dev.elrol.serverutilities.api.econ.AbstractShop parseShop(SignBlockEntity sign, Component[] messages);
+    AbstractShop parseShop(SignBlockEntity sign, Component[] messages);
 
     void save();
 

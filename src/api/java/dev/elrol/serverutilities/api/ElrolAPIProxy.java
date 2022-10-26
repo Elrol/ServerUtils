@@ -4,7 +4,7 @@ class ElrolAPIProxy {
 
     private static final ElrolAPIProxy proxy = new ElrolAPIProxy();
 
-    private dev.elrol.serverutilities.api.IElrolAPI apiInstance;
+    private IElrolAPI apiInstance;
 
     private ElrolAPIProxy() {}
 
@@ -12,11 +12,11 @@ class ElrolAPIProxy {
         return proxy;
     }
 
-    public dev.elrol.serverutilities.api.IElrolAPI getApi() {
+    public IElrolAPI getApi() {
         return apiInstance;
     }
 
-    public void setApi(final dev.elrol.serverutilities.api.IElrolAPI api) {
+    public void setApi(final IElrolAPI api) {
         apiInstance = api;
     }
 

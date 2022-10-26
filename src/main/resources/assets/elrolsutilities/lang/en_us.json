@@ -246,5 +246,7 @@
 	"serverutils.server.msg.role-added": 			"You have added the %s role from the %s server to the %s rank.",
 	"serverutils.server.msg.set_model": 			"Set %s's CustomModelData to: %s",
 	"serverutils.server.msg.cleared_model": 		"Cleared %s's CustomModelData",
-	"serverutils.server.msg.set_item_name": 		"Set items name to %s"
+	"serverutils.server.msg.set_item_name": 		"Set items name to %s",
+	"serverutils.command.err.not-enough-claims": 	"You need to have %s more claim blocks to claim this area.",
+	"serverutils.command.err.cant-use-cmd-here":	"That command is not allowed in this dimension."
 }

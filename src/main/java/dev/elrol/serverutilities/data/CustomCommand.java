@@ -1,15 +1,17 @@
 package dev.elrol.serverutilities.data;
 
-import dev.elrol.serverutilities.Main;
-import dev.elrol.serverutilities.libs.CustomCommandTypes;
-import dev.elrol.serverutilities.libs.Methods;
-import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import dev.elrol.serverutilities.Main;
+import dev.elrol.serverutilities.api.IElrolAPI;
+import dev.elrol.serverutilities.api.data.IPlayerData;
+import dev.elrol.serverutilities.config.FeatureConfig;
+import dev.elrol.serverutilities.libs.CustomCommandTypes;
+import dev.elrol.serverutilities.libs.Methods;
+import dev.elrol.serverutilities.libs.text.Errs;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -21,13 +23,12 @@ import java.util.concurrent.atomic.AtomicReference;
 public class CustomCommand {
 
     String name;
-    int cooldown = 0;
-    int delay = 0;
+    int cost = 0;
     List<String> cmds = new ArrayList<>();
     Map<String, CustomCommandTypes> argMap = new HashMap<>();
 
-    public CustomCommand() {
-
+    public CustomCommand(String rootNode) {
+        name = rootNode;
     }
 
     public ArgumentBuilder<CommandSourceStack,?> getCommand() {
@@ -45,6 +46,21 @@ public class CustomCommand {
     }
 
     private int execute(CommandContext<CommandSourceStack> c) {
+        ServerPlayer executingPlayer = c.getSource().getPlayer();
+
+        if(executingPlayer != null) {
+            IPlayerData data = IElrolAPI.getInstance().getPlayerDatabase().get(executingPlayer.getUUID());
+            if (Methods.hasCooldown(executingPlayer, this.name)) {
+                return 0;
+            }
+            if(FeatureConfig.enable_economy.get() && this.cost > 0){
+                if(!data.charge(this.cost)){
+                    Main.textUtils.err(executingPlayer, Errs.not_enough_funds(this.cost, data.getBal()));
+                    return 0;
+                }
+            }
+        }
+
         Map<String, String> args = new HashMap<>();
         for (String arg : argMap.keySet()) {
             CustomCommandTypes type = argMap.get(arg);

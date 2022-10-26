@@ -3,14 +3,11 @@ package dev.elrol.serverutilities.events;
 import dev.elrol.serverutilities.Main;
 import dev.elrol.serverutilities.api.data.IPlayerData;
 import dev.elrol.serverutilities.config.FeatureConfig;
-import dev.elrol.serverutilities.data.CommandDelay;
-import dev.elrol.serverutilities.data.PlayerDatabase;
-import dev.elrol.serverutilities.data.ServerData;
-import dev.elrol.serverutilities.data.TpRequest;
+import dev.elrol.serverutilities.data.*;
 import dev.elrol.serverutilities.econ.averon.AveronShopManager;
 import dev.elrol.serverutilities.econ.chestshop.ChestShopManager;
 import dev.elrol.serverutilities.econ.chestshop.ChestShopType;
-import dev.elrol.serverutilities.init.CommandRegistry;
+import dev.elrol.serverutilities.init.Blacklists;
 import dev.elrol.serverutilities.init.Ranks;
 import dev.elrol.serverutilities.init.TimerInit;
 import dev.elrol.serverutilities.libs.JsonMethod;
@@ -31,7 +28,9 @@ public class ServerLifecycleHandler {
     public void serverStarting(ServerStartingEvent event) {
         Main.database = new PlayerDatabase();
         Main.mcServer = event.getServer();
+        Main.dimModes = DimensionGamemodes.load();
         Main.patreonList.init();
+        Main.blacklists = Blacklists.load();
         Main.isCheatMode = Main.mcServer.getWorldData().getAllowCommands();
         Main.dir = Methods.getLevelDir(Main.mcServer.getWorldData().getLevelName());
 

@@ -7,7 +7,7 @@ import java.util.function.Function;
 public interface IClaimSettingEntry {
 
     String getName();
-    dev.elrol.serverutilities.api.claims.IClaimSetting create(Function<BlockPos, Boolean> delegate);
-    dev.elrol.serverutilities.api.claims.IClaimSetting load(String json);
+    IClaimSetting create(Function<BlockPos, Boolean> delegate);
+    IClaimSetting load(String json);
 
 }

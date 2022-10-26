@@ -1,5 +1,6 @@
 package dev.elrol.serverutilities.libs;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.elrol.serverutilities.Main;
 import dev.elrol.serverutilities.api.data.IPlayerData;
 import dev.elrol.serverutilities.api.enums.ClaimFlagKeys;
@@ -7,8 +8,6 @@ import dev.elrol.serverutilities.api.perms.IPermission;
 import dev.elrol.serverutilities.api.perms.IPermissionHandler;
 import dev.elrol.serverutilities.data.ClaimBlock;
 import dev.elrol.serverutilities.libs.text.Errs;
-import dev.elrol.serverutilities.libs.text.TextUtils;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -19,6 +18,10 @@ import java.util.Map;
 import java.util.UUID;
 
 public class PermissionHandler implements IPermissionHandler {
+
+    public void addPermission(String perm) {
+        Main.permRegistry.add(perm);
+    }
 
     public boolean hasPermission(UUID uuid, String perm) {
         IPlayerData data = Main.database.get(uuid);

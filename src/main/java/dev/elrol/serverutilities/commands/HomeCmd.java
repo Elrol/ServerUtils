@@ -1,5 +1,9 @@
 package dev.elrol.serverutilities.commands;
 
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.elrol.serverutilities.Main;
 import dev.elrol.serverutilities.api.data.IPlayerData;
 import dev.elrol.serverutilities.api.data.Location;
@@ -9,11 +13,6 @@ import dev.elrol.serverutilities.libs.Logger;
 import dev.elrol.serverutilities.libs.Methods;
 import dev.elrol.serverutilities.libs.text.Errs;
 import dev.elrol.serverutilities.libs.text.Msgs;
-import dev.elrol.serverutilities.libs.text.TextUtils;
-import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.StringArgumentType;
-import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerPlayer;
@@ -69,7 +68,7 @@ extends _CmdBase {
                 return 0;
             }
         }
-        Location loc = Methods.getPlayerLocation(player);
+        Location loc = new Location(player);
         Location home = data.getHomes().get(name);
         CommandDelay.init(this, player, new CommandRunnable(player, loc, home, name), true);
         return 1;

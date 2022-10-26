@@ -5,7 +5,6 @@ import dev.elrol.serverutilities.api.IElrolAPI;
 import dev.elrol.serverutilities.api.data.IPlayerData;
 import dev.elrol.serverutilities.config.FeatureConfig;
 import dev.elrol.serverutilities.libs.text.Errs;
-import dev.elrol.serverutilities.libs.text.TextUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.ForgeHooks;
@@ -15,7 +14,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ChatEventHandler {
     @SubscribeEvent(priority=EventPriority.LOWEST)
-    public void onPlayerChat(ServerChatEvent event) {
+    public void onPlayerChat(ServerChatEvent.Submitted event) {
         int muteTime;
         ServerPlayer player = event.getPlayer();
         IPlayerData data = Main.database.get(player.getUUID());

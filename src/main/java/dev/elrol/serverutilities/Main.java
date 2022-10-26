@@ -46,7 +46,7 @@ public class Main {
     public static ICommandRegistry commandRegistry;
     public static ITextUtils textUtils = new TextUtils();
     public static PermRegistry permRegistry = new PermRegistry();
-    public static Blacklists blacklists = Blacklists.load();
+    public static Blacklists blacklists;
     public static DefaultTitles defaultTitles = new DefaultTitles();
     public static DiscordBot bot = DiscordBot.load();
     public static Votifier vote = new Votifier();
@@ -56,6 +56,7 @@ public class Main {
     public static Map<UUID, CommandDelay> commandDelays;
     public static Map<UUID, Map<String, CommandCooldown>> commandCooldowns;
     public static Map<String, Kit> kitMap;
+    public static DimensionGamemodes dimModes;
 
     static {
         IElrolAPI.setInstance(new ElrolApi());

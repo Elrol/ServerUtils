@@ -8,10 +8,10 @@ import dev.elrol.serverutilities.libs.Logger;
 import dev.elrol.serverutilities.libs.Methods;
 import dev.elrol.serverutilities.libs.ModInfo;
 import dev.elrol.serverutilities.libs.text.Msgs;
-import dev.elrol.serverutilities.libs.text.TextUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -78,6 +78,8 @@ public class OnPlayerJoinHandler {
             player.onUpdateAbilities();
             data.update();
             data.checkPerms();
+            ResourceLocation dim = player.level.dimension().location();
+            player.setGameMode(Main.dimModes.getMode(dim));
             ServerData serverdata = Main.serverData;
             if(!serverdata.getMotd().isEmpty())
                 player.sendSystemMessage(Component.literal(serverdata.getMotd()));

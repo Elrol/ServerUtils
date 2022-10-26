@@ -160,4 +160,6 @@ public class Msgs {
     public static Msg voteLinks = new Msg("serverutils.server.msg.vote-links", "Vote Links:");
     public static Msg redeemVotes = new Msg("serverutils.server.msg.redeem-votes", "You have %s vote rewards remaining. Use /vote redeem to collect.");
     public static Msg roleAdded = new Msg("serverutils.server.msg.role-added", "You have added the %s role from the %s server to the %s rank.");
+
+    public static Msg chunks_claimed = new Msg("serverutils.server.msg.chunks-claimed","You have claimed %s chunks for a total of %s!");
 }

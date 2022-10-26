@@ -1,5 +1,6 @@
 package dev.elrol.serverutilities.data;
 
+import com.mojang.authlib.GameProfile;
 import dev.elrol.serverutilities.Main;
 import dev.elrol.serverutilities.api.IElrolAPI;
 import dev.elrol.serverutilities.api.claims.IClaimSetting;
@@ -12,8 +13,6 @@ import dev.elrol.serverutilities.libs.Logger;
 import dev.elrol.serverutilities.libs.Methods;
 import dev.elrol.serverutilities.libs.ModInfo;
 import dev.elrol.serverutilities.libs.text.Msgs;
-import dev.elrol.serverutilities.libs.text.TextUtils;
-import com.mojang.authlib.GameProfile;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
@@ -275,22 +274,26 @@ public class PlayerData implements IPlayerData {
     }
 
     public void checkPerms() {
-        tempMaxClaims = 0;
-        tempMaxLoadedClaims = 0;
         Main.getLogger().debug("Checking Perms");
         getPerms().forEach(this::checkPerm);
         if(ModList.get().isLoaded(ModInfo.Constants.ftbchunkId)) {
             Optional<GameProfile> p = Main.mcServer.getProfileCache().get(uuid);
             p.ifPresent(profile -> {
-                if (maxClaims != tempMaxClaims)
+                if (maxClaims < tempMaxClaims) {
                     Main.mcServer.getCommands().performPrefixedCommand(Main.mcServer.createCommandSourceStack(), "ftbchunks admin extra_claim_chunks " + profile.getName() + " set " + tempMaxClaims);
-                if (maxLoadedClaims != tempMaxLoadedClaims)
+                    maxClaims = tempMaxClaims;
+                    tempMaxClaims = 0;
+                }
+                if (maxLoadedClaims < tempMaxLoadedClaims) {
                     Main.mcServer.getCommands().performPrefixedCommand(Main.mcServer.createCommandSourceStack(), "ftbchunks admin extra_force_load_chunks " + profile.getName() + " set " + tempMaxLoadedClaims);
+                    maxLoadedClaims = tempMaxLoadedClaims;
+                }
             });
 
         }
-        maxClaims = tempMaxClaims;
-        maxLoadedClaims = tempMaxLoadedClaims;
+        if(maxClaims < tempMaxClaims) {
+            maxClaims = tempMaxClaims;
+        }
         save();
     }
 

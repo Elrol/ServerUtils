@@ -2,11 +2,11 @@ package dev.elrol.serverutilities.data;
 
 import dev.elrol.serverutilities.Main;
 import dev.elrol.serverutilities.api.data.IPlayerData;
+import dev.elrol.serverutilities.api.data.Location;
 import dev.elrol.serverutilities.config.CommandConfig;
 import dev.elrol.serverutilities.libs.Methods;
 import dev.elrol.serverutilities.libs.text.Errs;
 import dev.elrol.serverutilities.libs.text.Msgs;
-import dev.elrol.serverutilities.libs.text.TextUtils;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.io.Serial;
@@ -49,9 +49,9 @@ public class TpRequest implements Runnable, Serializable, dev.elrol.serverutilit
         Main.textUtils.msg(t, Msgs.acceptedTp.get(Methods.getDisplayName(r)));
         Main.textUtils.msg(r, Msgs.acceptedYourTp.get(Methods.getDisplayName(t)));
         if (this.tpHere) {
-            CommandDelay.init(t, CommandConfig.tpa_tp_time.get(), () -> Methods.teleport(t, Methods.getPlayerLocation(r)), true);
+            CommandDelay.init(t, CommandConfig.tpa_tp_time.get(), () -> Methods.teleport(t, new Location(r)), true);
         } else {
-            CommandDelay.init(r, CommandConfig.tpa_tp_time.get(), () -> Methods.teleport(r, Methods.getPlayerLocation(t)), true);
+            CommandDelay.init(r, CommandConfig.tpa_tp_time.get(), () -> Methods.teleport(r, new Location(t)), true);
         }
         this.cancel();
     }

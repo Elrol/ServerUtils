@@ -1,14 +1,12 @@
 package dev.elrol.serverutilities.commands;
 
-import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.context.CommandContext;
-import net.minecraft.commands.CommandSourceStack;
+import dev.elrol.serverutilities.api.commands.ICmdBase;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class _CmdBase implements dev.elrol.serverutilities.api.commands.ICmdBase {
+public abstract class _CmdBase implements ICmdBase {
     public String name = "";
     public List<String> aliases = new ArrayList<>();
     public int delay;

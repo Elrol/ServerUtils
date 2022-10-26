@@ -1,5 +1,8 @@
 package dev.elrol.serverutilities.commands;
 
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.elrol.serverutilities.Main;
 import dev.elrol.serverutilities.api.data.IPlayerData;
 import dev.elrol.serverutilities.api.data.Location;
@@ -9,10 +12,6 @@ import dev.elrol.serverutilities.libs.Logger;
 import dev.elrol.serverutilities.libs.Methods;
 import dev.elrol.serverutilities.libs.text.Errs;
 import dev.elrol.serverutilities.libs.text.Msgs;
-import dev.elrol.serverutilities.libs.text.TextUtils;
-import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
@@ -65,7 +64,7 @@ public class SpawnCmd
             BlockPos spawn = Main.mcServer.overworld().getSharedSpawnPos();
             newLoc = new Location(Main.mcServer.overworld().dimension(), spawn, 0.0f, 0.0f);
         }
-        Location loc = Methods.getPlayerLocation(player);
+        Location loc = new Location(player);
         IPlayerData data = Main.database.get(player.getUUID());
         if (FeatureConfig.enable_economy.get() && this.cost > 0) {
             if (!data.charge(this.cost)) {

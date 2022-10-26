@@ -11,6 +11,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public interface ITextUtils {
+
+    Component formatComponent(String input);
+
     String ticksToTime(long ticks);
 
     void staffChat(String message, UUID sender);

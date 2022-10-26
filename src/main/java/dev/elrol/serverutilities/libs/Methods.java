@@ -8,6 +8,7 @@ import dev.elrol.serverutilities.api.data.Location;
 import dev.elrol.serverutilities.config.Configs;
 import dev.elrol.serverutilities.config.FeatureConfig;
 import dev.elrol.serverutilities.data.CommandCooldown;
+import dev.elrol.serverutilities.data.DimensionGamemodes;
 import dev.elrol.serverutilities.events.ChunkHandler;
 import dev.elrol.serverutilities.init.Ranks;
 import dev.elrol.serverutilities.libs.text.Errs;
@@ -36,7 +37,6 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -170,7 +170,7 @@ public class Methods {
     public static void teleport(ServerPlayer player, Location loc, boolean track) {
         if(track) {
             IPlayerData data = Main.database.get(player.getUUID());
-            data.setPrevLoc(Methods.getPlayerLocation(player));
+            data.setPrevLoc(new Location(player));
             data.save();
         }
         ServerLevel world = Main.mcServer.getLevel(loc.getLevel());
@@ -182,9 +182,7 @@ public class Methods {
     }
 
     public static boolean teleport(ServerPlayer player, Location loc, Location newLoc) {
-        BlockPos pos = loc.getBlockPos();
-        BlockPos blockPos = new BlockPos(player.position());
-        if(pos.equals(blockPos)){
+        if(loc.isSamePosition(new Location(player))){
             teleport(player, newLoc);
             return true;
         } else {
@@ -204,13 +202,6 @@ public class Methods {
                 ChunkPos chunkpos = new ChunkPos(new BlockPos(x, y, z));
                 worldIn.getChunkSource().addRegionTicket(TicketType.POST_TELEPORT, chunkpos, 1, entityIn.getId());
                 player.teleportTo(worldIn,x,y,z,yaw,pitch);
-                /*
-                if (worldIn == entityIn.level) {
-                    player.connection.teleport(x, y, z, yaw, pitch, Collections.singleton(ClientboundPlayerPositionPacket.RelativeArgument.X));
-                } else {
-                    player.teleportTo(worldIn, x, y, z, yaw, pitch);
-                }
-                */
                 entityIn.setYHeadRot(yaw);
                 return;
             } else {
@@ -247,11 +238,6 @@ public class Methods {
         }
     }
 
-    public static Location getPlayerLocation(ServerPlayer player) {
-        Vec3 pos = player.position().add(0.0, 0.5, 0.0);
-        return new Location(player.level.dimension(), new BlockPos(pos), player.getYRot(), player.getXRot());
-    }
-
     public static ChunkPos getChunk(ServerPlayer player){
         return new ChunkPos(new BlockPos(player.position()));
     }
@@ -260,10 +246,10 @@ public class Methods {
         Location randLoc = null;
         Random rand = new Random();
         for (int a = 0; a < 200; ++a) {
-            Logger.log("Log1");
             BlockPos tpPos = null;
-            int x = (rand.nextBoolean() ? 1 : -1) * (min + rand.nextInt(max - min));
-            int z = (rand.nextBoolean() ? 1 : -1) * (min + rand.nextInt(max - min));
+            int randX = rand.nextInt(max);
+            int x = (rand.nextBoolean() ? 1 : -1) * randX;
+            int z = (rand.nextBoolean() ? 1 : -1) * (randX < min ? min + rand.nextInt(max - min) : rand.nextInt(max));
             for(int y = 128; y > 0; y--) {
                 BlockPos pos = new BlockPos(x, y, z);
                 if(player.level.getBlockState(pos).getBlock().equals(Blocks.BEDROCK)) continue;
@@ -277,13 +263,11 @@ public class Methods {
                 Logger.err("RTP Pos was not valid");
                 continue;
             } else {
-                Logger.err("06");
                 randLoc = new Location(player.level.dimension(), tpPos.offset(0, 1,0), 0.0f, 0.0f);
                 Logger.log(player.level.getBlockState(tpPos).getBlock().toString());
                 Methods.teleport(player, randLoc);
                 Main.textUtils.msg(player, Msgs.rtp.get(randLoc.getBlockPos().toString()));
             }
-            Logger.log("Log8");
             return;
         }
         Main.textUtils.err(player, Errs.rtp_error());
@@ -381,6 +365,7 @@ public class Methods {
         Configs.reload();
         Main.bot.shutdown();
         Main.bot.init();
+        Main.dimModes = DimensionGamemodes.load();
         if(FeatureConfig.votingEnabled.get())
             Main.vote.reload();
     }
