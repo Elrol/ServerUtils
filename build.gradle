@@ -99,7 +99,7 @@ configurations {
 
 minecraft.runs.all {
     lazyToken('minecraft_classpath') {
-        configurations.library.copyRecursive().resolve().collect { it.absolutePath }.join(File.pathSeparator)
+        configurations.library.copyRecursive().resolve().collect { it.absolutePath }.unique().join(File.pathSeparator)
     }
 }
 
@@ -114,6 +114,7 @@ dependencies {
         exclude module: 'opus-java'
         exclude module: 'slf4j-api'
         exclude module: 'annotations'
+        exclude module: 'jsr305'
     }
 }
 
