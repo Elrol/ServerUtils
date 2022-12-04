@@ -5,8 +5,6 @@ import dev.elrol.serverutilities.config.FeatureConfig;
 import dev.elrol.serverutilities.libs.Logger;
 import dev.elrol.serverutilities.libs.Methods;
 import dev.elrol.serverutilities.libs.text.Msgs;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Style;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -24,9 +22,6 @@ public class TimerInit {
     private static ScheduledThreadPoolExecutor EXECUTOR = null;
     private static final int EXECUTOR_SHUTDOWN_TIMEOUT = 10;
     private static final TimeUnit EXECUTOR_SHUTDOWN_TIME_UNIT = TimeUnit.SECONDS;
-
-    //TODO: Stop using magic characters
-    private static final Style CLEARLAG_STYLE = Style.EMPTY.withColor(ChatFormatting.DARK_GRAY).withStrikethrough(true);
 
     private static final Runnable secondTask = () -> {
         //Logger.debug("Second Task");
@@ -63,7 +58,7 @@ public class TimerInit {
 
     public static void init() {
         if(Status != TimerStatus.STOPPED)
-            Main.getLogger().warn("Attempting to initialize a TimerUtil in the {} State", Status.name());
+            Main.getLogger().warn("Attempting to initialize a TimerInit in the {} State", Status.name());
         Status = TimerStatus.INITIALIZING;
         EXECUTOR = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(1);
         EXECUTOR.scheduleAtFixedRate(secondTask, 1, 1, TimeUnit.SECONDS);
@@ -79,18 +74,18 @@ public class TimerInit {
 
     public static void shutdown() {
         if(Status != TimerStatus.RUNNING)
-            Main.getLogger().warn("Attempting to stop a TimerUtil in the {} State", Status.name());
+            Main.getLogger().warn("Attempting to stop a TimerInit in the {} State", Status.name());
         Status = TimerStatus.STOPPING;
         try {
             EXECUTOR.shutdownNow();
             if (EXECUTOR.awaitTermination(EXECUTOR_SHUTDOWN_TIMEOUT, EXECUTOR_SHUTDOWN_TIME_UNIT)) {
                 Status = TimerStatus.STOPPED;
             } else {
-                Main.getLogger().warn("TimerUtil failed to shut down within {} {}", EXECUTOR_SHUTDOWN_TIMEOUT, EXECUTOR_SHUTDOWN_TIME_UNIT.name());
+                Main.getLogger().warn("TimerInit failed to shut down within {} {}", EXECUTOR_SHUTDOWN_TIMEOUT, EXECUTOR_SHUTDOWN_TIME_UNIT.name());
             }
         }
         catch (InterruptedException e) {
-            Main.getLogger().warn("TimerUtil shutdown was interrupted and may not have completed");
+            Main.getLogger().warn("TimerInit shutdown was interrupted and may not have completed");
         }
     }
 }
