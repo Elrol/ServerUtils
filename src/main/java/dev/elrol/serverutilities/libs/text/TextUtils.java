@@ -152,6 +152,25 @@ public class TextUtils implements ITextUtils {
 
     @Override
     public Component formatChat(UUID uuid, String msg){
+        MutableComponent text = (MutableComponent)formatUsername(uuid);
+        text.append(Main.textUtils.formatString(": "));
+        if (FeatureConfig.color_chat_enable.get()) {
+            if (IElrolAPI.getInstance().getPermissionHandler().hasPermission(uuid, FeatureConfig.color_chat_perm.get())) {
+                Logger.debug("Color chat enabled");
+                text.append(Main.textUtils.format(msg));
+            } else {
+                Logger.debug("Doesnt have permission to use color chat");
+                text.append(msg);
+            }
+        } else {
+            Logger.debug("Color chat disabled");
+            text.append(msg);
+        }
+        return text;
+    }
+
+    @Override
+    public Component formatUsername(UUID uuid) {
         IPlayerData data = Main.database.get(uuid);
         MutableComponent text = Component.literal("");
         StringBuilder string = new StringBuilder();
@@ -171,20 +190,7 @@ public class TextUtils implements ITextUtils {
         } else {
             string.append("&r");
         }
-        string.append(": ");
-        text.append(Main.textUtils.formatString(string.toString()));
-        if (FeatureConfig.color_chat_enable.get()) {
-            if (IElrolAPI.getInstance().getPermissionHandler().hasPermission(uuid, FeatureConfig.color_chat_perm.get())) {
-                Logger.debug("Color chat enabled");
-                text.append(Main.textUtils.format(msg));
-            } else {
-                Logger.debug("Doesnt have permission to use color chat");
-                text.append(msg);
-            }
-        } else {
-            Logger.debug("Color chat disabled");
-            text.append(msg);
-        }
+        text.append(formatString(string.toString()));
         return text;
     }
 
