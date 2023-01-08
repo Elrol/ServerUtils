@@ -119,7 +119,7 @@ extends _CmdBase {
             return 0;
         }
         Main.serverData.addJailCell(name, new Location(player));
-        Main.textUtils.msg(c.getSource(), Msgs.cell_added.get(String.valueOf(Main.serverData.getJail(name).cells.size()), name));
+        Main.textUtils.msg(c.getSource(), Msgs.cell_added.get(String.valueOf(Main.serverData.getJail(name).cells.size() - 1), name));
         return 1;
     }
 
