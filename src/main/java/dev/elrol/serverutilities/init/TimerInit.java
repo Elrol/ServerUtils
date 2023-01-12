@@ -5,15 +5,23 @@ import dev.elrol.serverutilities.config.FeatureConfig;
 import dev.elrol.serverutilities.libs.Logger;
 import dev.elrol.serverutilities.libs.Methods;
 import dev.elrol.serverutilities.libs.text.Msgs;
-import dev.elrol.serverutilities.libs.text.TextUtils;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class TimerInit {
+    private enum TimerStatus {
+        STOPPED,
+        INITIALIZING,
+        RUNNING,
+        STOPPING,
+    }
 
-    private static final ScheduledThreadPoolExecutor EXECUTOR = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(1);
+    private static TimerStatus Status = TimerStatus.STOPPED;
+    private static ScheduledThreadPoolExecutor EXECUTOR = null;
+    private static final int EXECUTOR_SHUTDOWN_TIMEOUT = 10;
+    private static final TimeUnit EXECUTOR_SHUTDOWN_TIME_UNIT = TimeUnit.SECONDS;
 
     private static final Runnable secondTask = () -> {
         //Logger.debug("Second Task");
@@ -49,17 +57,35 @@ public class TimerInit {
     };
 
     public static void init() {
+        if(Status != TimerStatus.STOPPED)
+            Main.getLogger().warn("Attempting to initialize a TimerInit in the {} State", Status.name());
+        Status = TimerStatus.INITIALIZING;
+        EXECUTOR = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(1);
         EXECUTOR.scheduleAtFixedRate(secondTask, 1, 1, TimeUnit.SECONDS);
         EXECUTOR.scheduleAtFixedRate(minuteTask, 1, 1, TimeUnit.MINUTES);
         EXECUTOR.scheduleAtFixedRate(fiveMinuteTask, 5, 5, TimeUnit.MINUTES);
 
-        if(!FeatureConfig.auto_clearlag_enabled.get()) return;
-        int freq = FeatureConfig.clearlag_frequency.get();
-        EXECUTOR.scheduleAtFixedRate(clearlagTask, freq, freq, TimeUnit.MINUTES);
+        if(FeatureConfig.auto_clearlag_enabled.get()) {
+            int freq = FeatureConfig.clearlag_frequency.get();
+            EXECUTOR.scheduleAtFixedRate(clearlagTask, freq, freq, TimeUnit.MINUTES);
+        }
+        Status = TimerStatus.RUNNING;
     }
 
     public static void shutdown() {
-        EXECUTOR.shutdownNow();
+        if(Status != TimerStatus.RUNNING)
+            Main.getLogger().warn("Attempting to stop a TimerInit in the {} State", Status.name());
+        Status = TimerStatus.STOPPING;
+        try {
+            EXECUTOR.shutdownNow();
+            if (EXECUTOR.awaitTermination(EXECUTOR_SHUTDOWN_TIMEOUT, EXECUTOR_SHUTDOWN_TIME_UNIT)) {
+                Status = TimerStatus.STOPPED;
+            } else {
+                Main.getLogger().warn("TimerInit failed to shut down within {} {}", EXECUTOR_SHUTDOWN_TIMEOUT, EXECUTOR_SHUTDOWN_TIME_UNIT.name());
+            }
+        }
+        catch (InterruptedException e) {
+            Main.getLogger().warn("TimerInit shutdown was interrupted and may not have completed");
+        }
     }
-
 }
