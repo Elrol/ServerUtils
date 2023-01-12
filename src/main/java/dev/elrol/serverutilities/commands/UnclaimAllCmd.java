@@ -6,7 +6,6 @@ import dev.elrol.serverutilities.config.FeatureConfig;
 import dev.elrol.serverutilities.data.CommandDelay;
 import dev.elrol.serverutilities.libs.text.Errs;
 import dev.elrol.serverutilities.libs.text.Msgs;
-import dev.elrol.serverutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -27,8 +26,8 @@ public class UnclaimAllCmd extends _CmdBase {
     public void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         for (String a : aliases) {
             if(name.isEmpty()) name = a;
-                dispatcher.register((Commands.literal(a)
-                        .executes(this::execute))
+                dispatcher.register(Commands.literal(a)
+                        .executes(this::execute)
                         .then(Commands.argument("player", EntityArgument.player())
                                 .executes(c -> execute(c, EntityArgument.getPlayer(c, "player")))));
         }

@@ -28,8 +28,8 @@ public class UnclaimCmd extends _CmdBase {
     public void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         for (String a : aliases) {
             if(name.isEmpty()) name = a;
-                dispatcher.register((Commands.literal(a)
-                        .executes(this::execute)));
+                dispatcher.register(Commands.literal(a)
+                        .executes(this::execute));
         }
     }
 

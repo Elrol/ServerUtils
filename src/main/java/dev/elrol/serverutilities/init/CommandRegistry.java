@@ -71,7 +71,7 @@ public class CommandRegistry implements ICommandRegistry {
     public static TpaHereCmd tpaHereCmd = new TpaHereCmd(CommandConfig.tp_here.delay, CommandConfig.tp_here.cooldown, CommandConfig.tp_here.aliases, CommandConfig.tp_here.cost);
     public static TrustCmd trustCmd = new TrustCmd(CommandConfig.trust.delay, CommandConfig.trust.cooldown, CommandConfig.trust.aliases, CommandConfig.trust.cost);
     public static UnclaimCmd unclaimCmd = new UnclaimCmd(CommandConfig.unclaim.delay, CommandConfig.unclaim.cooldown, CommandConfig.unclaim.aliases, CommandConfig.unclaim.cost);
-    public static UnclaimCmd unclaimAllCmd = new UnclaimCmd(CommandConfig.unclaimAll.delay, CommandConfig.unclaimAll.cooldown, CommandConfig.unclaimAll.aliases, CommandConfig.unclaimAll.cost);
+    public static UnclaimAllCmd unclaimAllCmd = new UnclaimAllCmd(CommandConfig.unclaimAll.delay, CommandConfig.unclaimAll.cooldown, CommandConfig.unclaimAll.aliases, CommandConfig.unclaimAll.cost);
     public static UnjailCmd unjailCmd = new UnjailCmd(CommandConfig.unjail.delay, CommandConfig.unjail.cooldown, CommandConfig.unjail.aliases, CommandConfig.unjail.cost);
     public static UntrustCmd untrustCmd = new UntrustCmd(CommandConfig.untrust.delay, CommandConfig.untrust.cooldown, CommandConfig.untrust.aliases, CommandConfig.untrust.cost);
     public static VoteCmd voteCmd = new VoteCmd(CommandConfig.vote.delay, CommandConfig.vote.cooldown, CommandConfig.vote.aliases, CommandConfig.vote.cost);
