@@ -1,10 +1,14 @@
 package dev.elrol.serverutilities.init;
 
+import dev.elrol.serverutilities.Main;
+import dev.elrol.serverutilities.api.data.IPlayerData;
+import dev.elrol.serverutilities.api.data.IRank;
 import dev.elrol.serverutilities.data.Rank;
 import dev.elrol.serverutilities.libs.JsonMethod;
 import dev.elrol.serverutilities.libs.Logger;
 import dev.elrol.serverutilities.libs.ModInfo;
 import dev.elrol.serverutilities.libs.Permissions;
+import net.minecraft.server.level.ServerPlayer;
 
 import java.io.File;
 import java.util.*;
@@ -78,6 +82,18 @@ public class Ranks {
 
     public static Rank get(String rank) {
         return rankMap.getOrDefault(rank, null);
+    }
+
+    public static void refreshTabDisplayForRank(IRank rank)
+    {
+        Main.database.getDatabase().forEach(
+                (UUID uuid, IPlayerData playerData) -> {
+                    if(playerData.getRankList().contains(rank)) {
+                        ServerPlayer player = Main.mcServer.getPlayerList().getPlayer(uuid);
+                        if (player != null) player.refreshTabListName();
+                    }
+                }
+        );
     }
 }
 

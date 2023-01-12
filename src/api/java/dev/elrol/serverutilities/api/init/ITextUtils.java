@@ -38,6 +38,8 @@ public interface ITextUtils {
 
     Component formatChat(UUID uuid, String msg);
 
+    Component formatUsername(UUID uuid);
+
     void msgNoTag(ServerPlayer player, Component message);
 
     void action(ServerPlayer player, Component message);

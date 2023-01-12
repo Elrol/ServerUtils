@@ -106,6 +106,7 @@ public class Main {
         MinecraftForge.EVENT_BUS.register(new ChunkHandler());
         MinecraftForge.EVENT_BUS.register(new NewCommandEventHandler());
         MinecraftForge.EVENT_BUS.register(new ServerLifecycleHandler());
+        MinecraftForge.EVENT_BUS.register(new TabListHandler());
     }
 
 
