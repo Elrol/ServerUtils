@@ -33,6 +33,8 @@ extends _CmdBase {
             if(name.isEmpty()) name = a;
             dispatcher.register((Commands.literal(a)
                     .executes(this::execute))
+                    .then(Commands.argument("player", EntityArgument.player())
+                            .executes(c -> other(c, List.of(EntityArgument.getPlayer(c, "player")))))
                     .then(Commands.argument("players", EntityArgument.players())
                             .executes(c -> other(c, EntityArgument.getPlayers(c, "players")))));
         }
