@@ -34,6 +34,7 @@ public class RankSuffix {
             suffix = StringArgumentType.getString(c, "string");
             rank.setSuffix(suffix);
             Main.textUtils.msg(c, Msgs.rank_suffix.get(rank.getName(), Main.textUtils.formatString(suffix)));
+            Ranks.refreshTabDisplayForRank(rank);
             return 1;
         }
         Main.textUtils.err(c, Errs.rank_doesnt_exist(rankName));

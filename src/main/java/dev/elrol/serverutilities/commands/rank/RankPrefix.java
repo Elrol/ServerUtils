@@ -6,7 +6,6 @@ import dev.elrol.serverutilities.data.Rank;
 import dev.elrol.serverutilities.init.Ranks;
 import dev.elrol.serverutilities.libs.text.Errs;
 import dev.elrol.serverutilities.libs.text.Msgs;
-import dev.elrol.serverutilities.libs.text.TextUtils;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
@@ -34,6 +33,7 @@ public class RankPrefix {
             prefix = StringArgumentType.getString(c, "prefix");
             rank.setPrefix(prefix);
             Main.textUtils.msg(c, Msgs.rank_prefix.get(rank.getName(), Main.textUtils.formatString(prefix)));
+            Ranks.refreshTabDisplayForRank(rank);
             return 1;
         }
         Main.textUtils.err(c, Errs.rank_doesnt_exist(rankName));
