@@ -47,6 +47,7 @@ public class RankAdd {
         }
         Main.textUtils.msg(c, Msgs.player_rank_added.get(data.getDisplayName(), rank.getName()));
         data.addRank(rank);
+        c.getSource().getServer().getPlayerList().getPlayer(uuid).refreshTabListName();
         Main.database.save(uuid);
         data.update();
         return 1;

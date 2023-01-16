@@ -4,6 +4,7 @@ import dev.elrol.serverutilities.Main;
 import dev.elrol.serverutilities.api.data.IPlayerData;
 import dev.elrol.serverutilities.config.FeatureConfig;
 import dev.elrol.serverutilities.data.ServerData;
+import dev.elrol.serverutilities.init.Ranks;
 import dev.elrol.serverutilities.libs.Logger;
 import dev.elrol.serverutilities.libs.Methods;
 import dev.elrol.serverutilities.libs.ModInfo;
@@ -84,6 +85,13 @@ public class OnPlayerJoinHandler {
             if(!serverdata.getMotd().isEmpty())
                 player.sendSystemMessage(Component.literal(serverdata.getMotd()));
         }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public void onPlayerJoinLate(PlayerEvent.PlayerLoggedInEvent event) {
+        if(!(event.getEntity() instanceof ServerPlayer player)) return;
+        Ranks.sendTabDisplaysToPlayer(player); // Send others to joiner
+        player.refreshTabListName(); // Send joiner to others
     }
 }
 
