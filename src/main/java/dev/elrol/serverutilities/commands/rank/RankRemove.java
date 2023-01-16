@@ -42,6 +42,7 @@ public class RankRemove {
         }
         Main.textUtils.msg(c, Msgs.player_rank_removed.get(data.getDisplayName(), rank.getName()));
         data.removeRank(rank.getName());
+        c.getSource().getServer().getPlayerList().getPlayer(uuid).refreshTabListName();
         Main.database.save(uuid);
         data.update();
         return 1;
