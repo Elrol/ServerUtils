@@ -1,17 +1,19 @@
 package dev.elrol.serverutilities.commands.rank.parent;
 
-import dev.elrol.serverutilities.Main;
-import dev.elrol.serverutilities.commands.ModSuggestions;
-import dev.elrol.serverutilities.data.Rank;
-import dev.elrol.serverutilities.init.Ranks;
-import dev.elrol.serverutilities.libs.text.Errs;
-import dev.elrol.serverutilities.libs.text.Msgs;
-import dev.elrol.serverutilities.libs.text.TextUtils;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import dev.elrol.serverutilities.Main;
+import dev.elrol.serverutilities.api.data.IRank;
+import dev.elrol.serverutilities.commands.ModSuggestions;
+import dev.elrol.serverutilities.init.Ranks;
+import dev.elrol.serverutilities.libs.Methods;
+import dev.elrol.serverutilities.libs.text.Errs;
+import dev.elrol.serverutilities.libs.text.Msgs;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.server.level.ServerPlayer;
 
 public class RankParentRemove {
     public static ArgumentBuilder<CommandSourceStack, ?> register() {
@@ -40,7 +42,19 @@ public class RankParentRemove {
             Main.textUtils.err(c, Errs.rank_doesnt_exist(parent));
             return 0;
         }
-        Rank rank = Ranks.rankMap.get(name);
+
+        IRank rank = Ranks.rankMap.get(name);
+        IRank parentRank = Ranks.rankMap.get(parent);
+        ServerPlayer sender = null;
+        try {
+            sender = c.getSource().getPlayerOrException();
+        } catch (CommandSyntaxException ignored) {}
+
+        if(sender != null && !Methods.canModifyRank(sender, rank) && !Methods.canModifyRank(sender, parentRank)) {
+            Main.textUtils.err(c, Errs.cant_change_higher_rank.get());
+            return 0;
+        }
+
         rank.removeParent(parent);
         Main.textUtils.msg(c, Msgs.parentRankRemove.get(name, parent));
         return 1;

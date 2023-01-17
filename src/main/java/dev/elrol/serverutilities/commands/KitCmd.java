@@ -1,11 +1,11 @@
 package dev.elrol.serverutilities.commands;
 
-import dev.elrol.serverutilities.Main;
-import dev.elrol.serverutilities.commands.kit.KitClaim;
-import dev.elrol.serverutilities.commands.kit.KitInfo;
-import dev.elrol.serverutilities.libs.text.TextUtils;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
+import dev.elrol.serverutilities.Main;
+import dev.elrol.serverutilities.commands.kit.KitClaim;
+import dev.elrol.serverutilities.commands.kit.KitGive;
+import dev.elrol.serverutilities.commands.kit.KitInfo;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -27,6 +27,7 @@ extends _CmdBase {
                         Commands.literal(a)
                                 .executes(this::execute)
                                 .then(KitClaim.register())
+                                .then(KitGive.register())
                                 .then(KitInfo.register()));
         }
     }

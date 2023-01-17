@@ -3,7 +3,9 @@ package dev.elrol.serverutilities.libs;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.elrol.serverutilities.Main;
+import dev.elrol.serverutilities.api.IElrolAPI;
 import dev.elrol.serverutilities.api.data.IPlayerData;
+import dev.elrol.serverutilities.api.data.IRank;
 import dev.elrol.serverutilities.api.data.Location;
 import dev.elrol.serverutilities.config.Configs;
 import dev.elrol.serverutilities.config.FeatureConfig;
@@ -430,6 +432,14 @@ public class Methods {
             }
         }
         return listToFill.size() - s;
+    }
+
+    public static boolean canModifyRank(ServerPlayer sender, IRank rank) {
+        if(IElrolAPI.getInstance().getPermissionHandler().hasPermission(sender, "*"))
+            return true;
+        IPlayerData data = Main.database.get(sender.getUUID());
+        IRank senderRank = data.getDomRank();
+        return rank.getWeight() <= senderRank.getWeight();
     }
 }
 

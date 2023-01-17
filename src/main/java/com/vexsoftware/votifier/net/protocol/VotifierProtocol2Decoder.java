@@ -17,9 +17,6 @@ import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Decodes protocol 2 JSON votes.
- */
 public class VotifierProtocol2Decoder extends MessageToMessageDecoder<String> {
     private static final SecureRandom RANDOM = new SecureRandom();
 

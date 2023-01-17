@@ -1,5 +1,9 @@
 package dev.elrol.serverutilities.commands.rank;
 
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.ArgumentBuilder;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.elrol.serverutilities.Main;
 import dev.elrol.serverutilities.api.data.IPlayerData;
 import dev.elrol.serverutilities.commands.ModSuggestions;
@@ -8,12 +12,9 @@ import dev.elrol.serverutilities.init.Ranks;
 import dev.elrol.serverutilities.libs.Methods;
 import dev.elrol.serverutilities.libs.text.Errs;
 import dev.elrol.serverutilities.libs.text.Msgs;
-import dev.elrol.serverutilities.libs.text.TextUtils;
-import com.mojang.brigadier.arguments.StringArgumentType;
-import com.mojang.brigadier.builder.ArgumentBuilder;
-import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.server.level.ServerPlayer;
 
 import java.util.UUID;
 
@@ -40,6 +41,17 @@ public class RankRemove {
             Main.textUtils.err(c, Errs.player_missing_rank(data.getDisplayName(), rank.getName()));
             return 0;
         }
+
+        ServerPlayer sender = null;
+        try {
+            sender = c.getSource().getPlayerOrException();
+        } catch (CommandSyntaxException ignored) {}
+
+        if(sender != null && !Methods.canModifyRank(sender, rank)) {
+            Main.textUtils.err(c, Errs.cant_change_higher_rank.get());
+            return 0;
+        }
+
         Main.textUtils.msg(c, Msgs.player_rank_removed.get(data.getDisplayName(), rank.getName()));
         data.removeRank(rank.getName());
         c.getSource().getServer().getPlayerList().getPlayer(uuid).refreshTabListName();

@@ -34,12 +34,21 @@ public class ServerLifecycleHandler {
         Main.isCheatMode = Main.mcServer.getWorldData().getAllowCommands();
         Main.dir = Methods.getLevelDir(Main.mcServer.getWorldData().getLevelName());
 
-        if(Main.isDev())
-            Main.shopRegistry.registerShopManager(new AveronShopManager());
-        Main.shopRegistry.registerShopManager(new ChestShopManager(ChestShopType.AdminBuy));
-        Main.shopRegistry.registerShopManager(new ChestShopManager(ChestShopType.AdminSell));
-        Main.shopRegistry.registerShopManager(new ChestShopManager(ChestShopType.Buy));
-        Main.shopRegistry.registerShopManager(new ChestShopManager(ChestShopType.Sell));
+        if(FeatureConfig.sign_shops_enabled.get()) {
+            if (Main.isDev())
+                Main.shopRegistry.registerShopManager(new AveronShopManager());
+            if(FeatureConfig.chest_shops_enabled.get()) {
+                if(FeatureConfig.chest_admin_buy_shops_enabled.get())
+                    Main.shopRegistry.registerShopManager(new ChestShopManager(ChestShopType.AdminBuy));
+                if(FeatureConfig.chest_admin_sell_shops_enabled.get())
+                    Main.shopRegistry.registerShopManager(new ChestShopManager(ChestShopType.AdminSell));
+                if(FeatureConfig.chest_buy_shops_enabled.get())
+                    Main.shopRegistry.registerShopManager(new ChestShopManager(ChestShopType.Buy));
+                if(FeatureConfig.chest_sell_shops_enabled.get())
+                    Main.shopRegistry.registerShopManager(new ChestShopManager(ChestShopType.Sell));
+            }
+        }
+
         Main.serverData = JsonMethod.load(new File(Main.dir, "/data"), "serverdata.dat", ServerData.class);
 
         if (Main.serverData == null) {

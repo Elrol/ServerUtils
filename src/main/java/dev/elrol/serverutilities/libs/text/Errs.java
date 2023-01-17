@@ -623,6 +623,7 @@ public class Errs {
     public static Err cant_use_cmd_here = new Err("serverutils.command.err.cant-use-cmd-here", "That command is not allowed in this dimension");
 
     //new errs
+    public static Err cant_change_higher_rank = new Err("serverutils.command.err.rank_too_high", "You can only add/remove ranks that are lower than your current rank");
 
     public static class Err {
 

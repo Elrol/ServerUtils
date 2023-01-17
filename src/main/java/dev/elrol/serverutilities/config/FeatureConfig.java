@@ -25,7 +25,12 @@ public class FeatureConfig {
     public static ForgeConfigSpec.ConfigValue<String> currency_plural;
     public static ForgeConfigSpec.ConfigValue<String> currency_symbol;
 
-    public static ForgeConfigSpec.DoubleValue chestshop_price;
+    public static ForgeConfigSpec.BooleanValue sign_shops_enabled;
+    public static ForgeConfigSpec.BooleanValue chest_shops_enabled;
+    public static ForgeConfigSpec.BooleanValue chest_buy_shops_enabled;
+    public static ForgeConfigSpec.BooleanValue chest_sell_shops_enabled;
+    public static ForgeConfigSpec.BooleanValue chest_admin_buy_shops_enabled;
+    public static ForgeConfigSpec.BooleanValue chest_admin_sell_shops_enabled;
 
     public static ForgeConfigSpec.ConfigValue<String> jan_colors;
     public static ForgeConfigSpec.ConfigValue<String> feb_colors;
@@ -112,7 +117,16 @@ public class FeatureConfig {
                 clearlag_hostile = server.define("hostile", true);
             server.pop();
         server.pop();
-
+        server.push("Shops");
+            sign_shops_enabled = server.define("Enabled", true);
+            server.push("Chest Shops");
+                chest_shops_enabled = server.define("Enabled", true);
+                chest_buy_shops_enabled = server.define("Buy Enabled", true);
+                chest_sell_shops_enabled = server.define("Sell Enabled", true);
+                chest_admin_buy_shops_enabled = server.define("Admin Buy Enabled", true);
+                chest_admin_sell_shops_enabled = server.define("Admin Sell Enabled", true);
+            server.pop();
+        server.pop();
         server.push("Color Chat");
             color_chat_perm = server.define("perm", "serverutils.colorchat");
             link_chat_perm = server.define("link-perm", "serverutils.linkchat");

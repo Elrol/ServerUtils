@@ -72,6 +72,7 @@ public class Msgs {
     public static Msg kit_cooldown_set = new Msg("serverutils.command.msg.kit-cooldown-set", "The cooldown for Kit %s has been set to %s.");
     public static Msg kit_cooldown_cleared = new Msg("serverutils.command.msg.kit-cooldown-clear","The cooldown for Kit %s has been removed.");
     public static Msg kit_info = new Msg("serverutils.command.msg.kit-info","The Kit %s contains: ");
+    public static Msg sent_kit = new Msg("serverutils.command.msg.give-kit", "You have given the %s kit to %s player(s)");
     public static Msg set_gamemode = new Msg("serverutils.command.msg.set-gamemode","Set your gamemode to %s.");
     public static Msg toggled_msg = new Msg("serverutils.command.msg.toggled-msg","You have %s messaging.");
     public static Msg muted_player = new Msg("serverutils.command.msg.muted-player","You have muted %s for %s.");

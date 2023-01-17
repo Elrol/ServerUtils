@@ -1,13 +1,12 @@
 package dev.elrol.serverutilities.econ.chestshop;
 
+import com.google.gson.JsonObject;
 import dev.elrol.serverutilities.Main;
 import dev.elrol.serverutilities.api.data.Location;
 import dev.elrol.serverutilities.api.econ.AbstractShop;
 import dev.elrol.serverutilities.api.econ.IShopManager;
 import dev.elrol.serverutilities.libs.JsonMethod;
 import dev.elrol.serverutilities.libs.Methods;
-import dev.elrol.serverutilities.libs.text.TextUtils;
-import com.google.gson.JsonObject;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -125,9 +124,7 @@ public class ChestShopManager implements IShopManager {
 
         mapObj.entrySet().forEach(entry -> {
             Map<BlockPos, ChestShop> shops = new TreeMap<>();
-            entry.getValue().getAsJsonObject().entrySet().forEach(shopEntry -> {
-                shops.put(Methods.stringToPos(shopEntry.getKey()), ChestShop.fromJson(type, shopEntry.getValue().getAsJsonObject()));
-            });
+            entry.getValue().getAsJsonObject().entrySet().forEach(shopEntry -> shops.put(Methods.stringToPos(shopEntry.getKey()), ChestShop.fromJson(type, shopEntry.getValue().getAsJsonObject())));
             newShopMap.put(new ResourceLocation(entry.getKey()), shops);
         });
         shopMap.clear();
