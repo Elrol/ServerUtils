@@ -5,16 +5,40 @@ import dev.elrol.serverutilities.api.IElrolAPI;
 import dev.elrol.serverutilities.api.data.IPlayerData;
 import dev.elrol.serverutilities.config.FeatureConfig;
 import dev.elrol.serverutilities.libs.text.Errs;
+import net.minecraft.SharedConstants;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ServerChatEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 public class ChatEventHandler {
-    @SubscribeEvent(priority=EventPriority.LOWEST)
-    public void onPlayerChat(ServerChatEvent.Submitted event) {
+    static class OldCompat {
+        // In a separate class so we can abuse classloading to hide nonexistent (in some versions) classes
+        public static void oldOnPlayerChat(ServerChatEvent.Submitted event)
+        {
+            ChatEventHandler.onPlayerChat(event);
+        }
+    }
+
+    //TODO: Remove this whole mess when 1.19.2 support is dropped
+    public static void registerChatHandler() {
+        try {
+            if (ObfuscationReflectionHelper.findField(SharedConstants.class, "f_142952_").get(null).equals("1.19.2")) {
+                MinecraftForge.EVENT_BUS.addListener(OldCompat::oldOnPlayerChat);
+            } else {
+                MinecraftForge.EVENT_BUS.addListener(ChatEventHandler::onPlayerChat);
+            }
+        }
+        catch (IllegalAccessException ignored)
+        {
+            Main.getLogger().error("Failed to complete version check, 1.19.2 users will receive chat spam in preference over crashing");
+            MinecraftForge.EVENT_BUS.addListener(ChatEventHandler::onPlayerChat);
+        }
+    }
+
+    public static void onPlayerChat(ServerChatEvent event) {
         int muteTime;
         ServerPlayer player = event.getPlayer();
         IPlayerData data = Main.database.get(player.getUUID());

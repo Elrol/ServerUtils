@@ -94,7 +94,7 @@ public class Main {
 
         loadKits();
 
-        MinecraftForge.EVENT_BUS.register(new ChatEventHandler());
+        ChatEventHandler.registerChatHandler();
         MinecraftForge.EVENT_BUS.register(new EntityEventHandler());
         MinecraftForge.EVENT_BUS.register(new LivingDropHandler());
 
